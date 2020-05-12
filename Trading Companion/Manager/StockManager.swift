@@ -44,9 +44,17 @@ public class StockManager {
         UserDefaults.standard.removeObject(forKey: "Stock.Key")
     }
     
-    func add(Stock:Stock) {
-        self.stocks.append(Stock)
-        self.save()
+    func add(Stock:Stock?=nil, Stocks:[Stock]?=nil) {
+        
+        if let stock = Stock {
+            self.stocks.append(stock)
+            self.save()
+        }
+        
+        if let stocks = Stocks {
+            self.stocks.append(contentsOf: stocks)
+            self.save()
+        }
     }
     
     func remove(Stock:Stock) {

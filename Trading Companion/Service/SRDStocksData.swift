@@ -11,6 +11,9 @@ import Foundation
 class SRDStocksData {
     
     static let list = [
-        "AC.PA"
+        "AC.PA",
+        "PUB.PA",
+        "ICAD.PA",
+        "GLE.PA"
     ]
 }

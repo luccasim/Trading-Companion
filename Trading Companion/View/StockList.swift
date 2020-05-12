@@ -18,6 +18,8 @@ struct StockList: View {
             ForEach(self.viewModel.stocks) { stock in
                 StockCell(name: stock.symbol, close: 12, support: 10)
             }
+        }.onAppear {
+            self.viewModel.fetchStocks()
         }
     }
 }

@@ -16,8 +16,9 @@ final class StockViewModel : ObservableObject {
     
     @Published var stocks : [Stock] = []
     
-    func addStock(Stock:Stock) {
-        self.stocks.append(Stock)
+    func addStocks(Stocks:[Stock]) {
+        self.stocks.append(contentsOf: Stocks)
+        self.stockManager.add(Stocks: Stocks)
     }
     
     func reloadStock() {
@@ -25,10 +26,10 @@ final class StockViewModel : ObservableObject {
     }
     
     func fetchStocks() {
-        self.webService.taskEquityDailyTime(StockName: "AC.PA") { (result) in
+        self.webService.fetchEquityList(List: self.stockList) { (result) in
             switch result {
-            case .success(let stock): self.addStock(Stock: stock)
-            case .failure(let error): print("Error -> \(error.localizedDescription)")
+            case .success(let stocks): DispatchQueue.main.async {self.addStocks(Stocks: stocks)}
+            case .failure(let error):   print("Error -> \(error.localizedDescription)")
             }
         }
     }
