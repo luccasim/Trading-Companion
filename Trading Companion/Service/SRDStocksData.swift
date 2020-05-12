@@ -14,6 +14,8 @@ class SRDStocksData {
         "AC.PA",
         "PUB.PA",
         "ICAD.PA",
-        "GLE.PA"
+        "GLE.PA",
+        "GTT.PA",
+        "OR.PA"
     ]
 }

@@ -15,10 +15,12 @@ struct StockList: View {
     var body: some View {
         
         List {
+            
             ForEach(self.viewModel.stocks) { stock in
-                StockCell(name: stock.symbol, close: 12, support: 10)
+                StockCell(name: stock.symbol, close: stock.close, support: 10)
             }
-        }.onAppear {
+            
+            }.onAppear {
             self.viewModel.fetchStocks()
         }
     }

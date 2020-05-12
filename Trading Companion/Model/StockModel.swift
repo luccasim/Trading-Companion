@@ -2,20 +2,19 @@ import Foundation
 
 struct StockDaily : Codable {
     
-    let date    : String
+    let date    : Date
     let low     : Double
     let hight   : Double
     let open    : Double
     let volume  : Double
     let close   : Double
-    
+ 
+    var timestamp : Double {
+        return self.date.timeIntervalSinceReferenceDate
+    }
 }
 
 struct Stock : Codable, Identifiable {
-    
-    var id : Int {
-        return symbol.hashValue
-    }
     
     let symbol  : String
     let days    : [StockDaily]
@@ -27,5 +26,12 @@ struct Stock : Codable, Identifiable {
 //    let stopLoss    : Double
 //    let purchase    : Double
 //    let sell        : Double
-        
+    
+    var id : Int {
+        return symbol.hashValue
+    }
+    
+    var close : Double {
+        return days.sorted {$0.date > $01.date}.first?.close ?? 42
+    }
 }

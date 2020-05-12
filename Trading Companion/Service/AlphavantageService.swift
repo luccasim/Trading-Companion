@@ -119,7 +119,14 @@ extension StockDaily {
             return nil
         }
         
-        self.date = Date
+        let formater = DateFormatter()
+        formater.dateFormat = "yyyy-MM-dd"
+        
+        guard let date = formater.date(from: Date) else {
+            return nil
+        }
+        
+        self.date = date
         self.low = _lowValue
         self.hight = _hightValue
         self.open = _openValue

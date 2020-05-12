@@ -28,6 +28,7 @@ struct StockCell: View {
             }
         }
         .padding(10.0)
+        .layoutPriority(300)
     }
     
 }

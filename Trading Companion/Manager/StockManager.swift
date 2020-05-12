@@ -20,9 +20,9 @@ public class StockManager {
             
             let decoder = PropertyListDecoder()
             self.stocks = try decoder.decode([Stock].self, from: data)
+            print("Unarchive \(self.stocks.count) stocks.")
             
         } catch let error {
-            
             print("Error -> \(error.localizedDescription)")
         }
     }
@@ -34,7 +34,8 @@ public class StockManager {
             let encoder = PropertyListEncoder()
             let data = try encoder.encode(self.stocks)
             UserDefaults.standard.set(data, forKey: "Stock.Key")
-        
+            print("Save \(self.stocks.count) stocks")
+            
         } catch let error {
             print("Save() Error -> \(error.localizedDescription)")
         }
