@@ -21,17 +21,20 @@ final class StockViewModel : ObservableObject {
         self.stockManager.add(Stocks: Stocks)
     }
     
-    func reloadStock() {
-        self.stockManager.retrive()
-        self.stocks = self.stockManager.stocks
-    }
-    
     private func fetchToDownload() -> [String] {
         
-        self.reloadStock()
+        self.stockManager.retrive()
         
         let localStock = self.stockManager.stocks.map({$0.symbol})
         let validStock = self.stockList
+        
+        let removeStock = localStock.filter {!validStock.contains($0)}
+        
+        if !removeStock.isEmpty {
+            self.stockManager.remove(Symbols: removeStock)
+        }
+        
+        self.stocks = self.stockManager.stocks
         
         return validStock.filter {!localStock.contains($0)}
     }

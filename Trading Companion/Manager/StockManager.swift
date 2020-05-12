@@ -50,6 +50,7 @@ public class StockManager {
         if let stock = Stock {
             self.stocks.append(stock)
             self.save()
+            print("Add \(stock.symbol) stock")
         }
         
         if let stocks = Stocks {
@@ -58,11 +59,34 @@ public class StockManager {
         }
     }
     
-    func remove(Stock:Stock) {
-        if let index = self.stocks.firstIndex(where: {$0.symbol == Stock.symbol}) {
-            self.stocks.remove(at: index)
+    func remove(Stock:Stock?=nil, Stocks:[Stock]?=nil, Symbols:[String]?=nil) {
+        
+        if let symbols = Symbols {
+            symbols.forEach { (symbol) in
+                if let index = self.stocks.firstIndex(where: {symbol == $0.symbol}) {
+                    self.stocks.remove(at: index)
+                    print("Remove \(symbol).")
+                }
+            }
             self.save()
         }
+        
+        if let stocks = Stocks {
+            stocks.forEach { (s) in
+                if let index = self.stocks.firstIndex(where: {$0.symbol == s.symbol}) {
+                    self.stocks.remove(at: index)
+                    print("Remove \(s.symbol).")
+                }
+            }
+            self.save()
+        }
+        
+        if let stock = Stock {
+            if let index = self.stocks.firstIndex(where: {$0.symbol == stock.symbol}) {
+                self.stocks.remove(at: index)
+                print("Remove \(stock.symbol).")
+                self.save()
+            }
+        }
     }
-    
 }
