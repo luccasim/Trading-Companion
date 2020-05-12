@@ -65,11 +65,11 @@ public class StockManager {
         let service = AlphavantageService()
         
         service.taskEquityDailyTime(StockName: Name) { (result) in
+            
             switch  result {
             case .failure(let error):
                 Completion(.failure(error))
             case .success(let data):
-                print("Data -> \(data)")
                 if let stock = Stock(fromAlphavangage: data) {
                     self.stocks.append(stock)
                     Completion(.success(stock))
