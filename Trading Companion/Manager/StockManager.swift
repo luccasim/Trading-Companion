@@ -2,24 +2,11 @@ import Foundation
 
 public class StockManager {
     
-    private init() {
-        
-        self.retrive()
-        
-        if self.stocks.isEmpty {
-            
-            self.updateStock(Name: "AC.PA") { (result) in
-                
-                self.stocks.forEach { (s) in
-                    print(s)
-                }
-            }
-        }
-    }
+    var stocks : [Stock] = []
+    
+    public init() {}
     
     public static let shared = StockManager()
-    
-    public var stocks : [Stock] = []
     
     public let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("StockManager")
     
@@ -37,7 +24,6 @@ public class StockManager {
         } catch let error {
             
             print("Error -> \(error.localizedDescription)")
-            
         }
     }
     
@@ -52,29 +38,21 @@ public class StockManager {
         } catch let error {
             print("Save() Error -> \(error.localizedDescription)")
         }
-        
     }
     
     func delete() {
-        
         UserDefaults.standard.removeObject(forKey: "Stock.Key")
     }
     
-    func updateStock(Name:String, Completion: @escaping ((Result<Stock, Error>) -> Void)) {
-        
-        let service = AlphavantageService()
-        
-        service.taskEquityDailyTime(StockName: Name) { (result) in
-            
-            switch  result {
-            case .failure(let error):
-                Completion(.failure(error))
-            case .success(let data):
-                if let stock = Stock(fromAlphavangage: data) {
-                    self.stocks.append(stock)
-                    Completion(.success(stock))
-                }
-            }
+    func add(Stock:Stock) {
+        self.stocks.append(Stock)
+        self.save()
+    }
+    
+    func remove(Stock:Stock) {
+        if let index = self.stocks.firstIndex(where: {$0.symbol == Stock.symbol}) {
+            self.stocks.remove(at: index)
+            self.save()
         }
     }
     

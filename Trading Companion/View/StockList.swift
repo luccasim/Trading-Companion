@@ -10,14 +10,20 @@ import SwiftUI
 
 struct StockList: View {
     
+    @EnvironmentObject var viewModel : StockViewModel
+        
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        List {
+            ForEach(self.viewModel.stocks) { stock in
+                StockCell(name: stock.symbol, close: 12, support: 10)
+            }
+        }
     }
-    
 }
 
 struct StockList_Previews: PreviewProvider {
     static var previews: some View {
-        StockList()
+        StockList().environmentObject(StockViewModel())
     }
 }

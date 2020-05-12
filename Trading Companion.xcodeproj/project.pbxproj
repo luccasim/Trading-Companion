@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C72E246A8F4E00AA342E /* StockCell.swift */; };
 		8412C731246A8F6A00AA342E /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* StockList.swift */; };
+		8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C733246AB8C900AA342E /* StockViewModel.swift */; };
+		8412C736246AC3FF00AA342E /* SRDStocksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C735246AC3FF00AA342E /* SRDStocksData.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
 		8465CFD6246984C5000290A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD5246984C5000290A8 /* ContentView.swift */; };
@@ -42,6 +44,8 @@
 /* Begin PBXFileReference section */
 		8412C72E246A8F4E00AA342E /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		8412C730246A8F6A00AA342E /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
+		8412C733246AB8C900AA342E /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
+		8412C735246AC3FF00AA342E /* SRDStocksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRDStocksData.swift; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8465CFD3246984C5000290A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +99,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8412C732246AB8B000AA342E /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				8412C733246AB8C900AA342E /* StockViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		8465CFC5246984C5000290A8 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +130,7 @@
 		8465CFD0246984C5000290A8 /* Trading Companion */ = {
 			isa = PBXGroup;
 			children = (
+				8412C732246AB8B000AA342E /* View Model */,
 				8412C72D246A8F2E00AA342E /* View */,
 				8465D0092469851D000290A8 /* Service */,
 				8465D0082469850F000290A8 /* Manager */,
@@ -179,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				8465D001246984F0000290A8 /* AlphavantageService.swift */,
+				8412C735246AC3FF00AA342E /* SRDStocksData.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -314,9 +328,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */,
 				8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */,
 				8465D005246984F0000290A8 /* StockModel.swift in Sources */,
 				8412C731246A8F6A00AA342E /* StockList.swift in Sources */,
+				8412C736246AC3FF00AA342E /* SRDStocksData.swift in Sources */,
 				8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */,
 				8465D006246984F0000290A8 /* StockManager.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageService.swift in Sources */,
