@@ -1,0 +1,15 @@
+{
+    "bestMatches": [
+        {
+            "1. symbol": "AC.PAR",
+            "2. name": "Accor SA",
+            "3. type": "Equity",
+            "4. region": "Paris",
+            "5. marketOpen": "09:00",
+            "6. marketClose": "17:30",
+            "7. timezone": "UTC+02",
+            "8. currency": "EUR",
+            "9. matchScore": "1.0000"
+        }
+    ]
+}

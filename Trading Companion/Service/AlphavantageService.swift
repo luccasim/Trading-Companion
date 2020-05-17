@@ -10,39 +10,48 @@ public class AlphavantageService {
         case serverSideError(Error)
         case unvalidSymbolName
         case parsingStockModel
+        case parsingDetail
+        case endOfList
     }
     
     public init() {}
         
     public func stockURLRequest(Name:String) -> URLRequest {
         
-        let uri = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(Name)&apikey=\(key)"
+        let uri = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(Name)&apikey=\(self.key)"
         
         let url = URL(string: uri)!
         return URLRequest(url: url)
     }
     
-    func fetchEquityList(List:[String], Completion:@escaping((Result<[Stock],APIError>)->Void)) {
+    public func symbolRequest(Symbol:String) -> URLRequest {
         
-        let requests = List.map({stockURLRequest(Name: $0)})
-                
+        let uri = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=\(Symbol)&apikey=\(self.key)"
+        
+        let url = URL(string: uri)!
+        return URLRequest(url: url)
+    }
+    
+    func fetchEquityList(List:[String], Completion:@escaping((Result<Stock,APIError>)->Void)) {
+                        
         let dlqueue = DispatchQueue(label: "Download list Equity")
         let semaphore = DispatchSemaphore(value: 0)
         
         dlqueue.async {
             
-            var results : [Stock] = []
             self.pendingDL = true
             
-            requests.forEach { (request) in
-                
-                self.taskEquityDailyTime(Request: request) { (result) in
+            List.forEach { (name) in
+                                
+                print("Fetch Stock :\(name)")
+                self.taskEquityDailyTime(Name:name) { (result) in
                     
                     switch result {
                     case .success(let stock):
-                        results.append(stock)
                         print("Get Stock :\(stock.symbol)")
-                    default: break
+                        Completion(.success(stock))
+                    case .failure(let error):
+                        print("Error -> \(error.localizedDescription)")
                     }
                     
                     semaphore.signal()
@@ -51,16 +60,17 @@ public class AlphavantageService {
                 semaphore.wait()
             }
             
-            Completion(.success(results))
+            Completion(.failure(.endOfList))
             self.pendingDL = false
         }
     }
     
-    private func taskEquityDailyTime(Request:URLRequest, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
+    private func taskEquityDailyTime(Name:String, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
                 
+        let request = self.stockURLRequest(Name: Name)
         let session = URLSession(configuration: .default)
         
-        session.dataTask(with:Request) { (data, reponse, error) in
+        session.dataTask(with:request) { (data, reponse, error) in
             
             if let error = error {
                 Completion(.failure(.serverSideError(error)))
@@ -76,11 +86,52 @@ public class AlphavantageService {
                     }
                 }
                 
-                guard let stock = Stock(fromAlphavangage: data) else {
-                    return Completion(.failure(.parsingStockModel))
+                self.taskSymbolInfo(Symbol: Name, Data:data) { (result) in
+                    
+                    switch result {
+                    case .success(let stock): Completion(.success(stock))
+                    case .failure(let error): Completion(.failure(error))
+                    }
                 }
+            }
             
-                return Completion(.success(stock))
+        }.resume()
+    }
+    
+    private func taskSymbolInfo(Symbol:String, Data:Data, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
+        
+        let session = URLSession(configuration: .default)
+        let request = self.symbolRequest(Symbol: Symbol)
+        
+        session.dataTask(with: request) { (data, reponse, error) in
+            
+            if let error = error {
+                return Completion(.failure(.serverSideError(error)))
+            }
+            
+            if let data = data {
+                
+                if let str = String(data: data, encoding: .utf8) {
+                    
+                    if str.contains("Error Message") {
+                        return Completion(.failure(.unvalidSymbolName))
+                    }
+                    
+                    do {
+                        
+                        let details = try StockDetail(Symbol: Symbol, Data: data)
+                        
+                        guard let stock = Stock(fromAlphavangage: Data, details: details) else {
+                            return Completion(.failure(.parsingStockModel))
+                        }
+                        
+                        Completion(.success(stock))
+                        
+                    } catch let error {
+                        print("Error -> \(error.localizedDescription)")
+                        Completion(.failure(.parsingDetail))
+                    }
+                }
             }
             
         }.resume()
@@ -132,13 +183,12 @@ extension StockDaily {
         self.open = _openValue
         self.volume = _volValue
         self.close = _closeValue
-
     }
 }
 
 extension Stock {
     
-    init?(fromAlphavangage:Data) {
+    init?(fromAlphavangage:Data, details:StockDetail) {
         
         var symb : String?
         var dailies : [StockDaily] = []
@@ -177,8 +227,8 @@ extension Stock {
             
             self.symbol = symb
             self.days = dailies
-                
-
+            self.region = details.region
+            self.name = details.name
             
         } catch let error {
             print("Error -> \(error.localizedDescription)")

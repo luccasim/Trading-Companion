@@ -16,9 +16,9 @@ final class StockViewModel : ObservableObject {
     
     @Published var stocks : [Stock] = []
     
-    func addStocks(Stocks:[Stock]) {
-        self.stocks.append(contentsOf: Stocks)
-        self.stockManager.add(Stocks: Stocks)
+    func addStock(Stock:Stock) {
+        self.stocks.append(Stock)
+        self.stockManager.add(Stock: Stock)
     }
     
     private func fetchToDownload() -> [String] {
@@ -49,8 +49,8 @@ final class StockViewModel : ObservableObject {
         
         self.webService.fetchEquityList(List: list) { (result) in
             switch result {
-            case .success(let stocks): DispatchQueue.main.async {self.addStocks(Stocks: stocks)}
-            case .failure(let error):  print("Error -> \(error.localizedDescription)")
+            case .success(let stock):   DispatchQueue.main.async {self.addStock(Stock: stock)}
+            case .failure(let error):   print("Error -> \(error.localizedDescription)")
             }
         }
     }

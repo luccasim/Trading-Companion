@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Trading CompanionTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8465CFCD246984C5000290A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8465CFE3246984C6000290A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8465CFEE246984C6000290A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

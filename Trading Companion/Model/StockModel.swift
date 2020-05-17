@@ -19,7 +19,8 @@ struct Stock : Codable, Identifiable {
     let symbol  : String
     let days    : [StockDaily]
   
-//    let name    : String
+    let name    : String
+    let region  : String
     
 //    let support     : Double
 //    let resistance  : Double
