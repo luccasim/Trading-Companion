@@ -13,8 +13,8 @@ class StockTest: XCTestCase {
     
     var model : StockTest!
     
-    var source : URL {
-        return Bundle(for: type(of: self)).url(forResource: "history", withExtension: "json")!
+    func getSource(FileName:String, Extension:String) -> URL {
+        return Bundle(for: type(of: self)).url(forResource: FileName, withExtension: Extension)!
     }
 
     override func setUpWithError() throws {
@@ -30,9 +30,9 @@ class StockTest: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testInit() throws {
+    func testInitFromIBMHistory() throws {
     
-        let data = try Data(contentsOf: self.source)
+        let data = try Data(contentsOf: self.getSource(FileName: "IBM_history", Extension: "json"))
         let details = StockDetail(name: "mock", region: "mock")
 
         XCTAssertNoThrow(try Stock(Symbol:"IBM", DataHistory:data, Details:details))

@@ -120,10 +120,7 @@ public class AlphavantageService {
                     do {
                         
                         let details = try StockDetail(Symbol: Symbol, Data: data)
-                        
-                        guard let stock = Stock(fromAlphavangage: Data, details: details) else {
-                            return Completion(.failure(.parsingStockModel))
-                        }
+                        let stock = try Stock(Symbol: Symbol, DataHistory: Data, Details: details)
                         
                         Completion(.success(stock))
                         
@@ -183,56 +180,5 @@ extension StockDaily {
         self.open = _openValue
         self.volume = _volValue
         self.close = _closeValue
-    }
-}
-
-extension Stock {
-    
-    init?(fromAlphavangage:Data, details:StockDetail) {
-        
-        var symb : String?
-        var dailies : [StockDaily] = []
-        
-        do {
-            
-            let object = try JSONSerialization.jsonObject(with: fromAlphavangage, options: [])
-            
-            if let json = object as? [String:Any] {
-                
-                
-                if let meta = json["Meta Data"] as? [String:Any] {
-                    
-                    if let value = meta["2. Symbol"] as? String {
-                        symb = value
-                    }
-                }
-                
-                if let daily = json["Time Series (Daily)"] as? [String:Any] {
-                    
-                    daily.forEach { (dict: (key: String, value: Any)) in
-                        
-                        if let values = dict.value as? [String:Any] {
-                            
-                            if let daily = StockDaily(Date: dict.key, Values: values) {
-                                dailies.append(daily)
-                            }
-                        }
-                    }
-                }
-            }
-                
-            guard let symb = symb, !dailies.isEmpty else {
-                return nil
-            }
-            
-            self.symbol = symb
-            self.days = dailies
-            self.region = details.region
-            self.name = details.name
-            
-        } catch let error {
-            print("Error -> \(error.localizedDescription)")
-            return nil
-        }
     }
 }
