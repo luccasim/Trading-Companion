@@ -15,7 +15,7 @@
 		842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842050372472747C001CBA9C /* StockHistoryTests.swift */; };
 		8420503B24727994001CBA9C /* day_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503A24727994001CBA9C /* day_history.json */; };
 		8420503D247279D4001CBA9C /* meta_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503C247279D4001CBA9C /* meta_history.json */; };
-		84327DCB246FDDDA00FE4C87 /* accor.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor.txt */; };
+		84327DCB246FDDDA00FE4C87 /* accor_detail.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor_detail.json */; };
 		84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84327DCC2471AAD900FE4C87 /* StockTest.swift */; };
 		84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* IBM_history.json */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
@@ -59,7 +59,7 @@
 		842050372472747C001CBA9C /* StockHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryTests.swift; sourceTree = "<group>"; };
 		8420503A24727994001CBA9C /* day_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = day_history.json; sourceTree = "<group>"; };
 		8420503C247279D4001CBA9C /* meta_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meta_history.json; sourceTree = "<group>"; };
-		84327DCA246FDDDA00FE4C87 /* accor.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = accor.txt; sourceTree = "<group>"; };
+		84327DCA246FDDDA00FE4C87 /* accor_detail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = accor_detail.json; sourceTree = "<group>"; };
 		84327DCC2471AAD900FE4C87 /* StockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTest.swift; sourceTree = "<group>"; };
 		84327DCE2471B1A900FE4C87 /* IBM_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = IBM_history.json; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,7 +132,7 @@
 				84327DCE2471B1A900FE4C87 /* IBM_history.json */,
 				8420503A24727994001CBA9C /* day_history.json */,
 				8420503C247279D4001CBA9C /* meta_history.json */,
-				84327DCA246FDDDA00FE4C87 /* accor.txt */,
+				84327DCA246FDDDA00FE4C87 /* accor_detail.json */,
 			);
 			path = Ressources;
 			sourceTree = "<group>";
@@ -350,7 +350,7 @@
 				84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */,
 				84B634EC246D0F1400BB1CA9 /* details_query.txt in Resources */,
 				8420503B24727994001CBA9C /* day_history.json in Resources */,
-				84327DCB246FDDDA00FE4C87 /* accor.txt in Resources */,
+				84327DCB246FDDDA00FE4C87 /* accor_detail.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

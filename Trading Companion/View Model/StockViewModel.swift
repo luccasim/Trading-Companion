@@ -47,7 +47,7 @@ final class StockViewModel : ObservableObject {
             return
         }
         
-        self.webService.fetchEquityList(List: list) { (result) in
+        self.webService.fetchStockList(List: list) { (result) in
             switch result {
             case .success(let stock):   DispatchQueue.main.async {self.addStock(Stock: stock)}
             case .failure(let error):   print("Error -> \(error.localizedDescription)")

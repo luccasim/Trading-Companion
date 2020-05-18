@@ -2,6 +2,7 @@ import Foundation
 
 struct StockDetail : Codable {
     
+    let symbol  : String
     let name    : String
     let region  : String
     
@@ -52,5 +53,6 @@ extension StockDetail {
         
         self.region = region
         self.name = name
+        self.symbol = Symbol
     }
 }
