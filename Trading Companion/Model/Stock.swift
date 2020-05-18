@@ -18,6 +18,10 @@ extension Stock {
     }
     
     var symbol : String {
+        return detail.symbol
+    }
+    
+    var name    : String {
         return detail.name
     }
 }

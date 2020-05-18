@@ -25,6 +25,8 @@ public class AlphavantageService {
         dlqueue.async {
             
             print("Start download list")
+            
+            var success = 0
                         
             List.forEach { (name) in
                 
@@ -34,14 +36,14 @@ public class AlphavantageService {
                 self.detailsTask(Symbol: name) { (result) in
                     switch result {
                     case .success(let detail): details = detail
-                    case .failure(let error): print("Error -> \(error.localizedDescription)")
+                    case .failure(let error): print("Error \(name) -> \(error.localizedDescription)")
                     }
                 }
                 
                 self.historyTask(Name: name) { (result) in
                     switch result {
                     case .success(let history): histories = history
-                    case .failure(let error): print("Error -> \(error.localizedDescription)")
+                    case .failure(let error): print("Error \(name) -> \(error.localizedDescription)")
                     }
                 }
                 
@@ -50,10 +52,11 @@ public class AlphavantageService {
                 if let details = details, let history = histories {
                     let stock = Stock(history: history, detail: details)
                     Completion(.success(stock))
+                    success += 1
                 }
             }
             
-            print("Finish download List")
+            print("Finish download List [\(success)/\(List.count)]")
         }
     }
     

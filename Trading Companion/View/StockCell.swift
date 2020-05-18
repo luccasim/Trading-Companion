@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StockCell: View {
     
+    var symbol  : String       = "ABC"
     var name    : String       = "Title"
     var close   : Double       = 12
     var support : Double       = 10
@@ -18,11 +19,16 @@ struct StockCell: View {
         
         HStack {
             
-            Text(self.name)
-                .font(.largeTitle)
-            
+            VStack(alignment: .leading) {
+                Text(self.symbol)
+                    .font(.largeTitle)
+                    .frame(height: nil)
+                Text(self.name)
+                    .lineLimit(1)
+            }
+                        
             Spacer()
-            VStack {
+            VStack(alignment: .trailing) {
                 Text(self.close.description)
                 Text(self.support.description)
             }
