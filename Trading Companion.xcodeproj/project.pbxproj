@@ -11,6 +11,10 @@
 		8412C731246A8F6A00AA342E /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* StockList.swift */; };
 		8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C733246AB8C900AA342E /* StockViewModel.swift */; };
 		8412C736246AC3FF00AA342E /* SRDStocksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C735246AC3FF00AA342E /* SRDStocksData.swift */; };
+		842050342472728C001CBA9C /* StockHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842050332472728C001CBA9C /* StockHistory.swift */; };
+		842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842050372472747C001CBA9C /* StockHistoryTests.swift */; };
+		8420503B24727994001CBA9C /* day_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503A24727994001CBA9C /* day_history.json */; };
+		8420503D247279D4001CBA9C /* meta_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503C247279D4001CBA9C /* meta_history.json */; };
 		84327DCB246FDDDA00FE4C87 /* accor.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor.txt */; };
 		84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84327DCC2471AAD900FE4C87 /* StockTest.swift */; };
 		84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* IBM_history.json */; };
@@ -25,7 +29,7 @@
 		8465D005246984F0000290A8 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465D002246984F0000290A8 /* Stock.swift */; };
 		8465D006246984F0000290A8 /* StockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465D003246984F0000290A8 /* StockManager.swift */; };
 		84B634E7246C3D1300BB1CA9 /* StockDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B634E6246C3D1300BB1CA9 /* StockDetail.swift */; };
-		84B634EA246C477100BB1CA9 /* ModelDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B634E9246C477100BB1CA9 /* ModelDetail.swift */; };
+		84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B634E9246C477100BB1CA9 /* StockDetailTests.swift */; };
 		84B634EC246D0F1400BB1CA9 /* details_query.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84B634E8246C3D1B00BB1CA9 /* details_query.txt */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +55,10 @@
 		8412C730246A8F6A00AA342E /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
 		8412C733246AB8C900AA342E /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
 		8412C735246AC3FF00AA342E /* SRDStocksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRDStocksData.swift; sourceTree = "<group>"; };
+		842050332472728C001CBA9C /* StockHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistory.swift; sourceTree = "<group>"; };
+		842050372472747C001CBA9C /* StockHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryTests.swift; sourceTree = "<group>"; };
+		8420503A24727994001CBA9C /* day_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = day_history.json; sourceTree = "<group>"; };
+		8420503C247279D4001CBA9C /* meta_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meta_history.json; sourceTree = "<group>"; };
 		84327DCA246FDDDA00FE4C87 /* accor.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = accor.txt; sourceTree = "<group>"; };
 		84327DCC2471AAD900FE4C87 /* StockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTest.swift; sourceTree = "<group>"; };
 		84327DCE2471B1A900FE4C87 /* IBM_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = IBM_history.json; sourceTree = "<group>"; };
@@ -72,7 +80,7 @@
 		8465D003246984F0000290A8 /* StockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockManager.swift; sourceTree = "<group>"; };
 		84B634E6246C3D1300BB1CA9 /* StockDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetail.swift; sourceTree = "<group>"; };
 		84B634E8246C3D1B00BB1CA9 /* details_query.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = details_query.txt; sourceTree = "<group>"; };
-		84B634E9246C477100BB1CA9 /* ModelDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDetail.swift; sourceTree = "<group>"; };
+		84B634E9246C477100BB1CA9 /* StockDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,18 @@
 				8412C733246AB8C900AA342E /* StockViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		84205039247274ED001CBA9C /* Ressources */ = {
+			isa = PBXGroup;
+			children = (
+				84B634E8246C3D1B00BB1CA9 /* details_query.txt */,
+				84327DCE2471B1A900FE4C87 /* IBM_history.json */,
+				8420503A24727994001CBA9C /* day_history.json */,
+				8420503C247279D4001CBA9C /* meta_history.json */,
+				84327DCA246FDDDA00FE4C87 /* accor.txt */,
+			);
+			path = Ressources;
 			sourceTree = "<group>";
 		};
 		8465CFC5246984C5000290A8 = {
@@ -168,10 +188,9 @@
 			isa = PBXGroup;
 			children = (
 				84327DCC2471AAD900FE4C87 /* StockTest.swift */,
-				84B634E9246C477100BB1CA9 /* ModelDetail.swift */,
-				84B634E8246C3D1B00BB1CA9 /* details_query.txt */,
-				84327DCE2471B1A900FE4C87 /* IBM_history.json */,
-				84327DCA246FDDDA00FE4C87 /* accor.txt */,
+				842050372472747C001CBA9C /* StockHistoryTests.swift */,
+				84B634E9246C477100BB1CA9 /* StockDetailTests.swift */,
+				84205039247274ED001CBA9C /* Ressources */,
 				8465CFEA246984C6000290A8 /* Info.plist */,
 			);
 			path = "Trading CompanionTests";
@@ -191,6 +210,7 @@
 			children = (
 				8465D002246984F0000290A8 /* Stock.swift */,
 				84B634E6246C3D1300BB1CA9 /* StockDetail.swift */,
+				842050332472728C001CBA9C /* StockHistory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -326,8 +346,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8420503D247279D4001CBA9C /* meta_history.json in Resources */,
 				84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */,
 				84B634EC246D0F1400BB1CA9 /* details_query.txt in Resources */,
+				8420503B24727994001CBA9C /* day_history.json in Resources */,
 				84327DCB246FDDDA00FE4C87 /* accor.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +375,7 @@
 				8412C731246A8F6A00AA342E /* StockList.swift in Sources */,
 				8412C736246AC3FF00AA342E /* SRDStocksData.swift in Sources */,
 				8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */,
+				842050342472728C001CBA9C /* StockHistory.swift in Sources */,
 				8465D006246984F0000290A8 /* StockManager.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageService.swift in Sources */,
 				8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */,
@@ -365,7 +388,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */,
-				84B634EA246C477100BB1CA9 /* ModelDetail.swift in Sources */,
+				84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */,
+				842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

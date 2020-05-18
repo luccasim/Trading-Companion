@@ -44,7 +44,7 @@ public class AlphavantageService {
             List.forEach { (name) in
                                 
                 print("Fetch Stock :\(name)")
-                self.taskEquityDailyTime(Name:name) { (result) in
+                self.taskHistory(Name:name) { (result) in
                     
                     switch result {
                     case .success(let stock):
@@ -65,7 +65,7 @@ public class AlphavantageService {
         }
     }
     
-    private func taskEquityDailyTime(Name:String, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
+    private func taskHistory(Name:String, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
                 
         let request = self.stockURLRequest(Name: Name)
         let session = URLSession(configuration: .default)
@@ -86,7 +86,7 @@ public class AlphavantageService {
                     }
                 }
                 
-                self.taskSymbolInfo(Symbol: Name, Data:data) { (result) in
+                self.taskDetails(Symbol: Name, Data:data) { (result) in
                     
                     switch result {
                     case .success(let stock): Completion(.success(stock))
@@ -98,7 +98,7 @@ public class AlphavantageService {
         }.resume()
     }
     
-    private func taskSymbolInfo(Symbol:String, Data:Data, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
+    private func taskDetails(Symbol:String, Data:Data, Completion:@escaping ((Result<Stock,APIError>) -> Void)) {
         
         let session = URLSession(configuration: .default)
         let request = self.symbolRequest(Symbol: Symbol)
@@ -120,9 +120,9 @@ public class AlphavantageService {
                     do {
                         
                         let details = try StockDetail(Symbol: Symbol, Data: data)
-                        let stock = try Stock(Symbol: Symbol, DataHistory: Data, Details: details)
-                        
-                        Completion(.success(stock))
+//                        let stock = try Stock(Symbol: Symbol, DataHistory: Data, Details: details)
+//                        
+//                        Completion(.success(stock))
                         
                     } catch let error {
                         print("Error -> \(error.localizedDescription)")
@@ -132,53 +132,5 @@ public class AlphavantageService {
             }
             
         }.resume()
-    }
-}
-
-extension StockDaily {
-    
-    init?(Date:String, Values:[String:Any]) {
-        
-        var lowValue    : Double?
-        var hightValue  : Double?
-        var openValue   : Double?
-        var volValue    : Double?
-        var closeValue  : Double?
-        
-        Values.forEach { (dict: (key: String, value: Any)) in
-            
-            if let str = dict.value as? String {
-                
-                if let value = Double(str) {
-                    
-                    switch dict.key {
-                    case "1. open"  : openValue = value
-                    case "2. high"  : hightValue = value
-                    case "3. low"   : lowValue = value
-                    case "4. close" : closeValue = value
-                    case "5. volume": volValue = value
-                    default         : break
-                    }
-                }
-            }
-        }
-
-        guard let _lowValue = lowValue, let _hightValue = hightValue, let _openValue = openValue, let _volValue = volValue, let _closeValue = closeValue else {
-            return nil
-        }
-        
-        let formater = DateFormatter()
-        formater.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = formater.date(from: Date) else {
-            return nil
-        }
-        
-        self.date = date
-        self.low = _lowValue
-        self.hight = _hightValue
-        self.open = _openValue
-        self.volume = _volValue
-        self.close = _closeValue
     }
 }

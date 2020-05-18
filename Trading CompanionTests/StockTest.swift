@@ -24,19 +24,14 @@ class StockTest: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testInitFromIBMHistory() throws {
-    
-        let data = try Data(contentsOf: self.getSource(FileName: "IBM_history", Extension: "json"))
-        let details = StockDetail(name: "mock", region: "mock")
-
-        XCTAssertNoThrow(try Stock(Symbol:"IBM", DataHistory:data, Details:details))
-    }
+//    func testInitFromIBMHistory() throws {
+//    
+//        let data = try Data(contentsOf: self.getSource(FileName: "IBM_history", Extension: "json"))
+//        let details = StockDetail(name: "mock", region: "mock")
+//
+//        XCTAssertNoThrow(try Stock(Symbol:"IBM", DataHistory:data, Details:details))
+//    }
     
     
 }

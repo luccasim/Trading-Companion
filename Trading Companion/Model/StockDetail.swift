@@ -1,6 +1,7 @@
 import Foundation
 
-struct StockDetail {
+struct StockDetail : Codable {
+    
     let name    : String
     let region  : String
     

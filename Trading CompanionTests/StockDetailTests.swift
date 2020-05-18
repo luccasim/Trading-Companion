@@ -1,5 +1,5 @@
 //
-//  ModelDetail.swift
+//  StockDetailTests.swift
 //  Trading CompanionTests
 //
 //  Created by owee on 13/05/2020.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Trading_Companion
 
-class ModelDetail: XCTestCase {
+class StockDetailTests: XCTestCase {
     
     var model : StockDetail!
     
