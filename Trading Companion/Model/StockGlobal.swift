@@ -16,12 +16,27 @@ struct StockGlobal : Codable {
     let low         : Double
     let price       : Double
     let volume      : Int
-    let lastDay     : String
+    let lastDay     : Date
     let previous    : Double
     let change      : Double
     let percent     : String
     
-    enum CodingKeys : String, CodingKey {
+}
+
+extension StockGlobal {
+    
+    enum Errors : Error {
+        case convertOpenToDouble
+        case convertHighToDouble
+        case convertLowToDouble
+        case convertPriceToDouble
+        case convertLastDayToDate
+        case convertPreviousToDouble
+        case convertChangeToDouble
+        case convertVolumeToInt
+    }
+    
+    enum StockKeys : String, CodingKey {
         case symbol     = "01. symbol"
         case open       = "02. open"
         case high       = "03. high"
@@ -34,27 +49,68 @@ struct StockGlobal : Codable {
         case percent    = "10. change percent"
     }
     
-}
-
-extension StockGlobal {
-    
-    struct Wrapper : Codable {
-        
-        let day : StockGlobal
-        
-        enum CodingKeys : String, CodingKey {
-            case day = "Global Quote"
-        }
+    enum WrapperKeys : String, CodingKey {
+        case day = "Global Quote"
     }
-}
-
-extension StockGlobal {
+    
+    init(from decoder: Decoder) throws {
+        
+        let wrapper = try decoder.container(keyedBy: WrapperKeys.self)
+        
+        let container = try wrapper.nestedContainer(keyedBy: StockKeys.self, forKey: .day)
+        
+        self.symbol = try container.decode(String.self, forKey: .symbol)
+        
+        guard let open = Double(try container.decode(String.self, forKey: .open)) else {
+            throw Errors.convertOpenToDouble
+        }
+        self.open = open
+        
+        guard let high = Double(try container.decode(String.self, forKey: .high)) else {
+            throw Errors.convertHighToDouble
+        }
+        self.high = high
+        
+        guard let low = Double(try container.decode(String.self, forKey: .low)) else {
+            throw Errors.convertLowToDouble
+        }
+        self.low = low
+        
+        guard let price = Double(try container.decode(String.self, forKey: .price)) else {
+            throw Errors.convertPriceToDouble
+        }
+        self.price = price
+        
+        guard let volume = Int(try container.decode(String.self, forKey: .volume)) else {
+            throw Errors.convertVolumeToInt
+        }
+        self.volume = volume
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let last = formatter.date(from: try container.decode(String.self, forKey: .lastDay)) else {
+            throw Errors.convertLastDayToDate
+        }
+        self.lastDay = last
+        
+        guard let previous = Double(try container.decode(String.self, forKey: .previous)) else {
+            throw Errors.convertPreviousToDouble
+        }
+        self.previous = previous
+        
+        guard let change = Double(try container.decode(String.self, forKey: .change)) else {
+            throw Errors.convertChangeToDouble
+        }
+        self.change = change
+            
+        self.percent = try container.decode(String.self, forKey: .percent)
+    }
     
     init(fromData:Data) throws {
         
         let decoder = JSONDecoder()
         
-        let global = try decoder.decode(StockGlobal.Wrapper.self, from: fromData)
-        self = global.day
+        self = try decoder.decode(StockGlobal.self, from: fromData)
     }
 }
