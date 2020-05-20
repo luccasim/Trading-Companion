@@ -1,11 +1,10 @@
 import Foundation
+import Combine
 
 public class AlphavantageService {
     
     let key = "CZA8D69RROESV61Q"
-    
-    private var pendingDL = false
-    
+        
     public enum APIError : Error {
         case serverSideError(Error)
         case unvalidSymbolName
@@ -15,9 +14,7 @@ public class AlphavantageService {
     }
     
     public init() {}
-    
-    private var group = DispatchGroup()
-    
+                
     func fetchStockList(List:[String], Completion:@escaping((Result<Stock,APIError>)->Void)) {
                         
         let dlqueue = DispatchQueue(label: "Download stock List")
@@ -27,37 +24,93 @@ public class AlphavantageService {
             print("Start download list")
             
             var success = 0
+            let semaphore = DispatchSemaphore(value: 0)
                         
             List.forEach { (name) in
                 
                 var details : StockDetail?
                 var histories : StockHistory?
+                var globals : StockGlobal?
                 
+                print("Start Details Task")
+
                 self.detailsTask(Symbol: name) { (result) in
                     switch result {
                     case .success(let detail): details = detail
-                    case .failure(let error): print("Error \(name) -> \(error.localizedDescription)")
+                    case .failure(let error): print("[\(name)] Detail Task Error : \(error.localizedDescription)")
                     }
+                    semaphore.signal()
                 }
                 
+                semaphore.wait()
+                print("Start History Task")
+
                 self.historyTask(Name: name) { (result) in
                     switch result {
                     case .success(let history): histories = history
-                    case .failure(let error): print("Error \(name) -> \(error.localizedDescription)")
+                    case .failure(let error): print("[\(name)] History Task Error : \(error.localizedDescription)")
                     }
+                    semaphore.signal()
                 }
                 
-                self.group.wait()
+                semaphore.wait()
+                print("Start Global Task")
                 
-                if let details = details, let history = histories {
-                    let stock = Stock(history: history, detail: details)
-                    Completion(.success(stock))
+                self.globalTask(Symbol: name) { (result) in
+                    switch result {
+                    case .success(let global): globals = global
+                    case .failure(let error): print("[\(name)] Global Task Error : \(error.localizedDescription)")
+                    }
+                    semaphore.signal()
+                }
+                
+                semaphore.wait()
+
+                if let details = details, let history = histories, let global = globals {
+                    let stock = Stock(history: history, detail: details, global: global)
                     success += 1
+                    Completion(.success(stock))
                 }
             }
             
             print("Finish download List [\(success)/\(List.count)]")
         }
+    }
+    
+    public func globalRequest(Symbol:String) -> URLRequest {
+        
+        let uri = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(Symbol)&apikey=\(self.key)"
+        
+        let url = URL(string: uri)!
+        return URLRequest(url: url)
+    }
+    
+    var globalSession : URLSession?
+    
+    func globalTask(Symbol:String, Completion:@escaping ((Result<StockGlobal,Error>) -> Void)) {
+        
+        let request = self.globalRequest(Symbol: Symbol)
+        self.globalSession = URLSession(configuration: .default)
+                
+        self.globalSession?.dataTask(with: request) { (data, rep, error) in
+            
+            if let error = error {
+                return Completion(.failure(error))
+            }
+            
+            if let data = data {
+                
+                do {
+                    
+                    let global = try StockGlobal(fromData: data)
+                    Completion(.success(global))
+                    
+                } catch let error {
+                    return Completion(.failure(error))
+                }
+            }
+            
+        }.resume()
     }
     
     public func historyRequest(Name:String) -> URLRequest {
@@ -68,21 +121,17 @@ public class AlphavantageService {
         return URLRequest(url: url)
     }
     
-    private func historyTask(Name:String, Completion:@escaping ((Result<StockHistory,APIError>) -> Void)) {
+    var historySession : URLSession?
+    
+    func historyTask(Name:String, Completion:@escaping ((Result<StockHistory,Error>) -> Void)) {
                 
         let request = self.historyRequest(Name: Name)
-        let session = URLSession(configuration: .default)
-        
-        self.group.enter()
-        
-        session.dataTask(with:request) { (data, reponse, error) in
-            
-            defer {
-                self.group.leave()
-            }
+        self.historySession = URLSession(configuration: .default)
+                
+        self.historySession?.dataTask(with:request) { (data, reponse, error) in
             
             if let error = error {
-                Completion(.failure(.serverSideError(error)))
+                Completion(.failure(APIError.serverSideError(error)))
                 return
             }
             
@@ -91,7 +140,7 @@ public class AlphavantageService {
                 if let str = String(data: data, encoding: .utf8) {
                     
                     if str.contains("Error Message") {
-                        return Completion(.failure(.unvalidSymbolName))
+                        return Completion(.failure(APIError.unvalidSymbolName))
                     }
                 }
                 
@@ -101,13 +150,14 @@ public class AlphavantageService {
                     return Completion(.success(history))
                     
                 } catch let error {
-                    print("Error -> \(error.localizedDescription)")
-                    return Completion(.failure(.parsingDetail))
+                    return Completion(.failure(error))
                 }
                 
             }
         }.resume()
     }
+    
+    var detailSession : URLSession?
     
     public func detailsRequest(Symbol:String) -> URLRequest {
         
@@ -117,21 +167,15 @@ public class AlphavantageService {
         return URLRequest(url: url)
     }
     
-    private func detailsTask(Symbol:String, Completion:@escaping ((Result<StockDetail,APIError>) -> Void)) {
+    func detailsTask(Symbol:String, Completion:@escaping ((Result<StockDetail,Error>) -> Void)) {
         
-        let session = URLSession(configuration: .default)
+        self.detailSession = URLSession(configuration: .default)
         let request = self.detailsRequest(Symbol: Symbol)
-        
-        self.group.enter()
-        
-        session.dataTask(with: request) { (data, reponse, error) in
-            
-            defer {
-                self.group.leave()
-            }
+                
+        self.detailSession?.dataTask(with: request) { (data, reponse, error) in
             
             if let error = error {
-                return Completion(.failure(.serverSideError(error)))
+                return Completion(.failure(APIError.serverSideError(error)))
             }
             
             if let data = data {
@@ -139,7 +183,7 @@ public class AlphavantageService {
                 if let str = String(data: data, encoding: .utf8) {
                     
                     if str.contains("Error Message") {
-                        return Completion(.failure(.unvalidSymbolName))
+                        return Completion(.failure(APIError.unvalidSymbolName))
                     }
                     
                     do {
@@ -148,8 +192,7 @@ public class AlphavantageService {
                         Completion(.success(details))
                         
                     } catch let error {
-                        print("Error -> \(error.localizedDescription)")
-                        Completion(.failure(.parsingDetail))
+                        Completion(.failure(error))
                     }
                 }
             }

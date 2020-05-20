@@ -17,8 +17,8 @@ final class StockViewModel : ObservableObject {
     @Published var stocks : [Stock] = []
     
     func addStock(Stock:Stock) {
+//        self.stockManager.add(Stock: Stock)
         self.stocks.append(Stock)
-        self.stockManager.add(Stock: Stock)
     }
     
     private func fetchToDownload() -> [String] {

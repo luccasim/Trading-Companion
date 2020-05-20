@@ -50,7 +50,7 @@ extension StockGlobal {
     }
     
     enum WrapperKeys : String, CodingKey {
-        case day = "Global Quote"
+        case day        = "Global Quote"
     }
     
     init(from decoder: Decoder) throws {

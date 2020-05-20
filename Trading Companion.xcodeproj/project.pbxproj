@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */; };
 		8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C72E246A8F4E00AA342E /* StockCell.swift */; };
 		8412C731246A8F6A00AA342E /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* StockList.swift */; };
 		8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C733246AB8C900AA342E /* StockViewModel.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphavantageWSTests.swift; sourceTree = "<group>"; };
 		8412C72E246A8F4E00AA342E /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		8412C730246A8F6A00AA342E /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
 		8412C733246AB8C900AA342E /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				842050372472747C001CBA9C /* StockHistoryTests.swift */,
 				84B634E9246C477100BB1CA9 /* StockDetailTests.swift */,
 				847B16E124753F940054BE02 /* StockGlobalTests.swift */,
+				840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */,
 				84205039247274ED001CBA9C /* Ressources */,
 				8465CFEA246984C6000290A8 /* Info.plist */,
 			);
@@ -402,6 +405,7 @@
 				847B16E224753F940054BE02 /* StockGlobalTests.swift in Sources */,
 				84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */,
 				842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */,
+				840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

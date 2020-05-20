@@ -4,6 +4,7 @@ struct Stock : Codable, Identifiable {
         
     let history : StockHistory
     let detail  : StockDetail
+    let global  : StockGlobal
 
 }
 
@@ -23,12 +24,5 @@ extension Stock {
     
     var name    : String {
         return detail.name
-    }
-}
-
-extension Stock {
-    
-    enum Errors : Error {
-        case MissingHistory
     }
 }

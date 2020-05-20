@@ -18,7 +18,7 @@ public class StockManager {
         
         do {
             
-            let decoder = PropertyListDecoder()
+            let decoder = JSONDecoder()
             self.stocks = try decoder.decode([Stock].self, from: data)
             print("Unarchive \(self.stocks.count) stocks.")
             
@@ -31,7 +31,7 @@ public class StockManager {
         
         do {
             
-            let encoder = PropertyListEncoder()
+            let encoder = JSONEncoder()
             let data = try encoder.encode(self.stocks)
             UserDefaults.standard.set(data, forKey: "Stock.Key")
             print("Save \(self.stocks.count) stocks")
