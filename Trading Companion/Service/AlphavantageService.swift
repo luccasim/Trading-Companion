@@ -144,7 +144,7 @@ public class AlphavantageService {
                     
                     do {
                         
-                        let details = try StockDetail(Symbol: Symbol, Data: data)
+                        let details = try StockDetail(FromData: data)
                         Completion(.success(details))
                         
                     } catch let error {

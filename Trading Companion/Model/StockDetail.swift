@@ -1,58 +1,55 @@
 import Foundation
 
+struct StockMatch : Codable {
+    
+    let matches : [StockDetail]
+    
+    enum CodingKeys : String, CodingKey {
+        case matches = "bestMatches"
+    }
+}
+
 struct StockDetail : Codable {
     
     let symbol  : String
     let name    : String
+    let type    : String
     let region  : String
     
 }
 
 extension StockDetail {
     
-    enum DataError : Error {
-        case NoFindNameKey
-        case NoFindRegionKey
+    enum CodingKeys : String, CodingKey {
+        case symbol = "1. symbol"
+        case name   = "2. name"
+        case type   = "3. type"
+        case region = "4. region"
     }
+}
+
+extension StockDetail {
     
-    init(Symbol:String, Data:Data) throws {
-        
-        var dataName    : String?
-        var dataRegion  : String?
-        
-        do {
-            
-            let json = try JSONSerialization.jsonObject(with: Data, options: []) as? [String:Any]
-            
-            if let matches = json?["bestMatches"] as? [[String:Any]] {
-                
-                matches.forEach { (dict:[String : Any]) in
-                    
-                    if let key = dict["1. symbol"] as? String {
-                        
-                        if key.contains(Symbol) {
-                            dataName = dict["2. name"] as? String
-                            dataRegion = dict["4. region"] as? String
-                        }
-                    }
-                }
-            }
-            
-        } catch let error {
-            print("Error -> \(error)")
-            throw error
-        }
-        
-        guard let region = dataRegion else {
-            throw DataError.NoFindRegionKey
-        }
-        
-        guard let name = dataName else {
-            throw DataError.NoFindNameKey
-        }
-        
-        self.region = region
-        self.name = name
-        self.symbol = Symbol
+    enum Errors : Error {
+        case noMatchesfound
     }
+}
+
+extension StockDetail {
+    
+    /// Create the first matching details from the request
+    /// - Parameter FromData: Data received
+    /// - Throws: JsonDecoding, and not matching found.
+    init(FromData:Data) throws {
+        
+        let decoder = JSONDecoder()
+        let matches = try decoder.decode(StockMatch.self, from: FromData)
+        
+        guard let first = matches.matches.first else {
+            throw Errors.noMatchesfound
+        }
+        
+        self = first
+    }
+
 }

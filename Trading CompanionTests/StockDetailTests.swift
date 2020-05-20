@@ -13,14 +13,6 @@ class StockDetailTests: XCTestCase {
     
     var model : StockDetail!
     
-    var source : URL {
-        return Bundle(for: type(of: self)).url(forResource: "details_query", withExtension: "txt")!
-    }
-    
-    var source2 : URL {
-        return Bundle(for: type(of: self)).url(forResource: "accor", withExtension: "txt")!
-    }
-    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
@@ -30,26 +22,15 @@ class StockDetailTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         
     }
-    
-    func testSourceFile() throws {
-        XCTAssertNotNil(self.source)
+
+    func getSource(Filename:String,Extension:String) -> URL {
+        return Bundle(for: type(of: self)).url(forResource: Filename, withExtension: Extension)!
     }
 
     func testInit() throws {
                 
-        let data = try Data(contentsOf: self.source)
+        let data = try Data(contentsOf: getSource(Filename: "accor_detail", Extension: "json"))
         
-        XCTAssertNoThrow(try StockDetail(Symbol: "AMD", Data: data))
-        
-        XCTAssertThrowsError(try StockDetail(Symbol: "MU", Data: data))
-        
-        XCTAssertThrowsError(try StockDetail(Symbol: "MSFT", Data: data))
-    }
-
-    func testInit2() throws {
-        
-        let data = try Data(contentsOf: self.source2)
-        
-        XCTAssertNoThrow(try StockDetail(Symbol: "AC.PAR", Data: data))
+        XCTAssertNoThrow(try StockDetail(FromData: data))
     }
 }
