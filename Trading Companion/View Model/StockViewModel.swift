@@ -17,7 +17,7 @@ final class StockViewModel : ObservableObject {
     @Published var stocks : [Stock] = []
     
     func addStock(Stock:Stock) {
-//        self.stockManager.add(Stock: Stock)
+        self.stockManager.add(Stock: Stock)
         self.stocks.append(Stock)
     }
     
@@ -41,18 +41,10 @@ final class StockViewModel : ObservableObject {
     
     func fetchStocks() {
         
-        let list = self.fetchToDownload()
+        self.stockManager.retrive()
+        self.stocks = self.stockManager.stocks
+        self.stockManager.save()
         
-        guard !list.isEmpty else {
-            return
-        }
-        
-        self.webService.fetchStockList(List: list) { (result) in
-            switch result {
-            case .success(let stock):   DispatchQueue.main.async {self.addStock(Stock: stock)}
-            case .failure(let error):   print("Error -> \(error.localizedDescription)")
-            }
-        }
     }
     
 }

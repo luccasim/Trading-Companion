@@ -12,8 +12,8 @@ struct StockCell: View {
     
     var symbol  : String       = "ABC"
     var name    : String       = "Title"
-    var close   : Double       = 12
-    var support : Double       = 10
+    var close   : String       = "12"
+    var support : String       = "10"
     
     var body: some View {
         
@@ -29,8 +29,8 @@ struct StockCell: View {
                         
             Spacer()
             VStack(alignment: .trailing) {
-                Text(self.close.description)
-                Text(self.support.description)
+                Text(self.close)
+                Text(self.support)
             }
         }
         .padding(10.0)

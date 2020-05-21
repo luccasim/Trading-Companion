@@ -8,22 +8,35 @@ public class StockManager {
     
     public static let shared = StockManager()
     
-    public let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("StockManager")
+    public let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("StockManager")
+    
+    var verbose = true
+    
+    private var stocksData : [Stock] {
+//        return SRDStocksData.list.map({Stock(symbol: $0, history: nil, detail: nil, global: nil)})
+        return SRDStocksData.list.map({Stock(symbol: $0)})
+    }
+    
+    private func trace(_ str:String) {
+        if self.verbose {
+            print("[StockManager] : \(str)")
+        }
+    }
     
     func retrive() {
         
-        guard let data = UserDefaults.standard.data(forKey: "Stock.Key") else {
-            return
-        }
+        self.trace("Path \(self.fileURL.path)")
         
         do {
             
+            let data    = try Data(contentsOf: self.fileURL)
             let decoder = JSONDecoder()
             self.stocks = try decoder.decode([Stock].self, from: data)
-            print("Unarchive \(self.stocks.count) stocks.")
+            self.trace("Unarchive \(self.stocks.count) stocks.")
             
         } catch let error {
-            print("Error -> \(error.localizedDescription)")
+            self.trace("Retrieve Error -> \(error.localizedDescription)")
+            self.stocks = self.stocksData
         }
     }
     
@@ -33,16 +46,23 @@ public class StockManager {
             
             let encoder = JSONEncoder()
             let data = try encoder.encode(self.stocks)
-            UserDefaults.standard.set(data, forKey: "Stock.Key")
-            print("Save \(self.stocks.count) stocks")
+            try data.write(to: self.fileURL, options: .atomic)
+            self.trace("Save \(self.stocks.count) stocks")
             
         } catch let error {
-            print("Save() Error -> \(error.localizedDescription)")
+            self.trace("Save() Error -> \(error.localizedDescription)")
         }
     }
     
-    func delete() {
-        UserDefaults.standard.removeObject(forKey: "Stock.Key")
+    func reset() {
+        
+        do {
+            
+            try FileManager.default.removeItem(at: self.fileURL)
+            
+        } catch let error {
+            self.trace("Delete() Error -> \(error.localizedDescription)")
+        }
     }
     
     func add(Stock:Stock?=nil, Stocks:[Stock]?=nil) {
@@ -50,7 +70,7 @@ public class StockManager {
         if let stock = Stock {
             self.stocks.append(stock)
             self.save()
-            print("Add \(stock.symbol) stock")
+            self.trace("Add \(stock.symbol) stock")
         }
         
         if let stocks = Stocks {
@@ -65,7 +85,7 @@ public class StockManager {
             symbols.forEach { (symbol) in
                 if let index = self.stocks.firstIndex(where: {symbol == $0.symbol}) {
                     self.stocks.remove(at: index)
-                    print("Remove \(symbol).")
+                    self.trace("Remove \(symbol).")
                 }
             }
             self.save()
@@ -75,7 +95,7 @@ public class StockManager {
             stocks.forEach { (s) in
                 if let index = self.stocks.firstIndex(where: {$0.symbol == s.symbol}) {
                     self.stocks.remove(at: index)
-                    print("Remove \(s.symbol).")
+                    self.trace("Remove \(s.symbol).")
                 }
             }
             self.save()
@@ -84,7 +104,7 @@ public class StockManager {
         if let stock = Stock {
             if let index = self.stocks.firstIndex(where: {$0.symbol == stock.symbol}) {
                 self.stocks.remove(at: index)
-                print("Remove \(stock.symbol).")
+                self.trace("Remove \(stock.symbol).")
                 self.save()
             }
         }
