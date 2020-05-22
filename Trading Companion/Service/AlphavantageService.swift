@@ -18,7 +18,7 @@ public class AlphavantageService {
     let dlqueue = DispatchQueue(label: "Download stock List")
     let group   = DispatchGroup()
     
-    func updateStock(Stock:Stock, Completion:@escaping((Result<Stock,Error>)->Void)) {
+    func updateStock(OldStock:Stock, Completion:@escaping((Result<Stock,Error>)->Void)) {
         
         dlqueue.async {
             
@@ -26,102 +26,52 @@ public class AlphavantageService {
             var histories : StockHistory?
             var globals : StockGlobal?
             
-            print("Start Details Task")
+            self.group.enter()
+            print("Start Global Task")
             
-            self.detailsTask(Symbol: Stock.symbol) { (result) in
+            self.globalTask(Symbol: OldStock.symbol) { (result) in
                 switch result {
-                case .success(let detail): details = detail
-                case .failure(let error): print("[\(Stock.symbol)] Detail Task Error : \(error.localizedDescription)")
+                case .success(let global): globals = global
+                case .failure(let error): print("[\(OldStock.symbol)] Global Task Error : \(error.localizedDescription)")
                 }
                 self.group.leave()
             }
             
-            print("Start History Task")
-            
-            self.historyTask(Name: Stock.symbol) { (result) in
-                switch result {
-                case .success(let history): histories = history
-                case .failure(let error): print("[\(Stock.symbol)] History Task Error : \(error.localizedDescription)")
-                }
-            }
-            
-            print("Start Global Task")
-            
-            self.globalTask(Symbol: Stock.symbol) { (result) in
-                switch result {
-                case .success(let global): globals = global
-                case .failure(let error): print("[\(Stock.symbol)] Global Task Error : \(error.localizedDescription)")
-                }
-            }
-            
-            
-            if let details = details, let history = histories, let global = globals {
-                let stock = Stock(history: history, detail: details, global: global)
-                success += 1
-                Completion(.success(stock))
-            }
-        
-        }
-        
-    }
+            if OldStock.shouldUpdateDetail {
                 
-//    func fetchStockList(List:[Stock], Completion:@escaping((Result<Stock,APIError>)->Void)) {
-//        
-//        dlqueue.async {
-//                    
-//            var success = 0
-//            let semaphore = DispatchSemaphore(value: 0)
-//                        
-//            List.forEach { (name) in
-//                
-//                var details : StockDetail?
-//                var histories : StockHistory?
-//                var globals : StockGlobal?
-//                
-//                print("Start Details Task")
-//
-//                self.detailsTask(Symbol: name) { (result) in
-//                    switch result {
-//                    case .success(let detail): details = detail
-//                    case .failure(let error): print("[\(name)] Detail Task Error : \(error.localizedDescription)")
-//                    }
-//                    semaphore.signal()
-//                }
-//                
-//                semaphore.wait()
-//                print("Start History Task")
-//
-//                self.historyTask(Name: name) { (result) in
-//                    switch result {
-//                    case .success(let history): histories = history
-//                    case .failure(let error): print("[\(name)] History Task Error : \(error.localizedDescription)")
-//                    }
-//                    semaphore.signal()
-//                }
-//                
-//                semaphore.wait()
-//                print("Start Global Task")
-//                
-//                self.globalTask(Symbol: name) { (result) in
-//                    switch result {
-//                    case .success(let global): globals = global
-//                    case .failure(let error): print("[\(name)] Global Task Error : \(error.localizedDescription)")
-//                    }
-//                    semaphore.signal()
-//                }
-//                
-//                semaphore.wait()
-//
-//                if let details = details, let history = histories, let global = globals {
-//                    let stock = Stock(history: history, detail: details, global: global)
-//                    success += 1
-//                    Completion(.success(stock))
-//                }
-//            }
-//            
-//            print("Finish download List [\(success)/\(List.count)]")
-//        }
-//    }
+                self.group.enter()
+                print("Start Details Task")
+                
+                self.detailsTask(Symbol: OldStock.symbol) { (result) in
+                    switch result {
+                    case .success(let detail): details = detail
+                    case .failure(let error): print("[\(OldStock.symbol)] Detail Task Error : \(error.localizedDescription)")
+                    }
+                    self.group.leave()
+                }
+            }
+            
+            if OldStock.shouldUpdateHistory {
+                
+                self.group.enter()
+                print("Start History Task")
+                
+                self.historyTask(Name: OldStock.symbol) { (result) in
+                    switch result {
+                    case .success(let history): histories = history
+                    case .failure(let error): print("[\(OldStock.symbol)] History Task Error : \(error.localizedDescription)")
+                    }
+                    self.group.leave()
+                }
+            }
+            
+            self.group.wait()
+            
+            let stock = Stock(symbol: OldStock.symbol, history: histories, detail: details, global: globals)
+            
+            Completion(.success(stock))
+        }
+    }
     
     public func globalRequest(Symbol:String) -> URLRequest {
         

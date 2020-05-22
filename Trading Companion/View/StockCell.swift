@@ -26,12 +26,12 @@ struct StockCell: View {
                 Text(self.name)
                     .lineLimit(1)
             }
-                        
             Spacer()
             VStack(alignment: .trailing) {
                 Text(self.close)
                 Text(self.support)
             }
+            
         }
         .padding(10.0)
         .layoutPriority(300)

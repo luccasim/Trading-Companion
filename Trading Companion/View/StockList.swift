@@ -17,7 +17,7 @@ struct StockList: View {
         List {
             
             ForEach(self.viewModel.stocks) { stock in
-                StockCell(symbol: stock.little, name: "", close: "", support: "10")
+                StockCell(symbol: stock.little, name: stock.name, close: stock.close, support: "")
             }
             
             }.onAppear {

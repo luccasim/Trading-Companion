@@ -4,25 +4,36 @@ struct Stock : Codable, Identifiable {
     
     let symbol  : String
         
-    let history : StockHistory? = nil
-    let detail  : StockDetail? = nil
-    let global  : StockGlobal? = nil
+    var history : StockHistory? = nil
+    var detail  : StockDetail? = nil
+    var global  : StockGlobal? = nil
 
 }
 
 extension Stock {
     
-//    var shouldTaskHistory : Bool {
-//        return self.history != nil
-//    }
-//
-//    var shouldTaskGlobal : Bool {
-//        return self.global != nil
-//    }
-//
-//    var shouldTaskDetail : Bool {
-//        return self.detail != nil
-//    }
+    mutating func update(newStock:Stock) {
+        self.history    = newStock.history
+        self.detail     = newStock.detail
+        self.global     = newStock.global
+    }
+    
+    var shouldUpdateHistory : Bool {
+        return self.history == nil
+    }
+    
+    var shouldUpdateGlobal : Bool {
+        return self.global == nil
+    }
+    
+    var shouldUpdateDetail : Bool {
+        return self.detail == nil
+    }
+    
+    var shouldUpdate : Bool {
+        return shouldUpdateDetail || shouldUpdateGlobal || shouldUpdateHistory
+    }
+    
 }
 
 extension Stock {
@@ -31,16 +42,16 @@ extension Stock {
         return symbol.hashValue
     }
 
-//    var close : String {
-//        return history?.close.description ?? ""
-//    }
+    var close : String {
+        return history?.close.description ?? ""
+    }
 
     var little : String {
         return self.symbol.components(separatedBy: ".").first ?? self.symbol
     }
 
-//    var name    : String {
-//        return detail?.name ?? ""
-//    }
+    var name    : String {
+        return detail?.name ?? ""
+    }
 
 }

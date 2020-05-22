@@ -65,6 +65,15 @@ public class StockManager {
         }
     }
     
+    func update(Stock:Stock) {
+        
+        if let index = self.stocks.firstIndex(where: {$0.symbol == Stock.symbol}) {
+            self.stocks[index] = Stock
+            self.trace("Updating \(Stock.symbol)")
+            self.save()
+        }
+    }
+    
     func add(Stock:Stock?=nil, Stocks:[Stock]?=nil) {
         
         if let stock = Stock {

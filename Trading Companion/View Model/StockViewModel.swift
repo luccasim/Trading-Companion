@@ -17,8 +17,11 @@ final class StockViewModel : ObservableObject {
     @Published var stocks : [Stock] = []
     
     func addStock(Stock:Stock) {
-        self.stockManager.add(Stock: Stock)
-        self.stocks.append(Stock)
+        
+        self.stockManager.update(Stock: Stock)
+        if let index = self.stocks.firstIndex(where: {$0.symbol == Stock.symbol}) {
+            self.stocks[index] = Stock
+        }
     }
     
     private func fetchToDownload() -> [String] {
@@ -45,6 +48,33 @@ final class StockViewModel : ObservableObject {
         self.stocks = self.stockManager.stocks
         self.stockManager.save()
         
+        self.updateList = self.stocks.filter({$0.shouldUpdate})
+        self.updater()
+    }
+    
+    private var timer : Timer?
+    private var updateList : [Stock] = []
+    
+    func updater() {
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (timer) in
+            
+            guard self.updateList.isEmpty == false else {
+                self.timer?.invalidate()
+                return
+            }
+            
+            let stock = self.updateList.removeFirst()
+            
+            self.webService.updateStock(OldStock: stock) { (result) in
+                switch result {
+                case .success(let stock): DispatchQueue.main.async {self.addStock(Stock: stock)}
+                default: break
+                }
+            }
+        }
+        
+        self.timer?.fire()
     }
     
 }
