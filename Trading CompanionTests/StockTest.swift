@@ -25,13 +25,16 @@ class StockTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-//    func testInitFromIBMHistory() throws {
-//    
-//        let data = try Data(contentsOf: self.getSource(FileName: "IBM_history", Extension: "json"))
-//        let details = StockDetail(name: "mock", region: "mock")
-//
-//        XCTAssertNoThrow(try Stock(Symbol:"IBM", DataHistory:data, Details:details))
-//    }
+    func testInit() throws {
+        
+        let data = try Data(contentsOf: self.getSource(FileName: "stocks", Extension: "json"))
+        
+        let decoder = JSONDecoder()
+        
+        let stocks = try decoder.decode([Stock].self, from: data)
+        
+        print(stocks)
+    }
     
     
 }

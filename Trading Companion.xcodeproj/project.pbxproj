@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */; };
+		840CAA3B2477F10D0024DB5B /* stocks.json in Resources */ = {isa = PBXBuildFile; fileRef = 840CAA3A2477F10D0024DB5B /* stocks.json */; };
 		8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C72E246A8F4E00AA342E /* StockCell.swift */; };
 		8412C731246A8F6A00AA342E /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* StockList.swift */; };
 		8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C733246AB8C900AA342E /* StockViewModel.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphavantageWSTests.swift; sourceTree = "<group>"; };
+		840CAA3A2477F10D0024DB5B /* stocks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stocks.json; sourceTree = "<group>"; };
 		8412C72E246A8F4E00AA342E /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		8412C730246A8F6A00AA342E /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
 		8412C733246AB8C900AA342E /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				84B634E8246C3D1B00BB1CA9 /* details_query.txt */,
+				840CAA3A2477F10D0024DB5B /* stocks.json */,
 				84327DCE2471B1A900FE4C87 /* IBM_history.json */,
 				8420503A24727994001CBA9C /* day_history.json */,
 				8420503C247279D4001CBA9C /* meta_history.json */,
@@ -364,6 +367,7 @@
 				847B16E024753F5E0054BE02 /* ibm_global.json in Resources */,
 				8420503B24727994001CBA9C /* day_history.json in Resources */,
 				84327DCB246FDDDA00FE4C87 /* accor_detail.json in Resources */,
+				840CAA3B2477F10D0024DB5B /* stocks.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

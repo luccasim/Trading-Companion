@@ -8,12 +8,11 @@ public class StockManager {
     
     public static let shared = StockManager()
     
-    public let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("StockManager")
+    public let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("stocks.json")
     
     var verbose = true
     
     private var stocksData : [Stock] {
-//        return SRDStocksData.list.map({Stock(symbol: $0, history: nil, detail: nil, global: nil)})
         return SRDStocksData.list.map({Stock(symbol: $0)})
     }
     
@@ -25,7 +24,7 @@ public class StockManager {
     
     func retrive() {
         
-        self.trace("Path \(self.fileURL.path)")
+        self.trace("open \(self.fileURL.path)")
         
         do {
             
@@ -57,9 +56,7 @@ public class StockManager {
     func reset() {
         
         do {
-            
             try FileManager.default.removeItem(at: self.fileURL)
-            
         } catch let error {
             self.trace("Delete() Error -> \(error.localizedDescription)")
         }

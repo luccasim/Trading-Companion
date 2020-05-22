@@ -1,6 +1,6 @@
 import Foundation
 
-struct Stock : Codable, Identifiable {
+struct Stock : Identifiable {
     
     let symbol  : String
         
@@ -11,12 +11,6 @@ struct Stock : Codable, Identifiable {
 }
 
 extension Stock {
-    
-    mutating func update(newStock:Stock) {
-        self.history    = newStock.history
-        self.detail     = newStock.detail
-        self.global     = newStock.global
-    }
     
     var shouldUpdateHistory : Bool {
         return self.history == nil
@@ -53,5 +47,31 @@ extension Stock {
     var name    : String {
         return detail?.name ?? ""
     }
+}
 
+extension Stock : Decodable {
+    
+    enum CodingKeys : CodingKey {
+        case symbol, detail, history, global
+    }
+    
+    init(from decoder:Decoder) throws {
+        
+        let values      = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.symbol     = try values.decode(String.self, forKey: .symbol)
+        self.detail     = try values.decodeIfPresent(StockDetail.self, forKey: .detail)
+        self.history    = try values.decodeIfPresent(StockHistory.self, forKey: .history)
+        self.global     = try values.decodeIfPresent(StockGlobal.self, forKey: .global)
+    }
+    
+    init(from JsonData:Data) throws {
+        let json = JSONDecoder()
+        self = try json.decode(Stock.self, from: JsonData)
+    }
+    
+}
+
+extension Stock : Encodable {
+    
 }
