@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Index" representedClassName=".Index" syncable="YES" codeGenerationType="category">
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Equity" positionX="496.98828125" positionY="-895.8515625" width="128" height="58"/>
+        <element name="Index" positionX="495" positionY="-891" width="128" height="58"/>
+    </elements>
+</model>

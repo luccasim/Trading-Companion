@@ -56,7 +56,7 @@ final class StockViewModel : ObservableObject {
     private var updateList : [Stock] = []
     
     func updater() {
-        
+                
         self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (timer) in
             
             guard self.updateList.isEmpty == false else {
