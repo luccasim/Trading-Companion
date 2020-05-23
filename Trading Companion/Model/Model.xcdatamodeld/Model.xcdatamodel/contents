@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Change" representedClassName=".Change" syncable="YES" codeGenerationType="category">
+        <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="change" inverseEntity="Equity"/>
+    </entity>
     <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
         <attribute name="symbol" optional="YES" attributeType="String"/>
+        <relationship name="change" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Change" inverseName="equity" inverseEntity="Change"/>
+        <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="equity" inverseEntity="History"/>
+        <relationship name="information" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Information" inverseName="equity" inverseEntity="Information"/>
     </entity>
-    <entity name="Index" representedClassName=".Index" syncable="YES" codeGenerationType="category">
+    <entity name="History" representedClassName=".History" syncable="YES" codeGenerationType="category">
+        <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="histories" inverseEntity="Equity"/>
+    </entity>
+    <entity name="Information" representedClassName=".Information" syncable="YES" codeGenerationType="category">
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="information" inverseEntity="Equity"/>
     </entity>
     <elements>
-        <element name="Equity" positionX="496.98828125" positionY="-895.8515625" width="128" height="58"/>
-        <element name="Index" positionX="495" positionY="-891" width="128" height="58"/>
+        <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="103"/>
+        <element name="Information" positionX="128.0546875" positionY="-1047.39453125" width="128" height="73"/>
+        <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="58"/>
+        <element name="History" positionX="539.16015625" positionY="-956.31640625" width="128" height="58"/>
     </elements>
 </model>

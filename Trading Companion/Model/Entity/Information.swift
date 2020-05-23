@@ -9,6 +9,6 @@
 import Foundation
 import CoreData
 
-class Index : NSManagedObject {
+class Information : NSManagedObject {
     
 }

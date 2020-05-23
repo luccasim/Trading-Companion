@@ -13,7 +13,7 @@ class AlphavantageWSTests: XCTestCase {
     
     var ws : AlphavantageService!
     
-    let symbol = "GTT.PA"
+    let symbol = "FCH"
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -29,13 +29,37 @@ class AlphavantageWSTests: XCTestCase {
     
     func testGlobalRequest() throws {
         
-        let request = self.ws.globalRequest(Symbol: "AC.PA")
+//        let request = self.ws.globalRequest(Symbol: self.symbol)
+        let request = self.ws.detailsRequest(Symbol: self.symbol)
         
         guard let url = request.url else {
             return XCTAssertNil(nil)
         }
         
         print(url)
+        
+        let exp = expectation(description: "Read Data")
+        
+        URLSession.shared.dataTask(with: request) { (data, rep, error) in
+            
+            if let data = data {
+                
+                if let str = String(data: data, encoding: .utf8) {
+                    print(str)
+                }
+            }
+            
+            exp.fulfill()
+            
+        }.resume()
+        
+        waitForExpectations(timeout: 30) { (error) in
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+        }
     }
 
     func testGlobalTask() throws {
