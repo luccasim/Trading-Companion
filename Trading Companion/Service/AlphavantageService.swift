@@ -75,7 +75,8 @@ public class AlphavantageService {
     
     public func globalRequest(Symbol:String) -> URLRequest {
         
-        let uri = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(Symbol)&apikey=\(self.key)"
+        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
+        let uri = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(symbol)&apikey=\(self.key)"
         
         let url = URL(string: uri)!
         return URLRequest(url: url)
