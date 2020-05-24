@@ -13,7 +13,7 @@ public class StockManager {
     var verbose = true
     
     private var stocksData : [Stock] {
-        return SRDStocksData.list.map({Stock(symbol: $0)})
+        return EquitiesGroup.SRD.list.map({Stock(symbol: $0)})
     }
     
     private func trace(_ str:String) {

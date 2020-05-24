@@ -11,8 +11,8 @@ import Foundation
 final class StockViewModel : ObservableObject {
     
     private var stockManager    = StockManager.shared
-    private var webService      = AlphavantageService()
-    private var stockList       = SRDStocksData.list
+    private var webService      = AlphavantageWS()
+    private var stockList       = EquitiesGroup.SRD.list
     
     @Published var stocks : [Stock] = []
     

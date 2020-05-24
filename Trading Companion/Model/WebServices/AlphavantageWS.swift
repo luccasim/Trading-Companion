@@ -1,7 +1,7 @@
 import Foundation
 import Combine
 
-public class AlphavantageService {
+public class AlphavantageWS {
     
     let key = "CZA8D69RROESV61Q"
         

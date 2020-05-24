@@ -8,9 +8,16 @@
 
 import Foundation
 
-class SRDStocksData {
+struct EquitiesGroup {
     
-    static let list = [
+    let index   : String
+    let list    : [String]
+    
+}
+
+extension EquitiesGroup {
+    
+    static let SRD = EquitiesGroup(index: "^SBF120", list: [
         "AC.PA",
         "AF.PA",
         "AIR.PA",
@@ -35,5 +42,5 @@ class SRDStocksData {
         "UBI.PA",
         "DG.PA",
         "NXI.PA"
-    ]
+    ])
 }

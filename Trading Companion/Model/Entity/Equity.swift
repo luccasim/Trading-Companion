@@ -12,7 +12,7 @@ import CoreData
 class Equity : NSManagedObject {
     
     static var resetEquities : [Equity] {
-        return SRDStocksData.list.map { str in
+        return EquitiesGroup.SRD.list.map { str in
             let equity = Equity(context: AppDelegate.viewContext)
             equity.symbol = str
             return equity
