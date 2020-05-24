@@ -27,12 +27,9 @@ class InformationTests: XCTestCase {
         
         let data = try Data(contentsOf: self.getSource(fileName: "accor_information", fileExtension: "json"))
         
-        let information = try Information.with(AlphavantageData: data)
+        let information = try Information.from(AlphavantageData: data)
         
-        XCTAssertNotNil(information.reponse)
-        
-        if let reponse = information.reponse {
-            print(reponse)
-        }
+        XCTAssertNotNil(information.region)
+        print(information.description)
     }
 }
