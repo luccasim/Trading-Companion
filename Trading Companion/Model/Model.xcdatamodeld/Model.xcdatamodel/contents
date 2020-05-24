@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Change" representedClassName=".Change" syncable="YES" codeGenerationType="category">
+        <attribute name="change" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="high" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lastDay" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="low" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="open" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="percent" optional="YES" attributeType="String"/>
+        <attribute name="previousClose" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+        <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="change" inverseEntity="Equity"/>
     </entity>
     <entity name="Equity" representedClassName=".Equity" parentEntity="Index" syncable="YES" codeGenerationType="category">
@@ -31,7 +41,7 @@
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="information" inverseEntity="Equity"/>
     </entity>
     <elements>
-        <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="58"/>
+        <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="208"/>
         <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="118"/>
         <element name="History" positionX="539.16015625" positionY="-956.31640625" width="128" height="148"/>
         <element name="Index" positionX="350.375" positionY="-1186.19140625" width="128" height="58"/>
