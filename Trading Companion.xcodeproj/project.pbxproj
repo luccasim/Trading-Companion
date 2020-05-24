@@ -27,6 +27,7 @@
 		84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* IBM_history.json */; };
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
+		843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F7247AAF790091D853 /* HistoryTests.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
 		8465CFD6246984C5000290A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD5246984C5000290A8 /* ContentView.swift */; };
@@ -84,6 +85,7 @@
 		84327DCE2471B1A900FE4C87 /* IBM_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = IBM_history.json; sourceTree = "<group>"; };
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
+		843CC5F7247AAF790091D853 /* HistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTests.swift; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8465CFD3246984C5000290A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				843CC5F5247A86760091D853 /* InformationTests.swift */,
+				843CC5F7247AAF790091D853 /* HistoryTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */,
 				842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */,
 				840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */,
+				843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
