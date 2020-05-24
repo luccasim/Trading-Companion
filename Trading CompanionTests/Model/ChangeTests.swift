@@ -27,7 +27,7 @@ class ChangeTests: XCTestCase {
         
         let data = try Data(contentsOf: self.get(FileName: "ibm_change", FileExtension: "json"))
         
-        let change = try Change.with(AlphavantageData: data)
+        let change = try Change.from(AlphavantageData: data)
         
         print(change)
     }
