@@ -158,7 +158,8 @@ public class AlphavantageWS {
     
     public func detailsRequest(Symbol:String) -> URLRequest {
         
-        let uri = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=\(Symbol)&apikey=\(self.key)"
+        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
+        let uri = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=\(symbol)&apikey=\(self.key)"
         
         let url = URL(string: uri)!
         return URLRequest(url: url)

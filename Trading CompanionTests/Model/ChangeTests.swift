@@ -29,6 +29,7 @@ class ChangeTests: XCTestCase {
         
         let change = try Change.from(AlphavantageData: data)
         
+        XCTAssertNotNil(change.lastDay)
         print(change)
     }
 }

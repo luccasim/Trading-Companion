@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */; };
-		840CAA3B2477F10D0024DB5B /* stocks.json in Resources */ = {isa = PBXBuildFile; fileRef = 840CAA3A2477F10D0024DB5B /* stocks.json */; };
+		840CAA3B2477F10D0024DB5B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 840CAA3A2477F10D0024DB5B /* information.json */; };
 		840D5FF32479B3D400309500 /* Equity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF22479B3D400309500 /* Equity.swift */; };
 		840D5FF62479B9C400309500 /* Information.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF52479B9C400309500 /* Information.swift */; };
 		840D5FF82479C34100309500 /* EquityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF72479C34100309500 /* EquityTests.swift */; };
@@ -65,7 +65,7 @@
 
 /* Begin PBXFileReference section */
 		840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphavantageWSTests.swift; sourceTree = "<group>"; };
-		840CAA3A2477F10D0024DB5B /* stocks.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stocks.json; sourceTree = "<group>"; };
+		840CAA3A2477F10D0024DB5B /* information.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
 		840D5FF22479B3D400309500 /* Equity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equity.swift; sourceTree = "<group>"; };
 		840D5FF52479B9C400309500 /* Information.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Information.swift; sourceTree = "<group>"; };
 		840D5FF72479C34100309500 /* EquityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityTests.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				84327DCE2471B1A900FE4C87 /* ibm_history.json */,
 				84327DCA246FDDDA00FE4C87 /* accor_information.json */,
 				847B16DF24753F5E0054BE02 /* ibm_change.json */,
-				840CAA3A2477F10D0024DB5B /* stocks.json */,
+				840CAA3A2477F10D0024DB5B /* information.json */,
 			);
 			path = Ressources;
 			sourceTree = "<group>";
@@ -412,7 +412,7 @@
 				84327DCF2471B1A900FE4C87 /* ibm_history.json in Resources */,
 				847B16E024753F5E0054BE02 /* ibm_change.json in Resources */,
 				84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */,
-				840CAA3B2477F10D0024DB5B /* stocks.json in Resources */,
+				840CAA3B2477F10D0024DB5B /* information.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

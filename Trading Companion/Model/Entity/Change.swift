@@ -58,6 +58,8 @@ fileprivate extension String {
     }
     
     var toDate : Date? {
-        return DateFormatter().date(from: self)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self)
     }
 }

@@ -9,21 +9,9 @@
 import Foundation
 import CoreData
 
-class History : NSManagedObject {
+class History : NSManagedObject, Codable {
     
-}
-
-extension History {
-    
-    enum Errors : Error {
-        case jsonSerialization
-        case historyToDictonary
-    }
-    
-    enum Keys : String {
-        case meta       = "Meta Data"
-        case daily      = "Time Series (Daily)"
-        
+    enum Keys : String, CodingKey {
         case open       = "1. open"
         case high       = "2. high"
         case low        = "3. low"
@@ -31,43 +19,72 @@ extension History {
         case volume     = "5. volume"
     }
     
-    static func with(AlphavantageData data:Data) throws -> [History] {
+    required convenience init(from decoder: Decoder) throws {
         
-        let json = try JSONSerialization.jsonObject(with: data, options: [])
-        
-        guard let dict = json as? [String:Any] else {
-            throw Errors.jsonSerialization
-        }
-        
-        guard let daily = dict[Keys.daily.rawValue] as? [String:Any] else {
-            throw Errors.historyToDictonary
-        }
-        
-        var histories : [History] = []
-        
-        daily.forEach({ dict in
-            
-            let key = dict.key
-            
-            if let value = dict.value as? [String:Any] {
+        let container   = try decoder.container(keyedBy: Keys.self)
                 
-                let history = History(context: AppDelegate.viewContext)
-                
-                let formater = DateFormatter()
-                formater.dateFormat = "yyyy-MM-dd"
-                
-                history.date = formater.date(from: key)
-                history.open = Double(value[Keys.open.rawValue] as? String ?? "0") ?? 0
-                history.high = Double(value[Keys.high.rawValue] as? String ?? "0") ?? 0
-                history.close = Double(value[Keys.close.rawValue] as? String ?? "0") ?? 0
-                history.low = Double(value[Keys.low.rawValue] as? String ?? "0") ?? 0
-                history.volume = Double(value[Keys.volume.rawValue] as? String ?? "0") ?? 0
-                
-                histories.append(history)
-            }
-        })
-            
-        return histories
+        self.init(context:AppDelegate.viewContext)
+
+        self.open = try container.decode(String.self, forKey: .open).toDouble
+        self.high = try container.decode(String.self, forKey: .high).toDouble
+        self.low  = try container.decode(String.self, forKey: .low).toDouble
+        self.close = try container.decode(String.self, forKey: .close).toDouble
+        self.volume = try container.decode(String.self, forKey: .volume).toDouble
     }
     
+    struct Wrapper : Codable {
+        
+        let history : [History]
+        
+        enum Keys: String, CodingKey {
+            case history = "Time Series (Daily)"
+        }
+        
+        init(from decoder:Decoder) throws {
+            
+            let container = try decoder.container(keyedBy: Keys.self)
+            
+            let nested = try container.nestedContainer(keyedBy: DynamicKey.self, forKey: .history)
+            
+            var histories = [History]()
+            
+            nested.allKeys.forEach { (key) in
+                if let history = try? nested.decode(History.self, forKey: key) {
+                    history.date = key.stringValue.toDate
+                    histories.append(history)
+                }
+            }
+            self.history = histories
+        }
+    }
+    
+    static func from(AlphavantageData data:Data) throws -> [History] {
+        
+        let decoder = JSONDecoder()
+        let wrapper = try decoder.decode(Wrapper.self, from: data)
+        
+        return wrapper.history
+    }
+}
+
+fileprivate extension String {
+    
+    var toDouble : Double {
+        return Double(self) ?? 0
+    }
+    
+    var toDate : Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: self)
+    }
+}
+
+struct DynamicKey : CodingKey {
+    
+    var intValue: Int?
+    var stringValue: String
+
+    init?(intValue: Int) {self.intValue = intValue ;self.stringValue = ""}
+    init?(stringValue:String){self.stringValue = stringValue}
 }
