@@ -17,14 +17,18 @@
         <relationship name="equities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Equity" inverseName="index" inverseEntity="Equity"/>
     </entity>
     <entity name="Information" representedClassName=".Information" syncable="YES" codeGenerationType="category">
+        <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="region" optional="YES" attributeType="String"/>
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="information" inverseEntity="Equity"/>
     </entity>
     <elements>
         <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="58"/>
         <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="118"/>
         <element name="History" positionX="539.16015625" positionY="-956.31640625" width="128" height="58"/>
-        <element name="Information" positionX="128.0546875" positionY="-1047.39453125" width="128" height="73"/>
         <element name="Index" positionX="350.375" positionY="-1186.19140625" width="128" height="58"/>
+        <element name="Information" positionX="128.0546875" positionY="-1047.39453125" width="128" height="133"/>
     </elements>
 </model>

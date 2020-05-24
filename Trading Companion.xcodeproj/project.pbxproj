@@ -22,10 +22,11 @@
 		842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842050372472747C001CBA9C /* StockHistoryTests.swift */; };
 		8420503B24727994001CBA9C /* day_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503A24727994001CBA9C /* day_history.json */; };
 		8420503D247279D4001CBA9C /* meta_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 8420503C247279D4001CBA9C /* meta_history.json */; };
-		84327DCB246FDDDA00FE4C87 /* accor_detail.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor_detail.json */; };
+		84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor_information.json */; };
 		84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84327DCC2471AAD900FE4C87 /* StockTest.swift */; };
 		84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* IBM_history.json */; };
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
+		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
 		8465CFD6246984C5000290A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD5246984C5000290A8 /* ContentView.swift */; };
@@ -42,7 +43,6 @@
 		84B472062479B01E00DDFCBF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84B472042479B01E00DDFCBF /* Model.xcdatamodeld */; };
 		84B634E7246C3D1300BB1CA9 /* StockDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B634E6246C3D1300BB1CA9 /* StockDetail.swift */; };
 		84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B634E9246C477100BB1CA9 /* StockDetailTests.swift */; };
-		84B634EC246D0F1400BB1CA9 /* details_query.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84B634E8246C3D1B00BB1CA9 /* details_query.txt */; };
 		84C6429C2479DF3400AB5E7D /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C6429B2479DF3400AB5E7D /* Index.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,10 +79,11 @@
 		842050372472747C001CBA9C /* StockHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryTests.swift; sourceTree = "<group>"; };
 		8420503A24727994001CBA9C /* day_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = day_history.json; sourceTree = "<group>"; };
 		8420503C247279D4001CBA9C /* meta_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meta_history.json; sourceTree = "<group>"; };
-		84327DCA246FDDDA00FE4C87 /* accor_detail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = accor_detail.json; sourceTree = "<group>"; };
+		84327DCA246FDDDA00FE4C87 /* accor_information.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = accor_information.json; sourceTree = "<group>"; };
 		84327DCC2471AAD900FE4C87 /* StockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTest.swift; sourceTree = "<group>"; };
 		84327DCE2471B1A900FE4C87 /* IBM_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = IBM_history.json; sourceTree = "<group>"; };
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
+		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8465CFD3246984C5000290A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		847B16E3247540A70054BE02 /* StockGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockGlobal.swift; sourceTree = "<group>"; };
 		84B472052479B01E00DDFCBF /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		84B634E6246C3D1300BB1CA9 /* StockDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetail.swift; sourceTree = "<group>"; };
-		84B634E8246C3D1B00BB1CA9 /* details_query.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = details_query.txt; sourceTree = "<group>"; };
 		84B634E9246C477100BB1CA9 /* StockDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailTests.swift; sourceTree = "<group>"; };
 		84C6429B2479DF3400AB5E7D /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,15 +154,22 @@
 		84205039247274ED001CBA9C /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				84B634E8246C3D1B00BB1CA9 /* details_query.txt */,
 				840CAA3A2477F10D0024DB5B /* stocks.json */,
 				84327DCE2471B1A900FE4C87 /* IBM_history.json */,
 				8420503A24727994001CBA9C /* day_history.json */,
 				8420503C247279D4001CBA9C /* meta_history.json */,
-				84327DCA246FDDDA00FE4C87 /* accor_detail.json */,
+				84327DCA246FDDDA00FE4C87 /* accor_information.json */,
 				847B16DF24753F5E0054BE02 /* ibm_global.json */,
 			);
 			path = Ressources;
+			sourceTree = "<group>";
+		};
+		843CC5F4247A85C90091D853 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				843CC5F5247A86760091D853 /* InformationTests.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8465CFC5246984C5000290A8 = {
@@ -214,6 +221,7 @@
 		8465CFE7246984C6000290A8 /* Trading CompanionTests */ = {
 			isa = PBXGroup;
 			children = (
+				843CC5F4247A85C90091D853 /* Model */,
 				84327DCC2471AAD900FE4C87 /* StockTest.swift */,
 				843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */,
 				840D5FF72479C34100309500 /* EquityTests.swift */,
@@ -403,10 +411,9 @@
 			files = (
 				8420503D247279D4001CBA9C /* meta_history.json in Resources */,
 				84327DCF2471B1A900FE4C87 /* IBM_history.json in Resources */,
-				84B634EC246D0F1400BB1CA9 /* details_query.txt in Resources */,
 				847B16E024753F5E0054BE02 /* ibm_global.json in Resources */,
 				8420503B24727994001CBA9C /* day_history.json in Resources */,
-				84327DCB246FDDDA00FE4C87 /* accor_detail.json in Resources */,
+				84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */,
 				840CAA3B2477F10D0024DB5B /* stocks.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +460,7 @@
 			files = (
 				84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */,
 				843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */,
+				843CC5F6247A86760091D853 /* InformationTests.swift in Sources */,
 				847B16E224753F940054BE02 /* StockGlobalTests.swift in Sources */,
 				840D5FF82479C34100309500 /* EquityTests.swift in Sources */,
 				84B634EA246C477100BB1CA9 /* StockDetailTests.swift in Sources */,
