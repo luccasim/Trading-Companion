@@ -9,6 +9,35 @@
 import Foundation
 import CoreData
 
-class Index: NSManagedObject {
+public class Index: Equity {
 
+    private static var resetIndex : Index {
+    
+        let reset = Index(context: AppDelegate.viewContext)
+        
+        let equities = EquitiesGroup.SRD.list.map { symbol -> Equity in
+            let eq = Equity(context: AppDelegate.viewContext)
+            eq.symbol = symbol
+            eq.index = reset
+            return eq
+        }
+        
+        reset.equities?.addingObjects(from: equities)
+        reset.symbol = EquitiesGroup.SRD.index
+        return reset
+    }
+    
+    static var main : Index {
+        
+        let value = EquitiesGroup.SRD.index
+        
+        let request : NSFetchRequest<Index> = Index.fetchRequest()
+        request.predicate = NSPredicate(format: "symbol = %@", value)
+    
+        if let result = try? AppDelegate.viewContext.fetch(request), let index = result.first {
+            return index
+        }
+        
+        return resetIndex
+    }
 }

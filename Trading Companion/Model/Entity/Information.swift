@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class Information : NSManagedObject, Codable {
+public class Information : NSManagedObject, Codable {
         
     enum Keys : String, CodingKey {
         case symbol     = "1. symbol"
@@ -23,7 +23,7 @@ class Information : NSManagedObject, Codable {
         case score      = "9. matchScore"
     }
     
-    required convenience init(from decoder: Decoder) throws {
+    required convenience public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: Keys.self)
         

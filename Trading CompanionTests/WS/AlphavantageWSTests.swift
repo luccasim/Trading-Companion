@@ -13,7 +13,7 @@ class AlphavantageWSTests: XCTestCase {
     
     var ws : AlphavantageWS!
     
-    let symbol = "^SBF120"
+    let symbol = "AC.PA"
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -30,17 +30,18 @@ class AlphavantageWSTests: XCTestCase {
     func testGlobalRequest() throws {
         
         let request = self.ws.globalRequest(Symbol: self.symbol)
-//        let request = self.ws.detailsRequest(Symbol: self.symbol)
         
-        guard let url = request.url else {
-            return XCTAssertNil(nil)
+        if let url = request.url {
+            print(url)
         }
-        
-        print(url)
         
         let exp = expectation(description: "Read Data")
         
         URLSession.shared.dataTask(with: request) { (data, rep, error) in
+            
+            if let error = error {
+                print(error)
+            }
             
             if let data = data {
                 
@@ -54,11 +55,6 @@ class AlphavantageWSTests: XCTestCase {
         }.resume()
         
         waitForExpectations(timeout: 30) { (error) in
-            
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
         }
     }
 
@@ -89,15 +85,46 @@ class AlphavantageWSTests: XCTestCase {
         }
     }
     
+    func testHistoryRequest() throws {
+        
+        let request = self.ws.historyRequest(Symbol: self.symbol)
+        
+        if let url = request.url {
+            print(url)
+        }
+        
+        let exp = expectation(description: "Read Data")
+        
+        URLSession.shared.dataTask(with: request) { (data, rep, error) in
+            
+            if let error = error {
+                print(error)
+            }
+            
+            if let data = data {
+                
+                if let str = String(data: data, encoding: .utf8) {
+                    print(str)
+                }
+            }
+            
+            exp.fulfill()
+            
+        }.resume()
+        
+        waitForExpectations(timeout: 30) { (error) in
+        }
+    }
+    
     func testHistoryTask() throws {
         
         let wsexpectation = expectation(description: "History Task")
-        var stock : StockHistory?
+        var res : Data?
         
         self.ws.historyTask(Name: self.symbol) { (result) in
             
             switch result {
-            case .success(let rep): stock = rep
+            case .success(let data): res = data
             default: break
             }
             
@@ -105,15 +132,51 @@ class AlphavantageWSTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 30) { (error) in
-            XCTAssertNotNil(stock)
-            print("History Task for \(self.symbol) :\n \(stock!)")
+        }
+        
+        XCTAssertNotNil(res)
+        
+        if let historyData = res {
+            let history = try! History.from(AlphavantageData:historyData)
+            print(history)
+        }
+    }
+    
+    func testDetailRequest() throws {
+        
+        let request = self.ws.detailsRequest(Symbol: self.symbol)
+        
+        if let url = request.url {
+            print(url)
+        }
+        
+        let exp = expectation(description: "Read Data")
+        
+        URLSession.shared.dataTask(with: request) { (data, rep, error) in
+            
+            if let error = error {
+                print(error)
+            }
+            
+            if let data = data {
+                
+                if let str = String(data: data, encoding: .utf8) {
+                    print(str)
+                }
+            }
+            
+            exp.fulfill()
+            
+        }.resume()
+        
+        waitForExpectations(timeout: 30) { (error) in
         }
     }
     
     func testDetailTask() throws {
         
         let wsexpectation = expectation(description: "Detail Task")
-        var stock : StockDetail?
+        var stock : Data?
         
         self.ws.detailsTask(Symbol: self.symbol) { (result) in
             
@@ -126,8 +189,13 @@ class AlphavantageWSTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 30) { (error) in
-            XCTAssertNotNil(stock)
-            print("History Task for \(self.symbol) :\n \(stock!)")
+        }
+        
+        XCTAssertNotNil(stock)
+        
+        if let detailData = stock {
+            let information = try Information.from(AlphavantageData: detailData)
+            print(information)
         }
     }
 

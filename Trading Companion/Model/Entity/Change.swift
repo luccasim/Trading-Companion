@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class Change : NSManagedObject, Codable {
+public class Change : NSManagedObject, Codable {
     
     enum Keys : String, CodingKey {
         case global     = "Global Quote"
@@ -27,7 +27,7 @@ class Change : NSManagedObject, Codable {
         case percent    = "10. change percent"
     }
     
-    required convenience init(from decoder: Decoder) throws {
+    required convenience public init(from decoder: Decoder) throws {
         
         let container   = try decoder.container(keyedBy: Keys.self)
         let nested      = try container.nestedContainer(keyedBy: Keys.self, forKey: .global)

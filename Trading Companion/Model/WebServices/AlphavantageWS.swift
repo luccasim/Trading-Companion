@@ -44,7 +44,7 @@ public class AlphavantageWS {
                 
                 self.detailsTask(Symbol: OldStock.symbol) { (result) in
                     switch result {
-                    case .success(let detail): details = detail
+                    case .success(let detail): details = try! StockDetail(FromData: detail)
                     case .failure(let error): print("[\(OldStock.symbol)] Detail Task Error : \(error.localizedDescription)")
                     }
                     self.group.leave()
@@ -58,7 +58,7 @@ public class AlphavantageWS {
                 
                 self.historyTask(Name: OldStock.symbol) { (result) in
                     switch result {
-                    case .success(let history): histories = history
+                    case .success(let history): histories = try! StockHistory(fromAlphavantage: history)
                     case .failure(let error): print("[\(OldStock.symbol)] History Task Error : \(error.localizedDescription)")
                     }
                     self.group.leave()
@@ -93,15 +93,23 @@ public class AlphavantageWS {
             }
             
             if let data = data {
+                
+                if let str = String(data: data, encoding: .utf8) {
+                    if str.contains("Error Message") || str.contains("Note") {
+                        return Completion(.failure(APIError.unvalidSymbolName))
+                    }
+                }
+                
                 return Completion(.success(data))
             }
             
         }.resume()
     }
     
-    public func historyRequest(Name:String) -> URLRequest {
+    public func historyRequest(Symbol:String) -> URLRequest {
         
-        let uri = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(Name)&apikey=\(self.key)"
+        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
+        let uri = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(symbol)&apikey=\(self.key)"
         
         let url = URL(string: uri)!
         return URLRequest(url: url)
@@ -109,9 +117,9 @@ public class AlphavantageWS {
     
     var historySession : URLSession?
     
-    func historyTask(Name:String, Completion:@escaping ((Result<StockHistory,Error>) -> Void)) {
+    func historyTask(Name:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
                 
-        let request = self.historyRequest(Name: Name)
+        let request = self.historyRequest(Symbol: Name)
         self.historySession = URLSession(configuration: .default)
                 
         self.historySession?.dataTask(with:request) { (data, reponse, error) in
@@ -124,22 +132,14 @@ public class AlphavantageWS {
             if let data = data {
                 
                 if let str = String(data: data, encoding: .utf8) {
-                    
-                    if str.contains("Error Message") {
+                    if str.contains("Error Message") || str.contains("Note") {
                         return Completion(.failure(APIError.unvalidSymbolName))
                     }
                 }
                 
-                do {
-                    
-                    let history = try StockHistory(fromAlphavantage: data)
-                    return Completion(.success(history))
-                    
-                } catch let error {
-                    return Completion(.failure(error))
-                }
-                
+                return Completion(.success(data))
             }
+            
         }.resume()
     }
     
@@ -154,7 +154,7 @@ public class AlphavantageWS {
         return URLRequest(url: url)
     }
     
-    func detailsTask(Symbol:String, Completion:@escaping ((Result<StockDetail,Error>) -> Void)) {
+    func detailsTask(Symbol:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
         
         self.detailSession = URLSession(configuration: .default)
         let request = self.detailsRequest(Symbol: Symbol)
@@ -168,20 +168,12 @@ public class AlphavantageWS {
             if let data = data {
                 
                 if let str = String(data: data, encoding: .utf8) {
-                    
-                    if str.contains("Error Message") {
+                    if str.contains("Error Message") || str.contains("Note") {
                         return Completion(.failure(APIError.unvalidSymbolName))
                     }
-                    
-                    do {
-                        
-                        let details = try StockDetail(FromData: data)
-                        Completion(.success(details))
-                        
-                    } catch let error {
-                        Completion(.failure(error))
-                    }
                 }
+                
+                return Completion(.success(data))
             }
         }.resume()
     }

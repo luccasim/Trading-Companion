@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class Equity : NSManagedObject {
+public class Equity : NSManagedObject {
     
     static var resetEquities : [Equity] {
         return EquitiesGroup.SRD.list.map { str in

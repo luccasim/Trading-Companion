@@ -13,7 +13,7 @@
         <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="change" inverseEntity="Equity"/>
     </entity>
-    <entity name="Equity" representedClassName=".Equity" parentEntity="Index" syncable="YES" codeGenerationType="category">
+    <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
         <attribute name="symbol" optional="YES" attributeType="String"/>
         <relationship name="change" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Change" inverseName="equity" inverseEntity="Change"/>
         <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="equity" inverseEntity="History"/>
@@ -29,7 +29,7 @@
         <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="histories" inverseEntity="Equity"/>
     </entity>
-    <entity name="Index" representedClassName=".Index" syncable="YES" codeGenerationType="category">
+    <entity name="Index" representedClassName=".Index" parentEntity="Equity" syncable="YES" codeGenerationType="category">
         <relationship name="equities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Equity" inverseName="index" inverseEntity="Equity"/>
     </entity>
     <entity name="Information" representedClassName=".Information" syncable="YES" codeGenerationType="category">
@@ -44,7 +44,7 @@
         <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="208"/>
         <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="118"/>
         <element name="History" positionX="539.16015625" positionY="-956.31640625" width="128" height="148"/>
-        <element name="Index" positionX="350.375" positionY="-1186.19140625" width="128" height="58"/>
+        <element name="Index" positionX="539.69140625" positionY="-1133.55859375" width="128" height="58"/>
         <element name="Information" positionX="128.0546875" positionY="-1047.39453125" width="128" height="133"/>
     </elements>
 </model>

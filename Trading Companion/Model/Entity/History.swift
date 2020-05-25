@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class History : NSManagedObject, Codable {
+public class History : NSManagedObject, Codable {
     
     enum Keys : String, CodingKey {
         case open       = "1. open"
@@ -19,7 +19,7 @@ class History : NSManagedObject, Codable {
         case volume     = "5. volume"
     }
     
-    required convenience init(from decoder: Decoder) throws {
+    required convenience public init(from decoder: Decoder) throws {
         
         let container   = try decoder.container(keyedBy: Keys.self)
                 
