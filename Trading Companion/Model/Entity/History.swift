@@ -43,7 +43,6 @@ class History : NSManagedObject, Codable {
         init(from decoder:Decoder) throws {
             
             let container = try decoder.container(keyedBy: Keys.self)
-            
             let nested = try container.nestedContainer(keyedBy: DynamicKey.self, forKey: .history)
             
             var histories = [History]()

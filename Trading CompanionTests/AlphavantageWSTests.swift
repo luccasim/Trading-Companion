@@ -65,12 +65,12 @@ class AlphavantageWSTests: XCTestCase {
     func testGlobalTask() throws {
         
         let wsexpectation = expectation(description: "Global Task")
-        var globalResult : StockGlobal?
+        var res : Data?
         
         self.ws.globalTask(Symbol: self.symbol) { (result) in
             
             switch result {
-            case .success(let global): globalResult = global
+            case .success(let data): res = data
             default: break
             }
             
@@ -78,8 +78,14 @@ class AlphavantageWSTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 30) { (error) in
-            XCTAssertNotNil(globalResult)
-            print(globalResult!)
+            
+        }
+        
+        XCTAssertNotNil(res)
+        
+        if let changeData = res {
+            let change = try Change.from(AlphavantageData: changeData)
+            print(change)
         }
     }
     

@@ -31,7 +31,7 @@ public class AlphavantageWS {
             
             self.globalTask(Symbol: OldStock.symbol) { (result) in
                 switch result {
-                case .success(let global): globals = global
+                case .success(let data): globals = try! StockGlobal(fromData: data)
                 case .failure(let error): print("[\(OldStock.symbol)] Global Task Error : \(error.localizedDescription)")
                 }
                 self.group.leave()
@@ -81,30 +81,19 @@ public class AlphavantageWS {
         let url = URL(string: uri)!
         return URLRequest(url: url)
     }
-    
-    var globalSession : URLSession?
-    
-    func globalTask(Symbol:String, Completion:@escaping ((Result<StockGlobal,Error>) -> Void)) {
+        
+    func globalTask(Symbol:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
         
         let request = self.globalRequest(Symbol: Symbol)
-        self.globalSession = URLSession(configuration: .default)
                 
-        self.globalSession?.dataTask(with: request) { (data, rep, error) in
+        URLSession(configuration: .default).dataTask(with: request) { (data, rep, error) in
             
             if let error = error {
                 return Completion(.failure(error))
             }
             
             if let data = data {
-                
-                do {
-                    
-                    let global = try StockGlobal(fromData: data)
-                    Completion(.success(global))
-                    
-                } catch let error {
-                    return Completion(.failure(error))
-                }
+                return Completion(.success(data))
             }
             
         }.resume()
