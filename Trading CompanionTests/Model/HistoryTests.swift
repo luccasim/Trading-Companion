@@ -10,26 +10,42 @@ import XCTest
 @testable import Trading_Companion
 
 class HistoryTests: XCTestCase {
+    
+    var history : History!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.history = History(context: AppDelegate.viewContext)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        self.history = nil
     }
     
-    private func get(FileName:String,FileExtension:String) -> URL! {
-        return Bundle(for: type(of: self)).url(forResource: FileName, withExtension: FileExtension)
+    func testInit() {
+        
+        XCTAssertNotNil(self.history)
+        
+        print(self.history.description)
     }
     
     func testInitFormAlphavantage() throws {
         
-        let data        = try Data(contentsOf: self.get(FileName: "ibm_history", FileExtension: "json"))
-        let histories   = try History.from(AlphavantageData: data)
+        let data        = self.dataRessourse(fileName: "ibm_history", fileExtension: "json")
+        let reponse     = try AlphavantageWS.HistoryReponse.from(AlphavantageData: data)
         
-        XCTAssertNotNil(histories.first?.date)
-        print(histories)
+        self.history.set(fromAlphavantage: reponse[0])
+        
+        XCTAssertNotNil(self.history.date)
+        XCTAssertNotNil(self.history.open)
+        XCTAssertNotNil(self.history.close)
+        XCTAssertNotNil(self.history.high)
+        XCTAssertNotNil(self.history.low)
+        XCTAssertNotNil(self.history.volume)
+        
+        print(self.history.description)
+        
     }
 
 }

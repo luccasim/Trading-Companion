@@ -137,7 +137,7 @@ class AlphavantageWSTests: XCTestCase {
         XCTAssertNotNil(res)
         
         if let historyData = res {
-            let history = try! History.from(AlphavantageData:historyData)
+            let history = try! AlphavantageWS.HistoryReponse.from(AlphavantageData:historyData)
             print(history)
         }
     }
