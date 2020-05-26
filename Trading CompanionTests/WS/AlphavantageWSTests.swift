@@ -194,7 +194,7 @@ class AlphavantageWSTests: XCTestCase {
         XCTAssertNotNil(stock)
         
         if let detailData = stock {
-            let information = try Information.from(AlphavantageData: detailData)
+            let information = try Information.Reponse(from: detailData)
             print(information)
         }
     }

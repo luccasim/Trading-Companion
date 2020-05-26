@@ -28,7 +28,10 @@ class ChangeTests: XCTestCase {
     }
     
     func testInit() throws {
+        
         XCTAssertNotNil(self.change)
+        
+        print(self.change.description)
     }
     
     func testSetFromAlphavantage() throws {
