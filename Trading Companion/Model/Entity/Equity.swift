@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-public class Equity : NSManagedObject {
+public class Equity : NSManagedObject, Identifiable {
     
     static var resetEquities : [Equity] {
         return EquitiesGroup.SRD.list.map { str in
@@ -28,4 +28,35 @@ public class Equity : NSManagedObject {
         }
     }
     
+    func updateInformation(json:AlphavantageWS.InformationReponse) {
+        self.information?.set(fromAlphavantage: json)
+    }
+        
+    var shouldUpdateChange : Bool {
+        return self.change == nil
+    }
+    
+    var shouldUpdateInformation : Bool {
+        return self.information == nil
+    }
+    
+}
+
+extension Equity : EquityListView {
+    
+    var little: String {
+        return self.symbol?.components(separatedBy: ".").first ?? self.symbol ?? ""
+    }
+    
+    var name: String {
+        return self.information?.name ?? ""
+    }
+    
+    var close: String {
+        return self.change?.previousClose.description ?? ""
+    }
+    
+    var support: String {
+        return ""
+    }
 }

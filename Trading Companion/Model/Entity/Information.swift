@@ -11,7 +11,7 @@ import CoreData
 
 public class Information : NSManagedObject {
         
-    func set(fromAlphavantage reponse:Information.Reponse) {
+    func set(fromAlphavantage reponse:AlphavantageWS.InformationReponse) {
         
         self.symbol     = reponse.symbol
         self.name       = reponse.name
@@ -21,9 +21,9 @@ public class Information : NSManagedObject {
     }
 }
 
-extension Information {
+extension AlphavantageWS {
     
-    struct Reponse : Codable {
+    struct InformationReponse : Codable {
         
         let symbol  : String
         let name    : String
@@ -56,7 +56,7 @@ extension Information {
         
         private struct Wrapper : Codable {
             
-            let matches : [Reponse]
+            let matches : [InformationReponse]
             
             enum CodingKeys: String, CodingKey {
                 case matches = "bestMatches"

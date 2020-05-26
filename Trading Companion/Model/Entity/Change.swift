@@ -11,7 +11,7 @@ import CoreData
 
 public class Change : NSManagedObject {
     
-    func set(from reponse:Change.Alphavantage) {
+    func set(from reponse:AlphavantageWS.GlobalReponse) {
         
         self.symbol         = reponse.symbol
         self.open           = reponse.open.toDouble
@@ -27,9 +27,9 @@ public class Change : NSManagedObject {
     }
 }
 
-extension Change {
+extension AlphavantageWS {
     
-    struct Alphavantage : Codable {
+    struct GlobalReponse : Codable {
         
         let symbol      : String
         let open        : String
@@ -78,7 +78,7 @@ extension Change {
         }
         
         init(from data:Data) throws {
-            self = try JSONDecoder().decode(Alphavantage.self, from: data)
+            self = try JSONDecoder().decode(GlobalReponse.self, from: data)
         }
     }
 }

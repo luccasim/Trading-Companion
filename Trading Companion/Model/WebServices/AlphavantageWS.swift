@@ -18,60 +18,78 @@ public class AlphavantageWS {
     let dlqueue = DispatchQueue(label: "Download stock List")
     let group   = DispatchGroup()
     
-    func updateStock(OldStock:Stock, Completion:@escaping((Result<Stock,Error>)->Void)) {
+    func update(Equity eq:Equity, Completion:@escaping((Result<AlphavantageWS.InformationReponse,Error>)->Void)) {
         
-        dlqueue.async {
-            
-            var details : StockDetail?
-            var histories : StockHistory?
-            var globals : StockGlobal?
-            
-            self.group.enter()
-            print("Start Global Task")
-            
-            self.globalTask(Symbol: OldStock.symbol) { (result) in
+        if eq.shouldUpdateInformation {
+            self.detailsTask(Symbol: eq.symbol!) { (result) in
+                
                 switch result {
-                case .success(let data): globals = try! StockGlobal(fromData: data)
-                case .failure(let error): print("[\(OldStock.symbol)] Global Task Error : \(error.localizedDescription)")
-                }
-                self.group.leave()
-            }
-            
-            if OldStock.shouldUpdateDetail {
-                
-                self.group.enter()
-                print("Start Details Task")
-                
-                self.detailsTask(Symbol: OldStock.symbol) { (result) in
-                    switch result {
-                    case .success(let detail): details = try! StockDetail(FromData: detail)
-                    case .failure(let error): print("[\(OldStock.symbol)] Detail Task Error : \(error.localizedDescription)")
+                case .success(let data):
+                    do {
+                        let reponse = try AlphavantageWS.InformationReponse(from: data)
+                        Completion(.success(reponse))
+                    } catch let error {
+                        print(error.localizedDescription)
                     }
-                    self.group.leave()
+                default: break
                 }
-            }
-            
-            if OldStock.shouldUpdateHistory {
                 
-                self.group.enter()
-                print("Start History Task")
-                
-                self.historyTask(Name: OldStock.symbol) { (result) in
-                    switch result {
-                    case .success(let history): histories = try! StockHistory(fromAlphavantage: history)
-                    case .failure(let error): print("[\(OldStock.symbol)] History Task Error : \(error.localizedDescription)")
-                    }
-                    self.group.leave()
-                }
             }
-            
-            self.group.wait()
-            
-            let stock = Stock(symbol: OldStock.symbol, history: histories, detail: details, global: globals)
-            
-            Completion(.success(stock))
         }
     }
+        
+//        dlqueue.async {
+//
+//            var details : StockDetail?
+//            var histories : StockHistory?
+//            var globals : StockGlobal?
+//
+//            self.group.enter()
+//            print("Start Global Task")
+//
+//            self.globalTask(Symbol: OldStock.symbol) { (result) in
+//                switch result {
+//                case .success(let data): globals = try! StockGlobal(fromData: data)
+//                case .failure(let error): print("[\(OldStock.symbol)] Global Task Error : \(error.localizedDescription)")
+//                }
+//                self.group.leave()
+//            }
+//
+//            if OldStock.shouldUpdateDetail {
+//
+//                self.group.enter()
+//                print("Start Details Task")
+//
+//                self.detailsTask(Symbol: OldStock.symbol) { (result) in
+//                    switch result {
+//                    case .success(let detail): details = try! StockDetail(FromData: detail)
+//                    case .failure(let error): print("[\(OldStock.symbol)] Detail Task Error : \(error.localizedDescription)")
+//                    }
+//                    self.group.leave()
+//                }
+//            }
+//
+//            if OldStock.shouldUpdateHistory {
+//
+//                self.group.enter()
+//                print("Start History Task")
+//
+//                self.historyTask(Name: OldStock.symbol) { (result) in
+//                    switch result {
+//                    case .success(let history): histories = try! StockHistory(fromAlphavantage: history)
+//                    case .failure(let error): print("[\(OldStock.symbol)] History Task Error : \(error.localizedDescription)")
+//                    }
+//                    self.group.leave()
+//                }
+//            }
+//
+//            self.group.wait()
+//
+//            let stock = Stock(symbol: OldStock.symbol, history: histories, detail: details, global: globals)
+//
+//            Completion(.success(stock))
+//        }
+//    }
     
     public func globalRequest(Symbol:String) -> URLRequest {
         

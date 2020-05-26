@@ -8,6 +8,13 @@
 
 import SwiftUI
 
+protocol EquityListView : Identifiable {
+    var little  : String { get }
+    var name    : String { get }
+    var close   : String { get }
+    var support : String { get }
+}
+
 struct StockList: View {
     
     @EnvironmentObject var viewModel : StockViewModel
@@ -16,8 +23,8 @@ struct StockList: View {
         
         List {
             
-            ForEach(self.viewModel.stocks) { stock in
-                StockCell(symbol: stock.little, name: stock.name, close: stock.close, support: "")
+            ForEach(self.viewModel.stocks) { equity in
+                StockCell(symbol: equity.little, name: equity.name, close: equity.close, support: equity.support)
             }
             
             }.onAppear {

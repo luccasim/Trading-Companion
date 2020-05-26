@@ -40,4 +40,8 @@ public class Index: Equity {
         
         return resetIndex
     }
+    
+    var equitiesList : [Equity] {
+        return self.equities?.allObjects as? [Equity] ?? []
+    }
 }
