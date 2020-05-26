@@ -80,7 +80,7 @@ class AlphavantageWSTests: XCTestCase {
         XCTAssertNotNil(res)
         
         if let changeData = res {
-            let change = try Change.from(AlphavantageData: changeData)
+            let change = try Change.Alphavantage(from: changeData)
             print(change)
         }
     }
