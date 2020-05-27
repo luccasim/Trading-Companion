@@ -22,6 +22,7 @@
 		842050382472747C001CBA9C /* StockHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842050372472747C001CBA9C /* StockHistoryTests.swift */; };
 		84246E99247C66BF007A9029 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C6429B2479DF3400AB5E7D /* Index.swift */; };
 		84246E9B247CED14007A9029 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9A247CED14007A9029 /* Helper.swift */; };
+		84246E9D247EEAB4007A9029 /* AlphavantageWS+Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9C247EEAB4007A9029 /* AlphavantageWS+Detail.swift */; };
 		84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor_information.json */; };
 		84327DCD2471AAD900FE4C87 /* StockTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84327DCC2471AAD900FE4C87 /* StockTest.swift */; };
 		84327DCF2471B1A900FE4C87 /* ibm_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* ibm_history.json */; };
@@ -80,6 +81,7 @@
 		842050332472728C001CBA9C /* StockHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistory.swift; sourceTree = "<group>"; };
 		842050372472747C001CBA9C /* StockHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHistoryTests.swift; sourceTree = "<group>"; };
 		84246E9A247CED14007A9029 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		84246E9C247EEAB4007A9029 /* AlphavantageWS+Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlphavantageWS+Detail.swift"; sourceTree = "<group>"; };
 		84327DCA246FDDDA00FE4C87 /* accor_information.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = accor_information.json; sourceTree = "<group>"; };
 		84327DCC2471AAD900FE4C87 /* StockTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTest.swift; sourceTree = "<group>"; };
 		84327DCE2471B1A900FE4C87 /* ibm_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ibm_history.json; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				8465D001246984F0000290A8 /* AlphavantageWS.swift */,
+				84246E9C247EEAB4007A9029 /* AlphavantageWS+Detail.swift */,
 			);
 			path = WebServices;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */,
 				842050342472728C001CBA9C /* StockHistory.swift in Sources */,
 				8465D006246984F0000290A8 /* StockManager.swift in Sources */,
+				84246E9D247EEAB4007A9029 /* AlphavantageWS+Detail.swift in Sources */,
 				840D5FF32479B3D400309500 /* Equity.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */,
 				8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */,

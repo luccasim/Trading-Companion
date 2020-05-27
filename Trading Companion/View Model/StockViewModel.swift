@@ -47,6 +47,7 @@ final class StockViewModel : ObservableObject {
             let stock = self.updateList.removeFirst()
             
             self.webService.update(Equity: stock) { (result) in
+                
                 switch result {
                 case .success(let reponse):
                     DispatchQueue.main.async {

@@ -28,7 +28,6 @@ public class AlphavantageWS {
                 case .success(let data): Completion(.success(data))
                 default: break
                 }
-                
             }
         }
     }
@@ -100,41 +99,6 @@ public class AlphavantageWS {
                 return Completion(.success(data))
             }
             
-        }.resume()
-    }
-    
-    var detailSession : URLSession?
-    
-    public func detailsRequest(Symbol:String) -> URLRequest {
-        
-        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
-        let uri = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=\(symbol)&apikey=\(self.key)"
-        
-        let url = URL(string: uri)!
-        return URLRequest(url: url)
-    }
-    
-    func detailsTask(Symbol:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
-        
-        self.detailSession = URLSession(configuration: .default)
-        let request = self.detailsRequest(Symbol: Symbol)
-                
-        self.detailSession?.dataTask(with: request) { (data, reponse, error) in
-            
-            if let error = error {
-                return Completion(.failure(APIError.serverSideError(error)))
-            }
-            
-            if let data = data {
-                
-                if let str = String(data: data, encoding: .utf8) {
-                    if str.contains("Error Message") || str.contains("Note") {
-                        return Completion(.failure(APIError.unvalidSymbolName))
-                    }
-                }
-                
-                return Completion(.success(data))
-            }
         }.resume()
     }
 }
