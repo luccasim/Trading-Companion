@@ -27,41 +27,48 @@ final class StockViewModel : ObservableObject {
         let list = index.equitiesList.sorted(by: {$0.name < $1.name})
         
         self.equities.append(contentsOf: list)
-        self.updateList = self.index.equitiesList.filter({$0.shouldUpdateInformation})
         
-        self.updater()
-    }
-    
-    private var timer : Timer?
-    private var updateList : [Equity] = []
-    
-    func updater() {
-                
-        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (timer) in
-            
-            guard self.updateList.isEmpty == false else {
-                self.timer?.invalidate()
-                return
-            }
-            
-            let stock = self.updateList.removeFirst()
-            
-            self.webService.update(Equity: stock) { (result) in
-                
-                switch result {
-                case .success(let reponse):
-                    DispatchQueue.main.async {
-                        stock.updateInformation(data: reponse)
-                        self.equities.update(element: stock)
-                        try? AppDelegate.viewContext.save()
-                    }
-
-                default: break
-                }
+        let listToUpdate = self.index.equitiesList.filter({$0.shouldUpdateInformation})
+        
+        self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
+            switch result {
+            case .success(let equities):    DispatchQueue.main.async {self.updates(equities: equities)}
+            case .failure(let error):       print(error.localizedDescription)
             }
         }
         
-        self.timer?.fire()
     }
+    
+//    private var timer : Timer?
+//    private var updateList : [Equity] = []
+//    
+//    func updater() {
+//                
+//        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { (timer) in
+//            
+//            guard self.updateList.isEmpty == false else {
+//                self.timer?.invalidate()
+//                return
+//            }
+//            
+//            let stock = self.updateList.removeFirst()
+//            
+//            self.webService.update(Equity: stock) { (result) in
+//                
+//                switch result {
+//                case .success(let reponse):
+//                    DispatchQueue.main.async {
+//                        stock.updateInformation(data: reponse)
+//                        self.equities.update(element: stock)
+//                        try? AppDelegate.viewContext.save()
+//                    }
+//
+//                default: break
+//                }
+//            }
+//        }
+//        
+//        self.timer?.fire()
+//    }
     
 }

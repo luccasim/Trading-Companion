@@ -14,7 +14,7 @@
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="change" inverseEntity="Equity"/>
     </entity>
     <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
-        <attribute name="symbol" optional="YES" attributeType="String"/>
+        <attribute name="symbol" attributeType="String"/>
         <relationship name="change" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Change" inverseName="equity" inverseEntity="Change"/>
         <relationship name="histories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="History" inverseName="equity" inverseEntity="History"/>
         <relationship name="index" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Index" inverseName="equities" inverseEntity="Index"/>
@@ -43,8 +43,8 @@
     <elements>
         <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="208"/>
         <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="118"/>
-        <element name="History" positionX="539.16015625" positionY="-956.31640625" width="128" height="148"/>
-        <element name="Index" positionX="539.69140625" positionY="-1133.55859375" width="128" height="58"/>
-        <element name="Information" positionX="128.0546875" positionY="-1047.39453125" width="128" height="133"/>
+        <element name="History" positionX="531.171875" positionY="-859.93359375" width="128" height="148"/>
+        <element name="Index" positionX="350.4609375" positionY="-1157.55859375" width="128" height="58"/>
+        <element name="Information" positionX="151.30078125" positionY="-862.109375" width="128" height="133"/>
     </elements>
 </model>

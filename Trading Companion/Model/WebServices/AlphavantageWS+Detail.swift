@@ -19,29 +19,6 @@ extension AlphavantageWS {
         return URLRequest(url: url)
     }
     
-    func detailsTask(Symbol:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
-        
-        let session = URLSession(configuration: .default)
-        let request = self.detailsRequest(Symbol: Symbol)
-                
-        session.dataTask(with: request) { (data, reponse, error) in
-            
-            if let error = error {
-                return Completion(.failure(APIError.serverSideError(error)))
-            }
-            
-            if let data = data {
-                
-                if let str = String(data: data, encoding: .utf8) {
-                    if str.contains("Error Message") || str.contains("Note") {
-                        return Completion(.failure(APIError.unvalidSymbolName))
-                    }
-                }
-                
-                return Completion(.success(data))
-            }
-        }.resume()
-    }
 }
 
 extension AlphavantageWS {
@@ -55,6 +32,7 @@ extension AlphavantageWS {
         let currency: String
         
         enum Keys : String, CodingKey {
+            
             case symbol     = "1. symbol"
             case name       = "2. name"
             case type       = "3. type"
@@ -68,7 +46,7 @@ extension AlphavantageWS {
         
         init(from decoder: Decoder) throws {
             
-            let container = try decoder.container(keyedBy: Keys.self)
+            let container   = try decoder.container(keyedBy: Keys.self)
                         
             self.symbol     = try container.decode(String.self, forKey: .symbol)
             self.name       = try container.decode(String.self, forKey: .name)

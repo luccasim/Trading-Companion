@@ -41,6 +41,11 @@ public class Index: Equity {
         return resetIndex
     }
     
+    static func reset() {
+        AppDelegate.viewContext.delete(Index.main)
+        AppDelegate.saveContext()
+    }
+    
     var equitiesList : [Equity] {
         return self.equities?.allObjects as? [Equity] ?? []
     }

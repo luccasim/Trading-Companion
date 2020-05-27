@@ -31,7 +31,9 @@ public class Equity : NSManagedObject, Identifiable {
     func updateInformation(data:Data) {
         
         guard let information = self.information else {
-            self.information = Information(context: AppDelegate.viewContext)
+            DispatchQueue.main.sync {
+                self.information = Information(context: AppDelegate.viewContext)
+            }
             self.information?.set(fromAlphavantage: data)
             self.information?.equity = self
             return
@@ -46,6 +48,10 @@ public class Equity : NSManagedObject, Identifiable {
     
     var shouldUpdateInformation : Bool {
         return self.information == nil
+    }
+    
+    var label : String {
+        return self.symbol ?? ""
     }
     
 }
