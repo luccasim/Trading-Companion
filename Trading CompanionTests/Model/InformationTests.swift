@@ -35,9 +35,8 @@ class InformationTests: XCTestCase {
     func testSetAlphavantage() throws {
         
         let data = dataRessourse(fileName: "accor_information", fileExtension: "json")
-        let reponse = try Information.Reponse.init(from: data)
 
-        information.set(fromAlphavantage: reponse)
+        information.set(fromAlphavantage: data)
         
         XCTAssertNotNil(information.symbol)
         XCTAssertNotNil(information.name)

@@ -23,12 +23,12 @@ struct StockList: View {
         
         List {
             
-            ForEach(self.viewModel.stocks) { equity in
+            ForEach(self.viewModel.equities) { equity in
                 StockCell(symbol: equity.little, name: equity.name, close: equity.close, support: equity.support)
             }
             
             }.onAppear {
-            self.viewModel.fetchStocks()
+            self.viewModel.fetchEquities()
         }
     }
 }

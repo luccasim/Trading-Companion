@@ -28,8 +28,16 @@ public class Equity : NSManagedObject, Identifiable {
         }
     }
     
-    func updateInformation(json:AlphavantageWS.InformationReponse) {
-        self.information?.set(fromAlphavantage: json)
+    func updateInformation(data:Data) {
+        
+        guard let information = self.information else {
+            self.information = Information(context: AppDelegate.viewContext)
+            self.information?.set(fromAlphavantage: data)
+            self.information?.equity = self
+            return
+        }
+        
+        information.set(fromAlphavantage: data)
     }
         
     var shouldUpdateChange : Bool {

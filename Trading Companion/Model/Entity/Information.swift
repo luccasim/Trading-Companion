@@ -11,13 +11,21 @@ import CoreData
 
 public class Information : NSManagedObject {
         
-    func set(fromAlphavantage reponse:AlphavantageWS.InformationReponse) {
+    func set(fromAlphavantage data:Data) {
         
-        self.symbol     = reponse.symbol
-        self.name       = reponse.name
-        self.type       = reponse.type
-        self.region     = reponse.region
-        self.currency   = reponse.currency
+        do {
+            
+            let reponse = try AlphavantageWS.InformationReponse(from: data)
+            
+            self.symbol     = reponse.symbol
+            self.name       = reponse.name
+            self.type       = reponse.type
+            self.region     = reponse.region
+            self.currency   = reponse.currency
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 }
 

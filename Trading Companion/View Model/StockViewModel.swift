@@ -10,46 +10,23 @@ import Foundation
 
 final class StockViewModel : ObservableObject {
     
-    private var stockManager    = StockManager.shared
     private var webService      = AlphavantageWS()
-    private var stockList       = EquitiesGroup.SRD.list
     private var index           = Index.main
     
-    @Published var stocks : [Equity] = []
+    @Published var equities : [Equity] = []
     
-//    func addStock(Stock:Stock) {
-//
-//        self.stockManager.update(Stock: Stock)
-//        if let index = self.stocks.firstIndex(where: {$0.symbol == Stock.symbol}) {
-//            self.stocks[index] = Stock
-//        }
-//    }
-//
-//    private func fetchToDownload() -> [String] {
-//
-//        self.stockManager.retrive()
-//
-//        let localStock = self.stockManager.stocks.map({$0.symbol})
-//        let validStock = self.stockList
-//
-//        let removeStock = localStock.filter {!validStock.contains($0)}
-//
-//        if !removeStock.isEmpty {
-//            self.stockManager.remove(Symbols: removeStock)
-//        }
-//
-//        self.stocks = self.stockManager.stocks
-//
-//        return validStock.filter {!localStock.contains($0)}
-//    }
-    
-    func fetchStocks() {
+    private func updates(equities:[Equity]) {
         
-//        self.stockManager.retrive()
-//        self.stocks = self.stockManager.stocks
-//        self.stockManager.save()
-//
-        self.stocks.append(contentsOf: index.equitiesList)
+        self.equities.update(elements: equities)
+        AppDelegate.saveContext()
+        
+    }
+    
+    func fetchEquities() {
+
+        let list = index.equitiesList.sorted(by: {$0.name < $1.name})
+        
+        self.equities.append(contentsOf: list)
         self.updateList = self.index.equitiesList.filter({$0.shouldUpdateInformation})
         
         self.updater()
@@ -72,8 +49,12 @@ final class StockViewModel : ObservableObject {
             self.webService.update(Equity: stock) { (result) in
                 switch result {
                 case .success(let reponse):
-                    stock.updateInformation(json: reponse)
-                    
+                    DispatchQueue.main.async {
+                        stock.updateInformation(data: reponse)
+                        self.equities.update(element: stock)
+                        try? AppDelegate.viewContext.save()
+                    }
+
                 default: break
                 }
             }

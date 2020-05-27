@@ -52,11 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return persistentContainer.viewContext
     }
     
-//    static var testContext: NSManagedObjectContext {
-//        return persistentContainer.conte
-//    }
-    
     // MARK: - Core Data Saving support
+    
+    static func saveContext() {
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+    }
 
     func saveContext () {
         let context = persistentContainer.viewContext
