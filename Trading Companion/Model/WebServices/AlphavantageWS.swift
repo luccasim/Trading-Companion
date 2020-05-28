@@ -7,113 +7,62 @@ public class AlphavantageWS {
     
     public init() {}
     
-    let dlqueue     = DispatchQueue(label: "Download stock List")
-    let group       = DispatchGroup()
-    let semaphore   = DispatchSemaphore(value: 0)
-    
-    func splitList(for lenght:Int, list:[Reponse]) -> [[Reponse]] {
+    private let dlqueue     = DispatchQueue(label: "Download stock List")
+    private let timerQueue  = DispatchQueue.init(label: "Timer")
+    private let group       = DispatchGroup()
         
-        var tmp : [Reponse] = []
-        var result : [[Reponse]] = []
-        
-        var i = 0
-        var size = 0
-        
-        while (i < list.count) {
-            
-            tmp.append(list[i])
-            
-            size += 1
-            i += 1
-            
-            if size == lenght {
-                size = 0
-                result.append(tmp)
-                tmp.removeAll()
-            }
-        }
-        
-        if tmp.count > 0 {
-            result.append(tmp)
-        }
-        
-        return result
-    }
-    
     private var notDownloadList = true
     
-    enum Endpoint : String, Codable {
-        case detail
-    }
-    
-    struct Reponse {
-        let model       : AlphavantageWSModel
-        let request     : URLRequest
-        let endpoint    : AlphavantageWS.Endpoint
-    }
-    
+    /// Download a list to the specific endpoint every 10 secondes
+    /// - Parameters:
+    ///   - Endpoint: endpoint service to call
+    ///   - list: list for endpoint protocol
+    ///   - Completion: Result of operation
     func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
         
         guard self.notDownloadList else {
-            return
+            return Completion(.failure(AlphavantageWS.Errors.pendingDownload))
         }
         
         self.notDownloadList = false
 
-        let reponses : [Reponse]
+        var reponses : [Reponse] = []
         
         switch Endpoint {
         case .detail: reponses = list.map({self.detailReponse(Model: $0)})
         }
-        
-        var subList = self.splitList(for: 1, list: reponses)
-        
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (timer) in
+                        
+        self.timerQueue.async {
             
-            guard let downloadList = subList.first else {
-                timer.invalidate()
-                return
-            }
+            let semaphore = DispatchSemaphore(value: 0)
             
-            let label = downloadList[0].model.label
+            while (!reponses.isEmpty) {
             
-            print("[\(label)] Start Download At : \(Date())")
-            
-            self.getDataTask(List: downloadList) { (result) in
-                
-                switch result{
-                case .success(let datas):
-                    Completion(.success(datas.map({$0.model})))
-                    subList.removeFirst()
-                case .failure(let error):
-                    print("[\(label)] Fail Download")
-                    Completion(.failure(error))
+                guard let downloadList = reponses.first else {
+                    break
                 }
-            }
-            
-        }).fire()
-    }
-    
-    private func getDataTask(Request:URLRequest, Completion:@escaping ((Result<Data,Error>) -> Void)) {
-        
-        let session = URLSession(configuration: .default)
+
+                let label = downloadList.model.label
+
+                print("[\(label)] Start Download At : \(Date())")
+
+                self.getDataTask(List: [downloadList]) { (result) in
+
+                    switch result{
+                    case .success(let datas):
+                        Completion(.success(datas.map({$0.model})))
+                        reponses.removeFirst()
+                    case .failure(let error):
+                        print("[\(label)] Fail Download")
+                        Completion(.failure(error))
+                    }
+                    semaphore.signal()
+                }
                 
-        session.dataTask(with: Request) { (data, reponse, error) in
-            
-            if let error = error {
-                return Completion(.failure(error))
+                semaphore.wait()
+                
+                let _ = semaphore.wait(timeout: .now() + 10)
             }
-            
-            if let data = data {
-                return Completion(.success(data))
-            }
-            
-        }.resume()
-    }
-    
-    private func setData(Data:Data, Reponse:Reponse) {
-        switch Reponse.endpoint {
-        case .detail: Reponse.model.setDetail(Data: Data)
         }
     }
     
@@ -130,7 +79,7 @@ public class AlphavantageWS {
                 self.getDataTask(Request: model.request) { (result) in
 
                     switch result {
-                    case .success(let data): self.setData(Data: data, Reponse: model)
+                    case .success(let data): self.setDataToModel(Data: data, Reponse: model)
                     case .failure(let error): unvalid = error
                     }
                                         
@@ -148,5 +97,22 @@ public class AlphavantageWS {
                 }
             }
         }
+    }
+    
+    private func getDataTask(Request:URLRequest, Completion:@escaping ((Result<Data,Error>) -> Void)) {
+        
+        let session = URLSession(configuration: .default)
+                
+        session.dataTask(with: Request) { (data, reponse, error) in
+            
+            if let error = error {
+                return Completion(.failure(error))
+            }
+            
+            if let data = data {
+                return Completion(.success(data))
+            }
+            
+        }.resume()
     }
 }
