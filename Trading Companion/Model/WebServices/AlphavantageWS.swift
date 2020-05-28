@@ -40,11 +40,7 @@ public class AlphavantageWS {
         return result
     }
     
-    private var timer : Timer?
-    
-    var notPendingDownload : Bool {
-        return self.timer == nil
-    }
+    private var notDownloadList = true
     
     enum Endpoint : String, Codable {
         case detail
@@ -58,27 +54,30 @@ public class AlphavantageWS {
     
     func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
         
-        guard self.notPendingDownload else {
+        guard self.notDownloadList else {
             return
         }
         
+        self.notDownloadList = false
+
         let reponses : [Reponse]
         
         switch Endpoint {
         case .detail: reponses = list.map({self.detailReponse(Model: $0)})
         }
         
-        var subList = self.splitList(for: 5, list: reponses)
+        var subList = self.splitList(for: 1, list: reponses)
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (timer) in
             
             guard let downloadList = subList.first else {
-                self.timer?.invalidate()
-                self.timer = nil
+                timer.invalidate()
                 return
             }
             
-            print("Start Download At : \(Date())")
+            let label = downloadList[0].model.label
+            
+            print("[\(label)] Start Download At : \(Date())")
             
             self.getDataTask(List: downloadList) { (result) in
                 
@@ -86,12 +85,13 @@ public class AlphavantageWS {
                 case .success(let datas):
                     Completion(.success(datas.map({$0.model})))
                     subList.removeFirst()
-                case .failure(let error): Completion(.failure(error))
+                case .failure(let error):
+                    print("[\(label)] Fail Download")
+                    Completion(.failure(error))
                 }
             }
-        })
-        
-        self.timer?.fire()
+            
+        }).fire()
     }
     
     private func getDataTask(Request:URLRequest, Completion:@escaping ((Result<Data,Error>) -> Void)) {
@@ -111,6 +111,12 @@ public class AlphavantageWS {
         }.resume()
     }
     
+    private func setData(Data:Data, Reponse:Reponse) {
+        switch Reponse.endpoint {
+        case .detail: Reponse.model.setDetail(Data: Data)
+        }
+    }
+    
     private func getDataTask(List:[Reponse], Completion:@escaping ((Result<[Reponse],Error>) -> Void)) {
         
         self.dlqueue.async {
@@ -124,7 +130,7 @@ public class AlphavantageWS {
                 self.getDataTask(Request: model.request) { (result) in
 
                     switch result {
-                    case .success(let data): model.model.setData(data)
+                    case .success(let data): self.setData(Data: data, Reponse: model)
                     case .failure(let error): unvalid = error
                     }
                                         
@@ -144,4 +150,3 @@ public class AlphavantageWS {
         }
     }
 }
-

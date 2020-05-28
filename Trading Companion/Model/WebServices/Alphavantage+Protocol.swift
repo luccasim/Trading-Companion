@@ -11,6 +11,7 @@ import Foundation
 protocol AlphavantageWSModel : class {
     
     var label       : String {get}
-    var setData     : ((Data)->(Void)) {get}
+    
+    func setDetail(Data:Data)
     
 }

@@ -28,12 +28,6 @@ final class StockViewModel : ObservableObject {
         
         self.equities.append(contentsOf: list)
         
-        list.forEach { (equity) in
-            equity.setter = {
-                equity.updateInformation(data: $0)
-            }
-        }
-        
         let listToUpdate = list.filter({$0.shouldUpdateInformation})
         
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in

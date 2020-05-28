@@ -49,8 +49,6 @@ public class Equity : NSManagedObject, Identifiable {
     var shouldUpdateInformation : Bool {
         return self.information == nil
     }
-    
-    var setter : ((Data) -> ()) = {_ in }
 }
 
 extension Equity : EquityListView {
@@ -74,12 +72,9 @@ extension Equity : EquityListView {
 
 extension Equity : AlphavantageWSModel {
     
-    var setData: ((Data) -> (Void)) {
-        get {
-            self.setter
-        }
+    func setDetail(Data: Data) {
+        self.updateInformation(data: Data)
     }
-    
     
     var label : String {
         return self.symbol ?? ""
