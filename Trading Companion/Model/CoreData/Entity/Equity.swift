@@ -50,10 +50,7 @@ public class Equity : NSManagedObject, Identifiable {
         return self.information == nil
     }
     
-    var label : String {
-        return self.symbol ?? ""
-    }
-    
+    var setter : ((Data) -> ()) = {_ in }
 }
 
 extension Equity : EquityListView {
@@ -73,4 +70,20 @@ extension Equity : EquityListView {
     var support: String {
         return ""
     }
+}
+
+extension Equity : AlphavantageWSModel {
+    
+    var setData: ((Data) -> (Void)) {
+        get {
+            self.setter
+        }
+    }
+    
+    
+    var label : String {
+        return self.symbol ?? ""
+    }
+
+    
 }

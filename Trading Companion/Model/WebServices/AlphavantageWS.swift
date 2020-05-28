@@ -4,14 +4,6 @@ import Combine
 public class AlphavantageWS {
     
     let key = "CZA8D69RROESV61Q"
-        
-    public enum APIError : Error {
-        case serverSideError(Error)
-        case unvalidSymbolName
-        case parsingStockModel
-        case parsingDetail
-        case endOfList
-    }
     
     public init() {}
     
@@ -19,10 +11,10 @@ public class AlphavantageWS {
     let group       = DispatchGroup()
     let semaphore   = DispatchSemaphore(value: 0)
     
-    func splitList(for lenght:Int, list:[Equity]) -> [[Equity]] {
+    func splitList(for lenght:Int, list:[Reponse]) -> [[Reponse]] {
         
-        var tmp : [Equity] = []
-        var result : [[Equity]] = []
+        var tmp : [Reponse] = []
+        var result : [[Reponse]] = []
         
         var i = 0
         var size = 0
@@ -54,17 +46,29 @@ public class AlphavantageWS {
         return self.timer == nil
     }
     
-    enum Endpoint {
-        case detail, global, history
+    enum Endpoint : String, Codable {
+        case detail
     }
     
-    func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[Equity], Completion: @escaping(Result<[Equity],Error>)->Void) {
+    struct Reponse {
+        let model       : AlphavantageWSModel
+        let request     : URLRequest
+        let endpoint    : AlphavantageWS.Endpoint
+    }
+    
+    func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
         
         guard self.notPendingDownload else {
             return
         }
         
-        var subList = self.splitList(for: 5, list: list)
+        let reponses : [Reponse]
+        
+        switch Endpoint {
+        case .detail: reponses = list.map({self.detailReponse(Model: $0)})
+        }
+        
+        var subList = self.splitList(for: 5, list: reponses)
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
             
@@ -76,11 +80,11 @@ public class AlphavantageWS {
             
             print("Start Download At : \(Date())")
             
-            self.getDataTask(Endpoint: Endpoint, List: downloadList) { (result) in
+            self.getDataTask(List: downloadList) { (result) in
                 
                 switch result{
                 case .success(let datas):
-                    Completion(.success(datas))
+                    Completion(.success(datas.map({$0.model})))
                     subList.removeFirst()
                 case .failure(let error): Completion(.failure(error))
                 }
@@ -90,14 +94,14 @@ public class AlphavantageWS {
         self.timer?.fire()
     }
     
-    func getDataTask(Request:URLRequest, Completion:@escaping ((Result<Data,Error>) -> Void)) {
+    private func getDataTask(Request:URLRequest, Completion:@escaping ((Result<Data,Error>) -> Void)) {
         
         let session = URLSession(configuration: .default)
                 
         session.dataTask(with: Request) { (data, reponse, error) in
             
             if let error = error {
-                return Completion(.failure(APIError.serverSideError(error)))
+                return Completion(.failure(error))
             }
             
             if let data = data {
@@ -107,41 +111,24 @@ public class AlphavantageWS {
         }.resume()
     }
     
-    private func getRequest(Endpoint:Endpoint, Symbol:String) -> URLRequest {
-        switch Endpoint {
-        case .detail: return self.detailsRequest(Symbol: Symbol)
-        case .global: return self.globalRequest(Symbol: Symbol)
-        case .history: return self.historyRequest(Symbol: Symbol)
-        }
-    }
-    
-    func getDataTask(Endpoint:Endpoint, List:[Equity], Completion:@escaping ((Result<[Equity],Error>) -> Void)) {
+    private func getDataTask(List:[Reponse], Completion:@escaping ((Result<[Reponse],Error>) -> Void)) {
         
         self.dlqueue.async {
             
             var unvalid : Error?
                         
-            List.forEach { (equity) in
-                
-                let request = self.getRequest(Endpoint: Endpoint, Symbol: equity.label)
-                
+            List.forEach { (model) in
                 
                 self.group.enter()
                 
-                self.getDataTask(Request: request) { (result) in
+                self.getDataTask(Request: model.request) { (result) in
 
                     switch result {
-                        
-                    case .success(let data):
-                        switch Endpoint {
-                        case .detail:   equity.updateInformation(data: data)
-                        default: break
-                        }
+                    case .success(let data): model.model.setData(data)
                     case .failure(let error): unvalid = error
                     }
                                         
                     self.group.leave()
-                    
                 }
             }
             
@@ -156,74 +143,5 @@ public class AlphavantageWS {
             }
         }
     }
-    
-    public func globalRequest(Symbol:String) -> URLRequest {
-        
-        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
-        let uri = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=\(symbol)&apikey=\(self.key)"
-        
-        let url = URL(string: uri)!
-        return URLRequest(url: url)
-    }
-        
-    func globalTask(Symbol:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
-        
-        let request = self.globalRequest(Symbol: Symbol)
-                
-        URLSession(configuration: .default).dataTask(with: request) { (data, rep, error) in
-            
-            if let error = error {
-                return Completion(.failure(error))
-            }
-            
-            if let data = data {
-                
-                if let str = String(data: data, encoding: .utf8) {
-                    if str.contains("Error Message") || str.contains("Note") {
-                        return Completion(.failure(APIError.unvalidSymbolName))
-                    }
-                }
-                
-                return Completion(.success(data))
-            }
-            
-        }.resume()
-    }
-    
-    public func historyRequest(Symbol:String) -> URLRequest {
-        
-        let symbol = Symbol.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? Symbol
-        let uri = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=\(symbol)&apikey=\(self.key)"
-        
-        let url = URL(string: uri)!
-        return URLRequest(url: url)
-    }
-    
-    var historySession : URLSession?
-    
-    func historyTask(Name:String, Completion:@escaping ((Result<Data,Error>) -> Void)) {
-                
-        let request = self.historyRequest(Symbol: Name)
-        self.historySession = URLSession(configuration: .default)
-                
-        self.historySession?.dataTask(with:request) { (data, reponse, error) in
-            
-            if let error = error {
-                Completion(.failure(APIError.serverSideError(error)))
-                return
-            }
-            
-            if let data = data {
-                
-                if let str = String(data: data, encoding: .utf8) {
-                    if str.contains("Error Message") || str.contains("Note") {
-                        return Completion(.failure(APIError.unvalidSymbolName))
-                    }
-                }
-                
-                return Completion(.success(data))
-            }
-            
-        }.resume()
-    }
 }
+

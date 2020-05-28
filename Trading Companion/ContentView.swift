@@ -9,9 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    let manager = StockManager.shared
-    
+        
     var body: some View {
         Text("Hello, World!")
     }

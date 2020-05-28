@@ -9,6 +9,10 @@
 import Foundation
 
 extension AlphavantageWS {
+    
+    func detailReponse(Model:AlphavantageWSModel) -> Reponse {
+        return Reponse(model: Model, request: self.detailsRequest(Symbol: Model.label), endpoint: .detail)
+    }
         
     public func detailsRequest(Symbol:String) -> URLRequest {
         
@@ -19,12 +23,8 @@ extension AlphavantageWS {
         return URLRequest(url: url)
     }
     
-}
-
-extension AlphavantageWS {
-    
     struct InformationReponse : Codable {
-        
+                
         let symbol  : String
         let name    : String
         let type    : String

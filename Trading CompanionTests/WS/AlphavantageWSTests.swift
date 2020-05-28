@@ -29,7 +29,7 @@ class AlphavantageWSTests: XCTestCase {
     
     func testGlobalRequest() throws {
         
-        let request = self.ws.globalRequest(Symbol: self.symbol)
+        let request = self.ws.globalRequest(Label: self.symbol)
         
         if let url = request.url {
             print(url)
@@ -87,7 +87,7 @@ class AlphavantageWSTests: XCTestCase {
     
     func testHistoryRequest() throws {
         
-        let request = self.ws.historyRequest(Symbol: self.symbol)
+        let request = self.ws.historyRequest(Label: self.symbol)
         
         if let url = request.url {
             print(url)
