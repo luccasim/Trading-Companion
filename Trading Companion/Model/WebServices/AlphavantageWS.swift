@@ -17,7 +17,7 @@ public class AlphavantageWS {
     /// - Parameters:
     ///   - Endpoint: endpoint service to call
     ///   - list: list for endpoint protocol
-    ///   - Completion: Result of operation
+    ///   - Completion: Result of operation, the Error endOfUpdate mean the end of operation.
     func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
         
         guard self.notDownloadList else {
@@ -26,11 +26,7 @@ public class AlphavantageWS {
         
         self.notDownloadList = false
 
-        var reponses : [Reponse] = []
-        
-        switch Endpoint {
-        case .detail: reponses = list.map({self.detailReponse(Model: $0)})
-        }
+        var reponses = self.mapModel(Endpoint: Endpoint, Models: list)
                         
         self.timerQueue.async {
             
@@ -63,6 +59,10 @@ public class AlphavantageWS {
                 
                 let _ = semaphore.wait(timeout: .now() + 10)
             }
+            
+            self.notDownloadList = true
+            Completion(.failure(Errors.endOfUpdate))
+            
         }
     }
     
@@ -79,8 +79,10 @@ public class AlphavantageWS {
                 self.getDataTask(Request: model.request) { (result) in
 
                     switch result {
-                    case .success(let data): self.setDataToModel(Data: data, Reponse: model)
-                    case .failure(let error): unvalid = error
+                    case .success(let data):
+                        DispatchQueue.main.async {self.setDataToModel(Data: data, Reponse: model)}
+                    case .failure(let error):
+                        unvalid = error
                     }
                                         
                     self.group.leave()

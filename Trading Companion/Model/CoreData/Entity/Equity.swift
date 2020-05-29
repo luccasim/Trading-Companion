@@ -27,23 +27,16 @@ public class Equity : NSManagedObject, Identifiable {
             return Equity.resetEquities
         }
     }
-    
-    func updateInformation(data:Data) {
-        
-        guard let information = self.information else {
-            DispatchQueue.main.sync {
-                self.information = Information(context: AppDelegate.viewContext)
-            }
-            self.information?.set(fromAlphavantage: data)
-            self.information?.equity = self
-            return
-        }
-        
-        information.set(fromAlphavantage: data)
-    }
+
         
     var shouldUpdateChange : Bool {
-        return self.change == nil
+        
+        guard let change = self.change else {
+            return true
+        }
+        
+        print(change.lastDay == Date())
+        return change.lastDay == Date()
     }
     
     var shouldUpdateInformation : Bool {
@@ -72,8 +65,28 @@ extension Equity : EquityListView {
 
 extension Equity : AlphavantageWSModel {
     
+    func setGlobal(Data: Data) {
+        
+        guard let change = self.change else {
+            self.change = Change(WithEquity: self)
+            self.change?.set(fromAlphavantage: Data)
+            return
+        }
+        
+        
+    }
+    
+    
     func setDetail(Data: Data) {
-        self.updateInformation(data: Data)
+        
+        guard let information = self.information else {
+            self.information = Information(context: AppDelegate.viewContext)
+            self.information?.set(fromAlphavantage: Data)
+            self.information?.equity = self
+            return
+        }
+        
+        information.set(fromAlphavantage: Data)
     }
     
     var label : String {

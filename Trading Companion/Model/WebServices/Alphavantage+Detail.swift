@@ -44,10 +44,6 @@ extension AlphavantageWS {
             case score      = "9. matchScore"
         }
         
-        enum Errors : Error {
-            case missingMatching
-        }
-        
         init(from decoder: Decoder) throws {
             
             let container   = try decoder.container(keyedBy: Keys.self)
@@ -74,7 +70,7 @@ extension AlphavantageWS {
             let wrapper = try decoder.decode(Wrapper.self, from: data)
             
             guard let match = wrapper.matches.first else {
-                throw Errors.missingMatching
+                throw AlphavantageWS.Errors.missingMatchesDetails
             }
             
             self = match

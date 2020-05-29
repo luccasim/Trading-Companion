@@ -28,7 +28,7 @@ struct StockList: View {
             }
             
             }.onAppear {
-            self.viewModel.fetchEquities()
+            self.viewModel.fetchEquitiesInformations()
         }
     }
 }

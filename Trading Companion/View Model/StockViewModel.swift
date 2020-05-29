@@ -16,19 +16,18 @@ final class StockViewModel : ObservableObject {
     @Published var equities : [Equity] = []
     
     private func updates(equities:[Equity]) {
-        
         self.equities.update(elements: equities)
-        AppDelegate.saveContext()
-        
     }
     
-    func fetchEquities() {
-
-        let list = index.equitiesList.sorted(by: {$0.label < $1.label})
+    private lazy var sortedList = {
+        self.index.equitiesList.sorted(by: {$0.label < $1.label})
+    }()
+    
+    func fetchEquitiesInformations() {
         
-        self.equities.append(contentsOf: list)
+        self.equities.append(contentsOf: self.sortedList)
         
-        let listToUpdate = list.filter({$0.shouldUpdateInformation})
+        let listToUpdate = self.sortedList.filter({$0.shouldUpdateInformation})
         
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
             switch result {
@@ -39,9 +38,28 @@ final class StockViewModel : ObservableObject {
                     }
                 
                 }
-            case .failure(let error):       print(error.localizedDescription)
+            case .failure(let error):
+                if case AlphavantageWS.Errors.endOfUpdate = error {
+                    self.fetchEquitiesChange()
+                }
             }
         }
+    }
+    
+    func fetchEquitiesChange() {
         
+        let list = self.sortedList.filter({$0.shouldUpdateChange})
+        
+        self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
+            switch result {
+            case .success(let reponse):
+                DispatchQueue.main.async {
+                    if let equity = reponse as? [Equity] {
+                        self.updates(equities: equity)
+                    }
+                }
+            case .failure(_): break
+            }
+        }
     }
 }
