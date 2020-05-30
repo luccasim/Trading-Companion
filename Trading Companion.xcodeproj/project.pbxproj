@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */; };
-		840CAA3B2477F10D0024DB5B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 840CAA3A2477F10D0024DB5B /* information.json */; };
 		840D5FF32479B3D400309500 /* Equity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF22479B3D400309500 /* Equity.swift */; };
 		840D5FF62479B9C400309500 /* Information.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF52479B9C400309500 /* Information.swift */; };
 		840D5FF82479C34100309500 /* EquityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF72479C34100309500 /* EquityTests.swift */; };
@@ -24,8 +23,8 @@
 		84246E9F247FF64F007A9029 /* Alphavantage+Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9E247FF64F007A9029 /* Alphavantage+Endpoint.swift */; };
 		84246EA1247FFEE1007A9029 /* Alphavantage+Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA0247FFEE1007A9029 /* Alphavantage+Global.swift */; };
 		84246EA3247FFF50007A9029 /* Alphavantage+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA2247FFF50007A9029 /* Alphavantage+History.swift */; };
-		84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* accor_information.json */; };
-		84327DCF2471B1A900FE4C87 /* ibm_history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* ibm_history.json */; };
+		84327DCB246FDDDA00FE4C87 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
+		84327DCF2471B1A900FE4C87 /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
 		843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F7247AAF790091D853 /* HistoryTests.swift */; };
@@ -38,7 +37,10 @@
 		8465CFDE246984C6000290A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8465CFDC246984C6000290A8 /* LaunchScreen.storyboard */; };
 		8465CFF4246984C6000290A8 /* Trading_CompanionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFF3246984C6000290A8 /* Trading_CompanionUITests.swift */; };
 		8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465D001246984F0000290A8 /* AlphavantageWS.swift */; };
-		847B16E024753F5E0054BE02 /* ibm_change.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* ibm_change.json */; };
+		847B16E024753F5E0054BE02 /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* global.json */; };
+		848E16472482761000C0D536 /* EquityDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E16462482761000C0D536 /* EquityDetail.swift */; };
+		848E164A2482A94100C0D536 /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
+		848E164C2482B38200C0D536 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E164B2482B38200C0D536 /* Day.swift */; };
 		8494F828247C599800A7C5EE /* IndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494F827247C599800A7C5EE /* IndexTests.swift */; };
 		84B472062479B01E00DDFCBF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84B472042479B01E00DDFCBF /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -62,7 +64,6 @@
 
 /* Begin PBXFileReference section */
 		840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphavantageWSTests.swift; sourceTree = "<group>"; };
-		840CAA3A2477F10D0024DB5B /* information.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
 		840D5FF22479B3D400309500 /* Equity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equity.swift; sourceTree = "<group>"; };
 		840D5FF52479B9C400309500 /* Information.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Information.swift; sourceTree = "<group>"; };
 		840D5FF72479C34100309500 /* EquityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityTests.swift; sourceTree = "<group>"; };
@@ -77,8 +78,8 @@
 		84246E9E247FF64F007A9029 /* Alphavantage+Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+Endpoint.swift"; sourceTree = "<group>"; };
 		84246EA0247FFEE1007A9029 /* Alphavantage+Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+Global.swift"; sourceTree = "<group>"; };
 		84246EA2247FFF50007A9029 /* Alphavantage+History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+History.swift"; sourceTree = "<group>"; };
-		84327DCA246FDDDA00FE4C87 /* accor_information.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = accor_information.json; sourceTree = "<group>"; };
-		84327DCE2471B1A900FE4C87 /* ibm_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ibm_history.json; sourceTree = "<group>"; };
+		84327DCA246FDDDA00FE4C87 /* information.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = information.json; sourceTree = "<group>"; };
+		84327DCE2471B1A900FE4C87 /* history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = history.json; sourceTree = "<group>"; };
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
 		843CC5F7247AAF790091D853 /* HistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTests.swift; sourceTree = "<group>"; };
@@ -97,7 +98,10 @@
 		8465CFF3246984C6000290A8 /* Trading_CompanionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trading_CompanionUITests.swift; sourceTree = "<group>"; };
 		8465CFF5246984C6000290A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8465D001246984F0000290A8 /* AlphavantageWS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphavantageWS.swift; sourceTree = "<group>"; };
-		847B16DF24753F5E0054BE02 /* ibm_change.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ibm_change.json; sourceTree = "<group>"; };
+		847B16DF24753F5E0054BE02 /* global.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = global.json; sourceTree = "<group>"; };
+		848E16462482761000C0D536 /* EquityDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityDetail.swift; sourceTree = "<group>"; };
+		848E16492482A94100C0D536 /* days.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = days.json; sourceTree = "<group>"; };
+		848E164B2482B38200C0D536 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		8494F827247C599800A7C5EE /* IndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexTests.swift; sourceTree = "<group>"; };
 		84B472052479B01E00DDFCBF /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		84C6429B2479DF3400AB5E7D /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				8412C72E246A8F4E00AA342E /* StockCell.swift */,
+				848E16462482761000C0D536 /* EquityDetail.swift */,
 				8412C730246A8F6A00AA342E /* StockList.swift */,
 			);
 			path = View;
@@ -148,10 +153,6 @@
 		84205039247274ED001CBA9C /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				84327DCE2471B1A900FE4C87 /* ibm_history.json */,
-				84327DCA246FDDDA00FE4C87 /* accor_information.json */,
-				847B16DF24753F5E0054BE02 /* ibm_change.json */,
-				840CAA3A2477F10D0024DB5B /* information.json */,
 			);
 			path = Ressources;
 			sourceTree = "<group>";
@@ -217,6 +218,7 @@
 				8465CFD7246984C6000290A8 /* Assets.xcassets */,
 				8465CFDC246984C6000290A8 /* LaunchScreen.storyboard */,
 				8465CFDF246984C6000290A8 /* Info.plist */,
+				848E164824828AB900C0D536 /* Ressources */,
 				8465CFD9246984C6000290A8 /* Preview Content */,
 			);
 			path = "Trading Companion";
@@ -270,11 +272,23 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		848E164824828AB900C0D536 /* Ressources */ = {
+			isa = PBXGroup;
+			children = (
+				84327DCE2471B1A900FE4C87 /* history.json */,
+				848E16492482A94100C0D536 /* days.json */,
+				84327DCA246FDDDA00FE4C87 /* information.json */,
+				847B16DF24753F5E0054BE02 /* global.json */,
+			);
+			path = Ressources;
+			sourceTree = "<group>";
+		};
 		84B4722E2479B2C000DDFCBF /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				840D5FF52479B9C400309500 /* Information.swift */,
 				840D5FF92479CB3E00309500 /* History.swift */,
+				848E164B2482B38200C0D536 /* Day.swift */,
 				840D5FFB2479CB4C00309500 /* Change.swift */,
 				840D5FF22479B3D400309500 /* Equity.swift */,
 				84C6429B2479DF3400AB5E7D /* Index.swift */,
@@ -408,6 +422,7 @@
 			files = (
 				8465CFDE246984C6000290A8 /* LaunchScreen.storyboard in Resources */,
 				8465CFDB246984C6000290A8 /* Preview Assets.xcassets in Resources */,
+				848E164A2482A94100C0D536 /* days.json in Resources */,
 				8465CFD8246984C6000290A8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,10 +431,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84327DCF2471B1A900FE4C87 /* ibm_history.json in Resources */,
-				847B16E024753F5E0054BE02 /* ibm_change.json in Resources */,
-				84327DCB246FDDDA00FE4C87 /* accor_information.json in Resources */,
-				840CAA3B2477F10D0024DB5B /* information.json in Resources */,
+				84327DCF2471B1A900FE4C87 /* history.json in Resources */,
+				847B16E024753F5E0054BE02 /* global.json in Resources */,
+				84327DCB246FDDDA00FE4C87 /* information.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +456,7 @@
 				84246EA1247FFEE1007A9029 /* Alphavantage+Global.swift in Sources */,
 				8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */,
 				8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */,
+				848E16472482761000C0D536 /* EquityDetail.swift in Sources */,
 				84B472062479B01E00DDFCBF /* Model.xcdatamodeld in Sources */,
 				840D5FFC2479CB4C00309500 /* Change.swift in Sources */,
 				84246E9B247CED14007A9029 /* Helper.swift in Sources */,
@@ -450,6 +465,7 @@
 				8412C72F246A8F4E00AA342E /* StockCell.swift in Sources */,
 				84246E9D247EEAB4007A9029 /* Alphavantage+Detail.swift in Sources */,
 				840D5FF32479B3D400309500 /* Equity.swift in Sources */,
+				848E164C2482B38200C0D536 /* Day.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */,
 				8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */,
 				84246E99247C66BF007A9029 /* Index.swift in Sources */,

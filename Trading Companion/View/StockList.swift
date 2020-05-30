@@ -8,13 +8,6 @@
 
 import SwiftUI
 
-protocol EquityListView : Identifiable {
-    var little  : String { get }
-    var name    : String { get }
-    var close   : String { get }
-    var support : String { get }
-}
-
 struct StockList: View {
     
     @EnvironmentObject var viewModel : StockViewModel

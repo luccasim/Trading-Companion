@@ -9,22 +9,25 @@
 import Foundation
 import CoreData
 
+fileprivate let localData = load(FileName: "information.json")
+
 public class Information : NSManagedObject {
+    
+    static var previous = Information.local
+    
+    static var local : Information {
+        let obj = Information(context: AppDelegate.viewContext)
+        obj.set(fromAlphavantage: try! AlphavantageWS.InformationReponse(from: localData))
+        return obj
+    }
         
-    func set(fromAlphavantage data:Data) {
+    func set(fromAlphavantage reponse:AlphavantageWS.InformationReponse) {
         
-        do {
-            
-            let reponse = try AlphavantageWS.InformationReponse(from: data)
-            
-            self.symbol     = reponse.symbol
-            self.name       = reponse.name
-            self.type       = reponse.type
-            self.region     = reponse.region
-            self.currency   = reponse.currency
-            
-        } catch let error {
-            print(error.localizedDescription)
-        }
+        self.symbol     = reponse.symbol
+        self.name       = reponse.name
+        self.type       = reponse.type
+        self.region     = reponse.region
+        self.currency   = reponse.currency
+
     }
 }

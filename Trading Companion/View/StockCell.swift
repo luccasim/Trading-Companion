@@ -8,8 +8,15 @@
 
 import SwiftUI
 
+protocol EquityListView : Identifiable {
+    var little  : String { get }
+    var name    : String { get }
+    var close   : String { get }
+    var support : String { get }
+}
+
 struct StockCell: View {
-    
+        
     var symbol  : String       = "ABC"
     var name    : String       = "Title"
     var close   : String       = "12"

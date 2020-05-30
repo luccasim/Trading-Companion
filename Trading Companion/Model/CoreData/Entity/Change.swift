@@ -9,14 +9,21 @@
 import Foundation
 import CoreData
 
+fileprivate let localData = load(FileName: "global.json")
+
 public class Change : NSManagedObject {
     
-    func set(fromAlphavantage data:Data) {
+    static var previous = Change.local
+    
+    static var local : Change {
+        let obj = Change(context: AppDelegate.viewContext)
+        obj.set(fromAlphavantage: try? AlphavantageWS.GlobalReponse(from:localData))
+        return obj
+    }
+    
+    func set(fromAlphavantage reponse:AlphavantageWS.GlobalReponse?) {
         
-        do {
-            
-            let reponse = try AlphavantageWS.GlobalReponse(from: data)
-        
+        if let reponse = reponse {
             self.symbol         = reponse.symbol
             self.open           = reponse.open.toDouble
             self.high           = reponse.high.toDouble
@@ -27,9 +34,6 @@ public class Change : NSManagedObject {
             self.previousClose  = reponse.previous.toDouble
             self.change         = reponse.change.toDouble
             self.percent        = reponse.percent
-            
-        } catch let error {
-            print(error.localizedDescription)
         }
     }
     

@@ -11,6 +11,14 @@ import CoreData
 
 public class Equity : NSManagedObject, Identifiable {
     
+    static var preview : Equity = Equity.local
+    
+    static var local : Equity {
+        let new = Equity(context: AppDelegate.viewContext)
+        new.information = Information.previous
+        return new
+    }
+    
     static var resetEquities : [Equity] {
         return EquitiesGroup.SRD.list.map { str in
             let equity = Equity(context: AppDelegate.viewContext)
@@ -65,7 +73,11 @@ extension Equity : EquityListView {
 
 extension Equity : AlphavantageWSModel {
     
-    func setGlobal(Data: Data) {
+    var label : String {
+        return self.symbol ?? ""
+    }
+    
+    func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {
         
         guard let change = self.change else {
             self.change = Change(WithEquity: self)
@@ -73,11 +85,12 @@ extension Equity : AlphavantageWSModel {
             return
         }
         
+        change.set(fromAlphavantage: Data)
         
     }
     
     
-    func setDetail(Data: Data) {
+    func setDetail(Reponse Data: AlphavantageWS.InformationReponse) {
         
         guard let information = self.information else {
             self.information = Information(context: AppDelegate.viewContext)
@@ -89,9 +102,6 @@ extension Equity : AlphavantageWSModel {
         information.set(fromAlphavantage: Data)
     }
     
-    var label : String {
-        return self.symbol ?? ""
-    }
 
     
 }

@@ -12,8 +12,8 @@ protocol AlphavantageWSModel : class {
     
     var label       : String {get}
     
-    func setDetail(Data:Data)
-    func setGlobal(Data:Data)
+    func setDetail(Reponse:AlphavantageWS.InformationReponse)
+    func setGlobal(Reponse:AlphavantageWS.GlobalReponse)
     
 }
 
@@ -31,9 +31,14 @@ extension AlphavantageWS {
     }
     
     func setDataToModel(Data:Data, Reponse:Reponse) {
-        switch Reponse.endpoint {
-        case .detail: Reponse.model.setDetail(Data: Data)
-        case .global: Reponse.model.setGlobal(Data: Data)
+        do {
+            switch Reponse.endpoint {
+            case .detail: Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: Data))
+            case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: Data))
+                
+            }
+        } catch let error {
+            print("[\(Reponse.model.label)] Error \(error.localizedDescription)")
         }
     }
     

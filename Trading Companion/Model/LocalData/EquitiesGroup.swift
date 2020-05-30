@@ -8,6 +8,8 @@
 
 import Foundation
 
+let equity : Equity = Equity()
+
 struct EquitiesGroup {
     
     let index   : String
@@ -63,7 +65,6 @@ extension EquitiesGroup {
         "EO.PA",
         "FNAC.PA",
         "GFC.PA",
-        "GNFT.PA",
         "GET.PA",
         "GTT.PA",
         "ICAD.PA",

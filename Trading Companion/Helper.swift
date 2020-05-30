@@ -21,3 +21,17 @@ extension Array where Element:Equatable {
         elements.forEach({self.update(element: $0)})
     }
 }
+
+func load(FileName:String) -> Data {
+    
+    guard let url = Bundle.main.url(forResource: FileName, withExtension: nil) else {
+        fatalError("Could not load \(FileName)")
+    }
+    
+    do {
+        let data = try Data(contentsOf: url)
+        return data
+    } catch let error {
+        fatalError("Load data from \(FileName) error -> \(error.localizedDescription)")
+    }
+}
