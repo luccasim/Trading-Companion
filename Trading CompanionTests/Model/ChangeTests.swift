@@ -37,9 +37,8 @@ class ChangeTests: XCTestCase {
     func testSetFromAlphavantage() throws {
         
         let data    = try Data(contentsOf: self.get(FileName: "ibm_change", FileExtension: "json"))
-        let json    = try Change.Alphavantage(from: data)
         
-        self.change.set(from: json)
+        self.change.set(fromAlphavantage: data)
         
         XCTAssertNotNil(change.change)
         XCTAssertNotNil(change.lastDay)
