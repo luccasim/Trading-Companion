@@ -20,7 +20,7 @@ protocol AlphavantageWSModel : class {
 
 extension AlphavantageWS {
     
-    enum Endpoint {
+    enum Endpoint : String {
         case detail
         case global
         case history

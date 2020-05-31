@@ -40,7 +40,7 @@ public class AlphavantageWS {
 
                 let label = downloadList.model.label
 
-                print("[\(label)] Start Download At : \(Date())")
+                print("[\(label)] Start Download for : \(Endpoint.rawValue)  At : \(Date())")
 
                 self.getDataTask(List: [downloadList]) { (result) in
 

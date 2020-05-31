@@ -7,18 +7,22 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EquityDetail: View {
     
     @State var model : Equity
     
+    @State private var inputSupport : String = ""
+    @State private var inputEntry   : String = ""
+    
+    @State private var lock : Bool = true
+    
     var body: some View {
-        
-        NavigationView {
-            
+                    
             Form {
                 
-                Section(header: Text("Information")) {
+                Section(header: Text("Informations")) {
                     
                     HStack(alignment: .top) {
                         Text("Cours")
@@ -26,18 +30,19 @@ struct EquityDetail: View {
                         Text("\(model.close)")
                     }
                     
-                    if model.history != nil {
-                        HStack(alignment: .top) {
-                            Text("Support")
+                    
+                    HStack {
+                        Text("Support")
+                        if self.lock {
                             Spacer()
-                            Text("Name")
+                            Text("\(model.support)")
+                        } else {
+                            TextField("0.0", text: $inputSupport).keyboardType(.numbersAndPunctuation).multilineTextAlignment(.trailing)
                         }
-                    } else {
-                        TextField("Support", text: $model.inputSupport)
                     }
                 }
                 
-                Section(header: Text("Indicateur")) {
+                Section(header: Text("Indicateurs")) {
                     
                     HStack(alignment: .top) {
                         Text("Tendance")
@@ -53,11 +58,11 @@ struct EquityDetail: View {
                     
                 }
                 
-                Section(header: Text("Simulation")) {
+                Section(header: Text("Simulations")) {
                     
-                    TextField("test", text: $model.inputEntry)
+                    TextField("test", text: $inputEntry)
                     
-                    if !self.model.inputEntry.isEmpty {
+                    if !self.inputEntry.isEmpty {
                         Group {
                             
                             HStack(alignment: .top) {
@@ -85,20 +90,27 @@ struct EquityDetail: View {
                             }
                         }
                     }
-
                 }
                 
-                Section() {
-                    Button(action: {
-                        print("OK")
-                    }) {
-                        Text("Register")
+                Section(header: Text("Actions")) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            self.lock.toggle()
+                        }) {
+                            if self.lock {
+                                Text("Edit")
+                            } else {
+                                Text("Lock")
+                            }
+                        }
                     }
                 }
-                
-            }.navigationBarTitle("\(model.name)")
+            }
+            .navigationBarTitle("\(model.name)")
+            .onDisappear(){
+                self.model.register(InputSupport: self.inputSupport, InputEntry: self.inputEntry)
         }
-
     }
 }
 

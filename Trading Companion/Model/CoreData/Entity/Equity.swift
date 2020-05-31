@@ -11,9 +11,6 @@ import CoreData
 
 public class Equity : NSManagedObject, Identifiable {
     
-    var inputSupport    : String = ""
-    var inputEntry      : String = ""
-    
     static var preview : Equity = Equity.local
     
     static var local : Equity {
@@ -41,15 +38,17 @@ public class Equity : NSManagedObject, Identifiable {
         }
     }
 
-    func registerNewSimulation() {
+    func register(InputSupport:String, InputEntry:String) {
         
-        if let value = Double(self.inputSupport) {
+        if let value = Double(InputSupport) {
             self.support = value
         }
         
-        if let value = Double(self.inputEntry) {
+        if let value = Double(InputEntry) {
             self.entry = value
         }
+        
+        AppDelegate.saveContext()
     }
         
     var shouldUpdateChange : Bool {
@@ -58,7 +57,6 @@ public class Equity : NSManagedObject, Identifiable {
             return true
         }
         
-        print(change.lastDay == Date())
         return change.lastDay == Date()
     }
     

@@ -26,7 +26,7 @@ struct StockCell: View {
         guard let close = Double(self.close), let support = Double(self.support) else {
             return .black
         }
-        return close < support ? .green : .black
+        return close < support ? .green : .primary
     }
     
     var body: some View {
@@ -42,7 +42,7 @@ struct StockCell: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text(self.close).foregroundColor(self.color())
+                Text(self.close)
                 Text(self.support)
             }
             
