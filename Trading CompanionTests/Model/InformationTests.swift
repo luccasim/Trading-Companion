@@ -9,6 +9,8 @@
 import XCTest
 @testable import Trading_Companion
 
+fileprivate let localdata = load(FileName: "information.json")
+
 class InformationTests: XCTestCase {
     
     var information : Information!
@@ -24,6 +26,11 @@ class InformationTests: XCTestCase {
         
         self.information = nil
     }
+    
+    func testPrevious() {
+        self.information = Information.previous
+        XCTAssertNotNil(self.information)
+    }
 
     func testInit() throws {
     
@@ -34,9 +41,9 @@ class InformationTests: XCTestCase {
     
     func testSetAlphavantage() throws {
         
-        let data = dataRessourse(fileName: "accor_information", fileExtension: "json")
+        let reponse = try AlphavantageWS.InformationReponse(from: localdata)
 
-        information.set(fromAlphavantage: data)
+        information.set(fromAlphavantage: reponse)
         
         XCTAssertNotNil(information.symbol)
         XCTAssertNotNil(information.name)

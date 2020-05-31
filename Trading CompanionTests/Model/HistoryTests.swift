@@ -9,6 +9,8 @@
 import XCTest
 @testable import Trading_Companion
 
+//private var localdata = load
+
 class HistoryTests: XCTestCase {
     
     var history : History!
@@ -32,7 +34,7 @@ class HistoryTests: XCTestCase {
     
     func testInitFormAlphavantage() throws {
         
-        let data        = self.dataRessourse(fileName: "ibm_history", fileExtension: "json")
+//        let data        = self.dataRessourse(fileName: "ibm_history", fileExtension: "json")
         
 //        self.history.set(fromAlphavantage: data)
         

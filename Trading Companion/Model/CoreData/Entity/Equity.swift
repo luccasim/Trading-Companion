@@ -16,6 +16,8 @@ public class Equity : NSManagedObject, Identifiable {
     static var local : Equity {
         let new = Equity(context: AppDelegate.viewContext)
         new.information = Information.previous
+        new.change = Change.previous
+        new.symbol = new.information?.symbol
         return new
     }
     

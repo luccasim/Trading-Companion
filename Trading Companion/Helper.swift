@@ -24,7 +24,15 @@ extension Array where Element:Equatable {
 
 func load(FileName:String) -> Data {
     
-    guard let url = Bundle.main.url(forResource: FileName, withExtension: nil) else {
+    let fileName        : String
+    let fileExtension   : String?
+
+    let tab = FileName.components(separatedBy: ".")
+
+    fileName = tab[0]
+    fileExtension = tab.count > 1 ? tab[1] : nil
+    
+    guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
         fatalError("Could not load \(FileName)")
     }
     

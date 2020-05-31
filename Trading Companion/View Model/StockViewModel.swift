@@ -16,7 +16,9 @@ final class StockViewModel : ObservableObject {
     @Published var equities : [Equity] = []
     
     private func updates(equities:[Equity]) {
+        DispatchQueue.main.async {
         self.equities.update(elements: equities)
+        }
     }
     
     private lazy var sortedList = {
@@ -32,11 +34,8 @@ final class StockViewModel : ObservableObject {
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
             switch result {
             case .success(let reponse):
-                DispatchQueue.main.async {
-                    if let equities = reponse as? [Equity] {
-                        self.updates(equities: equities)
-                    }
-                
+                if let equities = reponse as? [Equity] {
+                    self.updates(equities: equities)
                 }
             case .failure(let error):
                 if case AlphavantageWS.Errors.endOfUpdate = error {
@@ -53,10 +52,8 @@ final class StockViewModel : ObservableObject {
         self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
             switch result {
             case .success(let reponse):
-                DispatchQueue.main.async {
-                    if let equity = reponse as? [Equity] {
-                        self.updates(equities: equity)
-                    }
+                if let equity = reponse as? [Equity] {
+                    self.updates(equities: equity)
                 }
             case .failure(_): break
             }

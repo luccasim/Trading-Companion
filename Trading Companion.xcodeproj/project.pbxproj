@@ -23,8 +23,14 @@
 		84246E9F247FF64F007A9029 /* Alphavantage+Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9E247FF64F007A9029 /* Alphavantage+Endpoint.swift */; };
 		84246EA1247FFEE1007A9029 /* Alphavantage+Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA0247FFEE1007A9029 /* Alphavantage+Global.swift */; };
 		84246EA3247FFF50007A9029 /* Alphavantage+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA2247FFF50007A9029 /* Alphavantage+History.swift */; };
-		84327DCB246FDDDA00FE4C87 /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
-		84327DCF2471B1A900FE4C87 /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
+		84366F0D2483CC32006A1C6B /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
+		84366F0E2483CC32006A1C6B /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
+		84366F0F2483CC32006A1C6B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
+		84366F102483CC32006A1C6B /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* global.json */; };
+		84366F122483CC34006A1C6B /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
+		84366F132483CC34006A1C6B /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
+		84366F142483CC34006A1C6B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
+		84366F152483CC34006A1C6B /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* global.json */; };
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
 		843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F7247AAF790091D853 /* HistoryTests.swift */; };
@@ -37,9 +43,7 @@
 		8465CFDE246984C6000290A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8465CFDC246984C6000290A8 /* LaunchScreen.storyboard */; };
 		8465CFF4246984C6000290A8 /* Trading_CompanionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFF3246984C6000290A8 /* Trading_CompanionUITests.swift */; };
 		8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465D001246984F0000290A8 /* AlphavantageWS.swift */; };
-		847B16E024753F5E0054BE02 /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* global.json */; };
 		848E16472482761000C0D536 /* EquityDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E16462482761000C0D536 /* EquityDetail.swift */; };
-		848E164A2482A94100C0D536 /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
 		848E164C2482B38200C0D536 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E164B2482B38200C0D536 /* Day.swift */; };
 		8494F828247C599800A7C5EE /* IndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494F827247C599800A7C5EE /* IndexTests.swift */; };
 		84B472062479B01E00DDFCBF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84B472042479B01E00DDFCBF /* Model.xcdatamodeld */; };
@@ -150,13 +154,6 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
-		84205039247274ED001CBA9C /* Ressources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Ressources;
-			sourceTree = "<group>";
-		};
 		84246EA424800278007A9029 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +166,7 @@
 		843CC5F4247A85C90091D853 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				840D5FF72479C34100309500 /* EquityTests.swift */,
 				843CC5F5247A86760091D853 /* InformationTests.swift */,
 				843CC5F9247ABDB60091D853 /* ChangeTests.swift */,
 				843CC5F7247AAF790091D853 /* HistoryTests.swift */,
@@ -238,8 +236,6 @@
 				843CC5FB247C3FBD0091D853 /* WS */,
 				843CC5F4247A85C90091D853 /* Model */,
 				843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */,
-				840D5FF72479C34100309500 /* EquityTests.swift */,
-				84205039247274ED001CBA9C /* Ressources */,
 				8465CFEA246984C6000290A8 /* Info.plist */,
 			);
 			path = "Trading CompanionTests";
@@ -420,9 +416,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84366F0F2483CC32006A1C6B /* information.json in Resources */,
 				8465CFDE246984C6000290A8 /* LaunchScreen.storyboard in Resources */,
+				84366F102483CC32006A1C6B /* global.json in Resources */,
 				8465CFDB246984C6000290A8 /* Preview Assets.xcassets in Resources */,
-				848E164A2482A94100C0D536 /* days.json in Resources */,
+				84366F0D2483CC32006A1C6B /* history.json in Resources */,
+				84366F0E2483CC32006A1C6B /* days.json in Resources */,
 				8465CFD8246984C6000290A8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,9 +430,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84327DCF2471B1A900FE4C87 /* history.json in Resources */,
-				847B16E024753F5E0054BE02 /* global.json in Resources */,
-				84327DCB246FDDDA00FE4C87 /* information.json in Resources */,
+				84366F152483CC34006A1C6B /* global.json in Resources */,
+				84366F142483CC34006A1C6B /* information.json in Resources */,
+				84366F132483CC34006A1C6B /* days.json in Resources */,
+				84366F122483CC34006A1C6B /* history.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

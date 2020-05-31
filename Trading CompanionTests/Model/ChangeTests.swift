@@ -37,8 +37,9 @@ class ChangeTests: XCTestCase {
     func testSetFromAlphavantage() throws {
         
         let data    = try Data(contentsOf: self.get(FileName: "ibm_change", FileExtension: "json"))
+        let reponse = try AlphavantageWS.GlobalReponse(from: data)
         
-        self.change.set(fromAlphavantage: data)
+        self.change.set(fromAlphavantage: reponse)
         
         XCTAssertNotNil(change.change)
         XCTAssertNotNil(change.lastDay)

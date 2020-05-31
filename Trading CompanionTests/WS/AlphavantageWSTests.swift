@@ -26,21 +26,42 @@ class AlphavantageWSTests: XCTestCase {
     }
     
     class Mock : AlphavantageWSModel {
-        
+
         var label   : String
         var detail  : AlphavantageWS.InformationReponse?
         var global  : AlphavantageWS.GlobalReponse?
+        var history : AlphavantageWS.HistoryReponse?
         
         init(_ str:String) {
             self.label = str
         }
         
-        func setDetail(Data: Data) {
-            self.detail = try? AlphavantageWS.InformationReponse.init(from: Data)
+        func setDetail(Reponse: AlphavantageWS.InformationReponse) {
+            self.detail = Reponse
         }
         
-        func setGlobal(Data: Data) {
-            self.global = try? AlphavantageWS.GlobalReponse.init(from: Data)
+        func setGlobal(Reponse: AlphavantageWS.GlobalReponse) {
+            self.global = Reponse
+        }
+        
+        func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
+            self.history = Reponse
+        }
+    }
+    
+    private func callEndpoint(Mock:Mock, Endpoint:AlphavantageWS.Endpoint) {
+        
+        let exp = expectation(description: "TestDetails")
+        
+        self.ws.update(Endpoint: .detail, EquitiesList: [Mock]) { (result) in
+            switch result {
+            case .success(_): break
+            case .failure(_): exp.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 60) { (error) in
+            
         }
     }
     
@@ -51,18 +72,7 @@ class AlphavantageWSTests: XCTestCase {
         let mock = Mock(self.symbol)
         mock.label = symbol
         
-        let exp = expectation(description: "TestDetails")
-        
-        self.ws.update(Endpoint: .detail, EquitiesList: [mock]) { (result) in
-            switch result {
-            case .success(_): break
-            case .failure(_): exp.fulfill()
-            }
-        }
-        
-        waitForExpectations(timeout: 60) { (error) in
-            
-        }
+        self.callEndpoint(Mock: mock, Endpoint: .detail)
         
         XCTAssertNotNil(mock.detail)
         
