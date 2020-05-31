@@ -10,56 +10,96 @@ import SwiftUI
 
 struct EquityDetail: View {
     
-    let model : Equity
-    @State var entry : String = "120"
+    @State var model : Equity
     
     var body: some View {
         
-        VStack(alignment: .center){
+        NavigationView {
             
-            // Global Informations
-            HStack(alignment: .top) {
-                VStack {
-                    Text("Symbol")
-                    Text("Name")
-                    Spacer()
+            Form {
+                
+                Section(header: Text("Information")) {
+                    
+                    HStack(alignment: .top) {
+                        Text("Cours")
+                        Spacer()
+                        Text("\(model.close)")
+                    }
+                    
+                    if model.history != nil {
+                        HStack(alignment: .top) {
+                            Text("Support")
+                            Spacer()
+                            Text("Name")
+                        }
+                    } else {
+                        TextField("Support", text: $model.inputSupport)
+                    }
                 }
-                Spacer()
-                VStack {
-                    Text("Cours")
-                    Text("Support : \(model.label)")
+                
+                Section(header: Text("Indicateur")) {
+                    
+                    HStack(alignment: .top) {
+                        Text("Tendance")
+                        Spacer()
+                        Text("")
+                    }
+                    
+                    HStack(alignment: .top) {
+                        Text("MM20")
+                        Spacer()
+                        Text("")
+                    }
+                    
                 }
-            }
-            
-            Spacer()
-            
-            // Indicateurs
-            HStack {
-                Text("Données")
-                Text("Tendance")
-                Text("MM20")
-                Spacer()
-                Text("Objectifs")
-            }
-            
-            // Simulation
-            HStack {
-                Text("Entrée:")
-                TextField("Entrée", text: $entry)
-                Spacer()
-            }
-            
-            // Actions
-            HStack {
-                Text("Enregistrer")
-                Spacer()
-                Text("Ordre")
-            }
-            
-            Spacer()
+                
+                Section(header: Text("Simulation")) {
+                    
+                    TextField("test", text: $model.inputEntry)
+                    
+                    if !self.model.inputEntry.isEmpty {
+                        Group {
+                            
+                            HStack(alignment: .top) {
+                                Text("Stop")
+                                Spacer()
+                                Text("0.0")
+                            }
+                            
+                            HStack(alignment: .top) {
+                                Text("S1")
+                                Spacer()
+                                Text("0.0")
+                            }
+                            
+                            HStack(alignment: .top) {
+                                Text("S2")
+                                Spacer()
+                                Text("0.0")
+                            }
+
+                            HStack(alignment: .top) {
+                                Text("S3")
+                                Spacer()
+                                Text("0.0")
+                            }
+                        }
+                    }
+
+                }
+                
+                Section() {
+                    Button(action: {
+                        print("OK")
+                    }) {
+                        Text("Register")
+                    }
+                }
+                
+            }.navigationBarTitle("\(model.name)")
         }
+
     }
-    
 }
 
 struct EquityDetail_Previews: PreviewProvider {

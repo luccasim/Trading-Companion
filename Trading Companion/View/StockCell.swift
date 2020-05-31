@@ -12,7 +12,7 @@ protocol EquityListView : Identifiable {
     var little  : String { get }
     var name    : String { get }
     var close   : String { get }
-    var support : String { get }
+    var alert   : String { get }
 }
 
 struct StockCell: View {
@@ -21,6 +21,13 @@ struct StockCell: View {
     var name    : String       = "Title"
     var close   : String       = "12"
     var support : String       = "10"
+    
+    func color() -> Color {
+        guard let close = Double(self.close), let support = Double(self.support) else {
+            return .black
+        }
+        return close < support ? .green : .black
+    }
     
     var body: some View {
         
@@ -35,7 +42,7 @@ struct StockCell: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text(self.close)
+                Text(self.close).foregroundColor(self.color())
                 Text(self.support)
             }
             

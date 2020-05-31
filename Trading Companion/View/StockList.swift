@@ -14,14 +14,21 @@ struct StockList: View {
         
     var body: some View {
         
-        List {
-            
-            ForEach(self.viewModel.equities) { equity in
-                StockCell(symbol: equity.little, name: equity.name, close: equity.close, support: equity.support)
-            }
-            
+        NavigationView {
+            List {
+                
+                ForEach(self.viewModel.equities) { equity in
+                    
+                    NavigationLink(destination: EquityDetail(model: equity)) {
+                        
+                    StockCell(symbol: equity.little, name: equity.name, close: equity.close, support: equity.alert)
+                    }
+                    
+                }
+                
             }.onAppear {
-            self.viewModel.fetchEquitiesInformations()
+                self.viewModel.fetchEquitiesInformations()
+            }.navigationBarTitle("TCD Equities")
         }
     }
 }
