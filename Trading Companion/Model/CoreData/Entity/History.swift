@@ -15,11 +15,12 @@ public class History : NSManagedObject {
     
     static var local : History {
         let obj = History(context: AppDelegate.viewContext)
-        obj.set(fromAlphavantage: try! AlphavantageWS.HistoryReponse.from(AlphavantageData: localData))
+        obj.set(fromAlphavantage: try! AlphavantageWS.HistoryReponse(from: localData))
         return obj
     }
     
-    func set(fromAlphavantage data:[AlphavantageWS.HistoryReponse]) {
+    func set(fromAlphavantage reponse:AlphavantageWS.HistoryReponse) {
+        
     }
 }
 

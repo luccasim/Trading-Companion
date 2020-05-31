@@ -73,6 +73,11 @@ extension Equity : EquityListView {
 
 extension Equity : AlphavantageWSModel {
     
+    func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
+        //Todo
+    }
+    
+    
     var label : String {
         return self.symbol ?? ""
     }
