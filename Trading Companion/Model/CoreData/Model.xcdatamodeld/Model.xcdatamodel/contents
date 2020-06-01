@@ -18,6 +18,7 @@
     </entity>
     <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
         <attribute name="entry" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="formattedTitle" optional="YES" attributeType="String"/>
         <attribute name="support" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="symbol" attributeType="String"/>
         <relationship name="change" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Change" inverseName="equity" inverseEntity="Change"/>
@@ -49,7 +50,7 @@
     <elements>
         <element name="Change" positionX="342.78125" positionY="-863.25" width="128" height="208"/>
         <element name="Day" positionX="575.3828125" positionY="-802.4375" width="128" height="58"/>
-        <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="148"/>
+        <element name="Equity" positionX="348.55859375" positionY="-1042.765625" width="128" height="163"/>
         <element name="History" positionX="545.546875" positionY="-1041.5546875" width="128" height="163"/>
         <element name="Index" positionX="350.4609375" positionY="-1157.55859375" width="128" height="58"/>
         <element name="Information" positionX="151.30078125" positionY="-862.109375" width="128" height="133"/>

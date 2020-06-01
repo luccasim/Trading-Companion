@@ -34,10 +34,6 @@ class HistoryTests: XCTestCase {
     
     func testInitFormAlphavantage() throws {
         
-//        let data        = self.dataRessourse(fileName: "ibm_history", fileExtension: "json")
-        
-//        self.history.set(fromAlphavantage: data)
-        
         XCTAssertNotNil(self.history.date)
         XCTAssertNotNil(self.history.open)
         XCTAssertNotNil(self.history.close)

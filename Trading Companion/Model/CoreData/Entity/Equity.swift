@@ -63,6 +63,22 @@ public class Equity : NSManagedObject, Identifiable {
     var shouldUpdateInformation : Bool {
         return self.information == nil
     }
+    
+    var titleFormat : String {
+        
+        guard let title = self.information?.name else {
+            return ""
+        }
+        
+        let format = title.components(separatedBy: " ")
+        let words = format.count > 3 ? "\(format[0]) \(format[1]) \(format[2])" : title
+        let size = words.count > 30 ? words.suffix(30).base : words
+        
+        self.formattedTitle = size
+        
+        return size
+    }
+
 }
 
 extension Equity : EquityListView {
@@ -72,7 +88,7 @@ extension Equity : EquityListView {
     }
     
     var name: String {
-        return self.information?.name ?? ""
+        return self.formattedTitle ?? self.titleFormat
     }
     
     var close: String {
