@@ -27,36 +27,20 @@ struct SimulationView: View {
     
     var body: some View {
         
-        Form {
+        Group {
             
             NumberFieldView(label: "Objectif", value: self.$inputObjectif, lock: false)
             
             
             if validInput {
                 
-                HStack(alignment: .top) {
-                    Text("Stop")
-                    Spacer()
-                    Text("\(self.simulator.stop.toString)")
-                }
+                DoubleTextView(label: "Stop", value: self.simulator.stop)
                 
-                HStack(alignment: .top) {
-                    Text("R1")
-                    Spacer()
-                    Text("\(self.simulator.r1.toString)")
-                }
+                DoubleTextView(label: "R1", value: self.simulator.r1)
                 
-                HStack(alignment: .top) {
-                    Text("R2")
-                    Spacer()
-                    Text("\(self.simulator.r2.toString)")
-                }
+                DoubleTextView(label: "R2", value: self.simulator.r2)
                 
-                HStack(alignment: .top) {
-                    Text("R3")
-                    Spacer()
-                    Text("\(self.simulator.r3.toString)")
-                }
+                DoubleTextView(label: "R3", value: self.simulator.r3)
             }
         }
         
@@ -65,7 +49,9 @@ struct SimulationView: View {
 
 struct SimulationView_Previews: PreviewProvider {
     static var previews: some View {
-        SimulationView(objectif: .constant(0))
+        Form {
+            SimulationView(objectif: .constant(0))
+        }
     }
 }
 
