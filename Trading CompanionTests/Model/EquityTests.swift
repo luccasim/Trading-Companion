@@ -30,6 +30,8 @@ class EquityTests: XCTestCase {
     
     func testTitleFormat() throws {
         
-        let equity = Equity
+        let equity = Equity.preview
+        
+        print(equity.name)
     }
 }

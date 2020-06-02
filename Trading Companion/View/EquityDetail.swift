@@ -11,11 +11,11 @@ import Combine
 
 struct EquityDetail: View {
     
-    @State var model : Equity
+    var model : Equity
     
-    @State private var inputSupport : String = ""
-    @State private var inputEntry   : String = ""
-    
+    @State private var inputSupport : Double = 0
+    @State private var inputEntry   : Double = 0
+        
     @State private var lock : Bool = true
     
     var body: some View {
@@ -32,12 +32,12 @@ struct EquityDetail: View {
                     
                     
                     HStack {
-                        Text("Support")
                         if self.lock {
+                            Text("Support")
                             Spacer()
-                            Text("\(model.support)")
+                            Text("\(String(format: "%.3f", model.support))")
                         } else {
-                            TextField("0.0", text: $inputSupport).keyboardType(.numbersAndPunctuation).multilineTextAlignment(.trailing)
+                            NumberField(label: "Support", input: "0", value: self.$inputSupport)
                         }
                     }
                 }
@@ -60,10 +60,9 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Simulations")) {
                     
-                    TextField("test", text: $inputEntry)
+                    NumberField(label: "Objectif", input: "0", value: self.$inputEntry)
                     
-                    if !self.inputEntry.isEmpty {
-                        Group {
+                    if self.inputEntry != 0 {
                             
                             HStack(alignment: .top) {
                                 Text("Stop")
@@ -82,14 +81,13 @@ struct EquityDetail: View {
                                 Spacer()
                                 Text("0.0")
                             }
-
+                            
                             HStack(alignment: .top) {
                                 Text("S3")
                                 Spacer()
                                 Text("0.0")
                             }
                         }
-                    }
                 }
                 
                 Section(header: Text("Actions")) {
@@ -109,7 +107,8 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onDisappear(){
-                self.model.register(InputSupport: self.inputSupport, InputEntry: self.inputEntry)
+                self.model.entry = self.inputEntry
+                self.model.support = self.inputSupport
         }
     }
 }
@@ -119,5 +118,3 @@ struct EquityDetail_Previews: PreviewProvider {
         EquityDetail(model: Equity.preview)
     }
 }
-
-

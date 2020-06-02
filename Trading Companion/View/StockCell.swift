@@ -20,7 +20,7 @@ struct StockCell: View {
     var symbol  : String       = "ABC"
     var name    : String       = "Title"
     var close   : String       = "12"
-    var support : String       = "10"
+    @State var support : String       = "10"
     
     func color() -> Color {
         guard let close = Double(self.close), let support = Double(self.support) else {
