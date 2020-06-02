@@ -13,10 +13,10 @@ struct SimulationView: View {
     var lock = false
     var simulator = Sim()
     
-    @Binding var objectif       : Double?
+    @Binding var objectif       : String
         
     var validInput : Bool {
-        if let value = objectif {
+        if let value = Double(objectif) {
             self.simulator.calcul(Objectif: value)
             return true
         }
@@ -27,7 +27,7 @@ struct SimulationView: View {
         
         Group {
             
-            NumberFieldView(label: "Objectif", value: self.$objectif, lock: self.lock)
+            NumberFieldView(label: "Objectif", input: self.$objectif, lock: self.lock)
             
             if validInput {
                 
@@ -40,14 +40,14 @@ struct SimulationView: View {
                 DoubleTextView(label: "R3", value: self.simulator.r3)
             }
         }
-        
     }
+    
 }
 
 struct SimulationView_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            SimulationView(objectif: .constant(nil))
+            SimulationView(objectif: .constant(""))
         }
     }
 }
@@ -71,7 +71,7 @@ class Sim {
     }
 }
 
-fileprivate extension Double {
+extension Double {
     
     var toString : String {
         return String(format: "%.3f", self)

@@ -17,7 +17,7 @@
         <relationship name="history" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="History" inverseName="days" inverseEntity="History"/>
     </entity>
     <entity name="Equity" representedClassName=".Equity" syncable="YES" codeGenerationType="category">
-        <attribute name="entry" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="entry" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="formattedTitle" optional="YES" attributeType="String"/>
         <attribute name="support" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="symbol" attributeType="String"/>

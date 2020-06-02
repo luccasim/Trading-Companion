@@ -13,8 +13,8 @@ struct EquityDetail: View {
     
     var model : Equity
     
-    @State private var inputSupport : Double?
-    @State private var inputEntry   : Double?
+    @State private var inputSupport : String = ""
+    @State private var inputEntry   : String = ""
         
     @State private var lock : Bool = true
     
@@ -26,7 +26,7 @@ struct EquityDetail: View {
                     
                     TextView(label: "Cours", value: model.close)
                     
-                    NumberFieldView(label: "Support", value: self.$inputSupport, lock: lock)
+                    NumberFieldView(label: "Support", input: self.$inputSupport, lock: lock)
                 }
                 
                 Section(header: Text("Indicateurs")) {
@@ -55,15 +55,12 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onAppear() {
-                self.inputEntry = self.model.entry
-                print(self.inputEntry)
-                self.inputSupport = self.model.support
-                print(self.inputSupport)
+                self.inputSupport = self.model.support == 0 ? "" : self.model.support.toString
+                self.inputEntry = self.model.entry == 0 ? "" : self.model.support.toString
             }
             .onDisappear(){
-                self.model.entry = self.inputEntry ?? 0
-                self.model.support = self.inputSupport ?? 0
-        }
+
+            }
     }
 }
 

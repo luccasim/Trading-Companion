@@ -12,22 +12,18 @@ import Combine
 struct NumberFieldView: View {
     
     let label    : String
-            
-    @Binding var value  : Double?
+                
+    @Binding var input    : String
     
-    @State var input    : String = ""
     var lock            : Bool = false
     
     var body: some View {
         
         HStack {
             Text("\(label)")
-            TextField("0.00", text: $input)
+            TextField("0.000", text: $input)
                 .multilineTextAlignment(.trailing)
                 .disabled(lock)
-                .onReceive(input.publisher) {
-                    self.value = Double(String($0))
-                }
         }
     }
 }
@@ -39,11 +35,11 @@ struct NumberField_Previews: PreviewProvider {
         Group {
             
             Form {
-                NumberFieldView(label: "Label", value: .constant(0))
+                NumberFieldView(label: "Label", input: .constant("3"))
             }
             
             List {
-                NumberFieldView(label: "Label", value: .constant(0))
+                NumberFieldView(label: "Label", input: .constant(""))
             }
         }
     }
