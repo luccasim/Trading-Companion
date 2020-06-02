@@ -13,7 +13,7 @@ struct EquityDetail: View {
     
     var model : Equity
     
-    @State private var inputSupport : Double = 0
+    @State private var inputSupport : String = ""
     @State private var inputEntry   : Double = 0
         
     @State private var lock : Bool = true
@@ -37,7 +37,7 @@ struct EquityDetail: View {
                             Spacer()
                             Text("\(String(format: "%.3f", model.support))")
                         } else {
-                            NumberField(label: "Support", input: "0", value: self.$inputSupport)
+//                            NumberFormField(label: "Support", value: self.$inputSupport, lock: false)
                         }
                     }
                 }
@@ -59,35 +59,7 @@ struct EquityDetail: View {
                 }
                 
                 Section(header: Text("Simulations")) {
-                    
-                    NumberField(label: "Objectif", input: "0", value: self.$inputEntry)
-                    
-                    if self.inputEntry != 0 {
-                            
-                            HStack(alignment: .top) {
-                                Text("Stop")
-                                Spacer()
-                                Text("0.0")
-                            }
-                            
-                            HStack(alignment: .top) {
-                                Text("S1")
-                                Spacer()
-                                Text("0.0")
-                            }
-                            
-                            HStack(alignment: .top) {
-                                Text("S2")
-                                Spacer()
-                                Text("0.0")
-                            }
-                            
-                            HStack(alignment: .top) {
-                                Text("S3")
-                                Spacer()
-                                Text("0.0")
-                            }
-                        }
+                    SimulationView(objectif: self.$inputEntry)
                 }
                 
                 Section(header: Text("Actions")) {
@@ -107,8 +79,8 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onDisappear(){
-                self.model.entry = self.inputEntry
-                self.model.support = self.inputSupport
+                self.model.entry = 0
+                self.model.support = Double(self.inputSupport) ?? 0
         }
     }
 }

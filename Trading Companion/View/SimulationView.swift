@@ -10,45 +10,54 @@ import SwiftUI
 
 struct SimulationView: View {
     
-    @Binding var model : Equity
+    var simulator = Sim()
     
-    var entryIsSet : Bool {
-        return self.model.entry != 0
+    @Binding var objectif       : Double
+    
+    @State var inputObjectif    : String = ""
+    
+    var validInput : Bool {
+        if let value = Double(inputObjectif) {
+            self.objectif = value
+            self.simulator.calcul(Objectif: value)
+            return true
+        }
+        return false
     }
     
     var body: some View {
         
-            VStack {
+        Form {
             
-            NumberField(label: "Objectif", input: "0", value: self.$model.entry)
+            NumberFormField(label: "Objectif", value: self.$inputObjectif, lock: false)
             
             
-            if self.model.entry == 0 {
-                    
-                    HStack(alignment: .top) {
-                        Text("Stop")
-                        Spacer()
-                        Text("0.0")
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Text("S1")
-                        Spacer()
-                        Text("0.0")
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Text("S2")
-                        Spacer()
-                        Text("0.0")
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Text("S3")
-                        Spacer()
-                        Text("0.0")
-                    }
+            if validInput {
+                
+                HStack(alignment: .top) {
+                    Text("Stop")
+                    Spacer()
+                    Text("\(self.simulator.stop.toString)")
                 }
+                
+                HStack(alignment: .top) {
+                    Text("R1")
+                    Spacer()
+                    Text("\(self.simulator.r1.toString)")
+                }
+                
+                HStack(alignment: .top) {
+                    Text("R2")
+                    Spacer()
+                    Text("\(self.simulator.r2.toString)")
+                }
+                
+                HStack(alignment: .top) {
+                    Text("R3")
+                    Spacer()
+                    Text("\(self.simulator.r3.toString)")
+                }
+            }
         }
         
     }
@@ -56,6 +65,35 @@ struct SimulationView: View {
 
 struct SimulationView_Previews: PreviewProvider {
     static var previews: some View {
-        SimulationView(model: .constant(Equity.preview))
+        SimulationView(objectif: .constant(0))
+    }
+}
+
+class Sim {
+    
+    var entry   : Double = 0
+    var percent : Double = 7
+    var stop    : Double = 6
+    
+    var r1      : Double = 0
+    var r2      : Double = 0
+    var r3      : Double = 0
+    
+    func calcul(Objectif:Double) {
+        self.entry = Objectif
+        self.stop = Objectif * (1 - percent.toPercent)
+        self.r1 = Objectif * (1 + percent.toPercent)
+        self.r2 = Objectif * (1 + percent.toPercent*2)
+        self.r3 = Objectif * (1 + percent.toPercent*3)
+    }
+}
+
+fileprivate extension Double {
+    var toString : String {
+        return String(format: "%.3f", self)
+    }
+    
+    var toPercent : Double {
+        return self / 100
     }
 }
