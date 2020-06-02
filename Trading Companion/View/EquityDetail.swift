@@ -13,8 +13,8 @@ struct EquityDetail: View {
     
     var model : Equity
     
-    @State private var inputSupport : String = ""
-    @State private var inputEntry   : Double = 0
+    @State private var inputSupport : Double?
+    @State private var inputEntry   : Double?
         
     @State private var lock : Bool = true
     
@@ -24,63 +24,45 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Informations")) {
                     
-                    HStack(alignment: .top) {
-                        Text("Cours")
-                        Spacer()
-                        Text("\(model.close)")
-                    }
+                    TextView(label: "Cours", value: model.close)
                     
-                    
-                    HStack {
-                        if self.lock {
-                            Text("Support")
-                            Spacer()
-                            Text("\(String(format: "%.3f", model.support))")
-                        } else {
-//                            NumberFormField(label: "Support", value: self.$inputSupport, lock: false)
-                        }
-                    }
+                    NumberFieldView(label: "Support", value: self.$inputSupport, lock: lock)
                 }
                 
                 Section(header: Text("Indicateurs")) {
                     
-                    HStack(alignment: .top) {
-                        Text("Tendance")
-                        Spacer()
-                        Text("")
-                    }
+                    DoubleTextView(label: "Tendance", value: 0)
                     
-                    HStack(alignment: .top) {
-                        Text("MM20")
-                        Spacer()
-                        Text("")
-                    }
+                    DoubleTextView(label: "MM20", value: 0)
                     
                 }
                 
                 Section(header: Text("Simulations")) {
-                    SimulationView(objectif: self.$inputEntry)
+                    
+                    SimulationView(lock: lock, objectif: self.$inputEntry)
                 }
                 
                 Section(header: Text("Actions")) {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            self.lock.toggle()
-                        }) {
-                            if self.lock {
-                                Text("Edit")
-                            } else {
-                                Text("Lock")
-                            }
+                    
+                    Button(action: {self.lock.toggle()}) {
+                        if self.lock {
+                            Text("Edit")
+                        } else {
+                            Text("Lock")
                         }
                     }
                 }
             }
             .navigationBarTitle("\(model.name)")
+            .onAppear() {
+                self.inputEntry = self.model.entry
+                print(self.inputEntry)
+                self.inputSupport = self.model.support
+                print(self.inputSupport)
+            }
             .onDisappear(){
-                self.model.entry = 0
-                self.model.support = Double(self.inputSupport) ?? 0
+                self.model.entry = self.inputEntry ?? 0
+                self.model.support = self.inputSupport ?? 0
         }
     }
 }

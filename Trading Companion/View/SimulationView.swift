@@ -10,15 +10,13 @@ import SwiftUI
 
 struct SimulationView: View {
     
+    var lock = false
     var simulator = Sim()
     
-    @Binding var objectif       : Double
-    
-    @State var inputObjectif    : String = ""
-    
+    @Binding var objectif       : Double?
+        
     var validInput : Bool {
-        if let value = Double(inputObjectif) {
-            self.objectif = value
+        if let value = objectif {
             self.simulator.calcul(Objectif: value)
             return true
         }
@@ -29,8 +27,7 @@ struct SimulationView: View {
         
         Group {
             
-            NumberFieldView(label: "Objectif", value: self.$inputObjectif, lock: false)
-            
+            NumberFieldView(label: "Objectif", value: self.$objectif, lock: self.lock)
             
             if validInput {
                 
@@ -50,7 +47,7 @@ struct SimulationView: View {
 struct SimulationView_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            SimulationView(objectif: .constant(0))
+            SimulationView(objectif: .constant(nil))
         }
     }
 }

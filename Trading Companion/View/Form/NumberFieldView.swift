@@ -7,21 +7,27 @@
 //
 
 import SwiftUI
+import Combine
 
 struct NumberFieldView: View {
     
-    var label    : String
+    let label    : String
             
-    @Binding var value  : String
-    @State var lock     : Bool = false
+    @Binding var value  : Double?
+    
+    @State var input    : String = ""
+    var lock            : Bool = false
     
     var body: some View {
         
         HStack {
             Text("\(label)")
-            TextField("0.00", text: $value)
+            TextField("0.00", text: $input)
                 .multilineTextAlignment(.trailing)
                 .disabled(lock)
+                .onReceive(input.publisher) {
+                    self.value = Double(String($0))
+                }
         }
     }
 }
@@ -33,11 +39,11 @@ struct NumberField_Previews: PreviewProvider {
         Group {
             
             Form {
-                NumberFieldView(label: "Label", value: .constant(""))
+                NumberFieldView(label: "Label", value: .constant(0))
             }
             
             List {
-                NumberFieldView(label: "Label", value: .constant(""))
+                NumberFieldView(label: "Label", value: .constant(0))
             }
         }
     }
