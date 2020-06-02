@@ -29,7 +29,7 @@ struct SimulationView: View {
         
         Form {
             
-            NumberFormField(label: "Objectif", value: self.$inputObjectif, lock: false)
+            NumberFieldView(label: "Objectif", value: self.$inputObjectif, lock: false)
             
             
             if validInput {
@@ -89,6 +89,7 @@ class Sim {
 }
 
 fileprivate extension Double {
+    
     var toString : String {
         return String(format: "%.3f", self)
     }

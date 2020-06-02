@@ -17,8 +17,10 @@
 		8412C731246A8F6A00AA342E /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* StockList.swift */; };
 		8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C733246AB8C900AA342E /* StockViewModel.swift */; };
 		8412C736246AC3FF00AA342E /* EquitiesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C735246AC3FF00AA342E /* EquitiesGroup.swift */; };
-		84207C532485813B0068DF50 /* NumberFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84207C522485813B0068DF50 /* NumberFormField.swift */; };
+		84207C532485813B0068DF50 /* NumberFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84207C522485813B0068DF50 /* NumberFieldView.swift */; };
 		84207C5824858FCE0068DF50 /* SimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84207C5724858FCE0068DF50 /* SimulationView.swift */; };
+		842099CA24867E4D0029739B /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842099C924867E4D0029739B /* TextView.swift */; };
+		842099CC248680D00029739B /* DoubleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842099CB248680D00029739B /* DoubleTextView.swift */; };
 		84246E99247C66BF007A9029 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C6429B2479DF3400AB5E7D /* Index.swift */; };
 		84246E9B247CED14007A9029 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9A247CED14007A9029 /* Helper.swift */; };
 		84246E9D247EEAB4007A9029 /* Alphavantage+Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246E9C247EEAB4007A9029 /* Alphavantage+Detail.swift */; };
@@ -79,8 +81,10 @@
 		8412C730246A8F6A00AA342E /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
 		8412C733246AB8C900AA342E /* StockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewModel.swift; sourceTree = "<group>"; };
 		8412C735246AC3FF00AA342E /* EquitiesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroup.swift; sourceTree = "<group>"; };
-		84207C522485813B0068DF50 /* NumberFormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormField.swift; sourceTree = "<group>"; };
+		84207C522485813B0068DF50 /* NumberFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFieldView.swift; sourceTree = "<group>"; };
 		84207C5724858FCE0068DF50 /* SimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationView.swift; sourceTree = "<group>"; };
+		842099C924867E4D0029739B /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		842099CB248680D00029739B /* DoubleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTextView.swift; sourceTree = "<group>"; };
 		84246E9A247CED14007A9029 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		84246E9C247EEAB4007A9029 /* Alphavantage+Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+Detail.swift"; sourceTree = "<group>"; };
 		84246E9E247FF64F007A9029 /* Alphavantage+Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+Endpoint.swift"; sourceTree = "<group>"; };
@@ -143,7 +147,7 @@
 		8412C72D246A8F2E00AA342E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84207C542485878A0068DF50 /* Support */,
+				84207C542485878A0068DF50 /* Form */,
 				8412C72E246A8F4E00AA342E /* StockCell.swift */,
 				848E16462482761000C0D536 /* EquityDetail.swift */,
 				84207C5724858FCE0068DF50 /* SimulationView.swift */,
@@ -159,12 +163,14 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
-		84207C542485878A0068DF50 /* Support */ = {
+		84207C542485878A0068DF50 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				84207C522485813B0068DF50 /* NumberFormField.swift */,
+				84207C522485813B0068DF50 /* NumberFieldView.swift */,
+				842099C924867E4D0029739B /* TextView.swift */,
+				842099CB248680D00029739B /* DoubleTextView.swift */,
 			);
-			path = Support;
+			path = Form;
 			sourceTree = "<group>";
 		};
 		84246EA424800278007A9029 /* CoreData */ = {
@@ -467,12 +473,14 @@
 			files = (
 				84246E9F247FF64F007A9029 /* Alphavantage+Endpoint.swift in Sources */,
 				840D5FFA2479CB3E00309500 /* History.swift in Sources */,
+				842099CA24867E4D0029739B /* TextView.swift in Sources */,
+				842099CC248680D00029739B /* DoubleTextView.swift in Sources */,
 				84246EA1247FFEE1007A9029 /* Alphavantage+Global.swift in Sources */,
 				8412C734246AB8C900AA342E /* StockViewModel.swift in Sources */,
 				8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */,
 				848E16472482761000C0D536 /* EquityDetail.swift in Sources */,
 				84B472062479B01E00DDFCBF /* Model.xcdatamodeld in Sources */,
-				84207C532485813B0068DF50 /* NumberFormField.swift in Sources */,
+				84207C532485813B0068DF50 /* NumberFieldView.swift in Sources */,
 				840D5FFC2479CB4C00309500 /* Change.swift in Sources */,
 				84246E9B247CED14007A9029 /* Helper.swift in Sources */,
 				8412C731246A8F6A00AA342E /* StockList.swift in Sources */,
