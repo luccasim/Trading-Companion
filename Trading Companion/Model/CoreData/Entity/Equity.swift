@@ -81,7 +81,7 @@ public class Equity : NSManagedObject, Identifiable {
 
 }
 
-extension Equity : EquityListView {
+extension Equity {
     
     var little: String {
         return self.symbol?.components(separatedBy: ".").first ?? self.symbol ?? ""

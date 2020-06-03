@@ -11,6 +11,11 @@ import SwiftUI
 struct EquityList: View {
     
     @EnvironmentObject var viewModel : StockViewModel
+    
+//    @Environment(\.managedObjectContext) var moc
+//    @FetchRequest(entity: Equity.entity(), sortDescriptors: [
+//        NSSortDescriptor(keyPath: \Equity.symbol, ascending: true)
+//    ]) var equities : FetchedResults<Equity>
         
     var body: some View {
         
@@ -23,7 +28,6 @@ struct EquityList: View {
                     NavigationLink(destination: EquityDetail(model: equity)) {
                         EquityRow(equity: equity)
                     }
-                    
                 }
                 
             }.onAppear {

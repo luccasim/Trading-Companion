@@ -15,7 +15,7 @@ struct EquityDetail: View {
     
     @State private var inputSupport : String = ""
     @State private var inputEntry   : String = ""
-        
+    
     @State private var lock : Bool = true
     
     func setInput() {
@@ -28,11 +28,20 @@ struct EquityDetail: View {
         
         if let value = Double(self.inputSupport) {
             self.model.support = value
+            print("Support saved")
         }
         if let value = Double(self.inputEntry) {
             self.model.entry = value
+            print("Objectif saved")
         }
     }
+    
+    func editAction() {
+        self.lock.toggle()
+        self.actionButtonName = self.lock ? "Edit" : "Lock"
+    }
+    
+    @State var actionButtonName = "Edit"
     
     var body: some View {
                     
@@ -60,13 +69,7 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Actions")) {
                     
-                    Button(action: {self.lock.toggle()}) {
-                        if self.lock {
-                            Text("Edit")
-                        } else {
-                            Text("Lock")
-                        }
-                    }
+                    Button(action: {self.editAction()}) {Text(self.actionButtonName)}
                 }
             }
             .navigationBarTitle("\(model.name)")

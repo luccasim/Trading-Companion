@@ -13,9 +13,9 @@ struct NumberFieldView: View {
     
     let label    : String
                 
-    @Binding var input    : String
+    @Binding var input      : String
     
-    var lock            : Bool = false
+    var lock                : Bool = false
     
     var body: some View {
         

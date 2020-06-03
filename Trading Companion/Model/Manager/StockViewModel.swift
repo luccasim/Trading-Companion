@@ -15,7 +15,7 @@ final class StockViewModel : ObservableObject {
     
     @Published var equities : [Equity] = []
     
-    private func updates(equities:[Equity]) {
+    func updates(equities:[Equity]) {
         DispatchQueue.main.async {
         self.equities.update(elements: equities)
         }
