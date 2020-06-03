@@ -18,6 +18,22 @@ struct EquityDetail: View {
         
     @State private var lock : Bool = true
     
+    func setInput() {
+        
+        self.inputSupport = self.model.support == 0 ? "" : self.model.support.toString
+        self.inputEntry = self.model.entry == 0 ? "" : self.model.support.toString
+    }
+    
+    func saveModel() {
+        
+        if let value = Double(self.inputSupport) {
+            self.model.support = value
+        }
+        if let value = Double(self.inputEntry) {
+            self.model.entry = value
+        }
+    }
+    
     var body: some View {
                     
             Form {
@@ -55,11 +71,10 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onAppear() {
-                self.inputSupport = self.model.support == 0 ? "" : self.model.support.toString
-                self.inputEntry = self.model.entry == 0 ? "" : self.model.support.toString
+                self.setInput()
             }
             .onDisappear(){
-
+                self.saveModel()
             }
     }
 }
