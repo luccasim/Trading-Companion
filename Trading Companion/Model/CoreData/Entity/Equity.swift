@@ -42,7 +42,7 @@ public class Equity : NSManagedObject, Identifiable {
         }
     }
         
-    var shouldUpdateChange : Bool {
+    var shouldUpdatePrice : Bool {
         
         guard let change = self.change else {
             return true
@@ -51,7 +51,7 @@ public class Equity : NSManagedObject, Identifiable {
         return change.shouldUpdate
     }
     
-    var shouldUpdateInformation : Bool {
+    var shouldInit : Bool {
         return self.information == nil
     }
     

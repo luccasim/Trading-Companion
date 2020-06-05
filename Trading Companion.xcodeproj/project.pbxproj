@@ -159,6 +159,7 @@
 		8412C732246AB8B000AA342E /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				8412C733246AB8C900AA342E /* EquityViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -283,7 +284,6 @@
 		8465D0082469850F000290A8 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				8412C733246AB8C900AA342E /* EquityViewModel.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";

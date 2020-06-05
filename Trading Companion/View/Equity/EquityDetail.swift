@@ -84,7 +84,7 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Actions")) {
                     
-                    if model.shouldUpdateChange {
+                    if model.shouldUpdatePrice {
                         Button(action: {self.fetchLastEquityLastChange()}, label: {Text("Last Change")})
                     }
                     

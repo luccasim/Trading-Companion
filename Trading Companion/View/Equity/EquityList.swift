@@ -17,7 +17,7 @@ struct EquityList: View {
         NavigationView {
             
             List {
-                
+                                
                 ForEach(self.viewModel.equities) { equity in
                     
                     NavigationLink(destination: EquityDetail(model: equity)) {

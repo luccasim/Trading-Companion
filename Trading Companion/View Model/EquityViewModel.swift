@@ -10,10 +10,10 @@ import Foundation
 
 final class EquityViewModel : ObservableObject {
     
-    private var webService      = AlphavantageWS()
-    private var index           = Index.main
+    private var webService              = AlphavantageWS()
     
-    @Published var equities : [Equity] = []
+    @Published var index                = Index.main
+    @Published var equities : [Equity]  = []
     
     func updates(result: Result<[AlphavantageWSModel], Error>) {
         
@@ -37,7 +37,7 @@ final class EquityViewModel : ObservableObject {
         
         self.equities.append(contentsOf: self.sortedList)
         
-        let listToUpdate = self.sortedList.filter({$0.shouldUpdateInformation})
+        let listToUpdate = self.sortedList.filter({$0.shouldInit})
         
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
             self.updates(result: result)
@@ -46,7 +46,7 @@ final class EquityViewModel : ObservableObject {
     
     func fetchEquitiesChange() {
         
-        let list = self.sortedList.filter({$0.shouldUpdateChange})
+        let list = self.sortedList.filter({$0.shouldUpdatePrice})
         
         self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
             self.updates(result: result)
