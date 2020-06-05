@@ -47,6 +47,14 @@ public class Change : NSManagedObject {
         self.equity = equity
     }
     
+    var percentFormat : String {
+        var cpy = self.percent ?? "#12"
+        cpy.removeLast()
+        cpy.removeLast()
+        cpy.append("%")
+        return cpy
+    }
+    
 }
 
 fileprivate extension String {

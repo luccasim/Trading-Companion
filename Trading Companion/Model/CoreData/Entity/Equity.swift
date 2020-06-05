@@ -15,9 +15,12 @@ public class Equity : NSManagedObject, Identifiable {
     
     static var local : Equity {
         let new = Equity(context: AppDelegate.viewContext)
+        let index = Index(context: AppDelegate.viewContext)
+        index.symbol = "^SBF120"
         new.information = Information.previous
         new.change = Change.previous
         new.symbol = new.information?.symbol
+        new.index = index
         return new
     }
     
@@ -94,11 +97,11 @@ extension Equity {
     }
     
     var prevChangePercent : String {
-        return self.change?.percent?.description ?? "#"
+        return self.change?.percentFormat ?? "#"
     }
     
     var indexName : String {
-        return self.index?.symbol ?? "#"
+        return self.index?.titleIndex ?? "#"
     }
     
 }

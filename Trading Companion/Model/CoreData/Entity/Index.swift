@@ -49,4 +49,8 @@ public class Index: Equity {
     var equitiesList : [Equity] {
         return self.equities?.allObjects as? [Equity] ?? []
     }
+    
+    var titleIndex : String {
+        return self.symbol?.replacingOccurrences(of: "^", with: "") ?? "#"
+    }
 }
