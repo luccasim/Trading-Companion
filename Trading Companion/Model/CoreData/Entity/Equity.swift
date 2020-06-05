@@ -37,19 +37,6 @@ public class Equity : NSManagedObject, Identifiable {
             return Equity.resetEquities
         }
     }
-
-    func register(InputSupport:String, InputEntry:String) {
-        
-        if let value = Double(InputSupport) {
-            self.support = value
-        }
-        
-        if let value = Double(InputEntry) {
-            self.entry = value
-        }
-        
-        AppDelegate.saveContext()
-    }
         
     var shouldUpdateChange : Bool {
         
@@ -57,7 +44,7 @@ public class Equity : NSManagedObject, Identifiable {
             return true
         }
         
-        return change.lastDay == Date()
+        return change.shouldUpdate
     }
     
     var shouldUpdateInformation : Bool {
@@ -81,6 +68,13 @@ public class Equity : NSManagedObject, Identifiable {
 
 }
 
+fileprivate extension Double {
+    
+    var stringFormat : String {
+        return String(format: "%.3f", self)
+    }
+}
+
 extension Equity {
     
     var little: String {
@@ -92,11 +86,19 @@ extension Equity {
     }
     
     var close: String {
-        return self.change?.previousClose.description ?? ""
+        return self.change?.previousClose.stringFormat ?? ""
     }
     
     var alert: String {
         return self.support == 0 ? "" : self.support.description
+    }
+    
+    var prevChangePercent : String {
+        return self.change?.percent?.description ?? "#"
+    }
+    
+    var indexName : String {
+        return self.index?.symbol ?? "#"
     }
     
 }
@@ -106,11 +108,7 @@ extension Equity : AlphavantageWSModel {
     func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
         //Todo
     }
-    
-    
-    var label : String {
-        return self.symbol ?? ""
-    }
+
     
     func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {
         
@@ -137,6 +135,8 @@ extension Equity : AlphavantageWSModel {
         information.set(fromAlphavantage: Data)
     }
     
-
+    var label : String {
+        return self.symbol ?? ""
+    }
     
 }

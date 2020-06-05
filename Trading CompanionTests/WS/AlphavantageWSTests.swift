@@ -12,17 +12,22 @@ import XCTest
 class AlphavantageWSTests: XCTestCase {
     
     var ws : AlphavantageWS!
+
+    var mock: Mock!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         self.ws = AlphavantageWS()
+        self.mock = Mock(self.symbol)
+        
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         
         self.ws = nil
+        self.mock = nil
     }
     
     class Mock : AlphavantageWSModel {
@@ -53,11 +58,12 @@ class AlphavantageWSTests: XCTestCase {
         
         let exp = expectation(description: "TestDetails")
         
-        self.ws.update(Endpoint: .detail, EquitiesList: [Mock]) { (result) in
+        self.ws.update(Endpoint: Endpoint, EquitiesList: [Mock]) { (result) in
             switch result {
             case .success(_): break
-            case .failure(_): exp.fulfill()
+            case .failure(let error): print(error.localizedDescription)
             }
+            exp.fulfill()
         }
         
         waitForExpectations(timeout: 60) { (error) in
@@ -69,15 +75,21 @@ class AlphavantageWSTests: XCTestCase {
     
     func testDetail() throws {
         
-        let mock = Mock(self.symbol)
-        mock.label = symbol
-        
         self.callEndpoint(Mock: mock, Endpoint: .detail)
         
         XCTAssertNotNil(mock.detail)
         
         print(mock.detail!)
         
+    }
+    
+    func testLastChange() throws {
+        
+        self.callEndpoint(Mock: self.mock, Endpoint: .global)
+        
+        XCTAssertNotNil(self.mock.global)
+        
+        print(self.mock.global!)
     }
 
 }

@@ -15,10 +15,13 @@ class EquityTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.model = Equity.preview
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
+        self.model = nil
     }
 
     func testResetData() throws {
@@ -33,5 +36,9 @@ class EquityTests: XCTestCase {
         let equity = Equity.preview
         
         print(equity.name)
+    }
+    
+    func testShouldUpdateChange() throws {
+        print(self.model.change)
     }
 }

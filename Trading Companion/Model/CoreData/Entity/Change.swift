@@ -21,6 +21,10 @@ public class Change : NSManagedObject {
         return obj
     }
     
+    var shouldUpdate : Bool {
+        return self.update == nil ? true : self.update == Date().currentStringDayDate ? false : true
+    }
+    
     func set(fromAlphavantage reponse:AlphavantageWS.GlobalReponse?) {
         
         if let reponse = reponse {
@@ -34,6 +38,7 @@ public class Change : NSManagedObject {
             self.previousClose  = reponse.previous.toDouble
             self.change         = reponse.change.toDouble
             self.percent        = reponse.percent
+            self.update         = Date().currentStringDayDate
         }
     }
     
@@ -54,5 +59,14 @@ fileprivate extension String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.date(from: self)
+    }
+}
+
+fileprivate extension Date {
+    
+    var currentStringDayDate : String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: self)
     }
 }

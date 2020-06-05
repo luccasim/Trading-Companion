@@ -8,16 +8,24 @@
 
 import Foundation
 
-final class StockViewModel : ObservableObject {
+final class EquityViewModel : ObservableObject {
     
     private var webService      = AlphavantageWS()
     private var index           = Index.main
     
     @Published var equities : [Equity] = []
     
-    func updates(equities:[Equity]) {
-        DispatchQueue.main.async {
-        self.equities.update(elements: equities)
+    func updates(result: Result<[AlphavantageWSModel], Error>) {
+        
+        switch result {
+        case .success(let reponse):
+            if let equities = reponse as? [Equity] {
+                DispatchQueue.main.async {
+                    self.equities.update(elements: equities)
+                }
+            }
+        case .failure(let error):
+            print("Error -> \(error.localizedDescription)")
         }
     }
     
@@ -32,16 +40,7 @@ final class StockViewModel : ObservableObject {
         let listToUpdate = self.sortedList.filter({$0.shouldUpdateInformation})
         
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
-            switch result {
-            case .success(let reponse):
-                if let equities = reponse as? [Equity] {
-                    self.updates(equities: equities)
-                }
-            case .failure(let error):
-                if case AlphavantageWS.Errors.endOfUpdate = error {
-                    self.fetchEquitiesChange()
-                }
-            }
+            self.updates(result: result)
         }
     }
     
@@ -50,13 +49,14 @@ final class StockViewModel : ObservableObject {
         let list = self.sortedList.filter({$0.shouldUpdateChange})
         
         self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
-            switch result {
-            case .success(let reponse):
-                if let equity = reponse as? [Equity] {
-                    self.updates(equities: equity)
-                }
-            case .failure(_): break
-            }
+            self.updates(result: result)
+        }
+    }
+    
+    func fetchChange(Equity:Equity) {
+        
+        self.webService.update(Endpoint: .global, EquitiesList: [Equity]) { (result) in
+            self.updates(result: result)
         }
     }
 }

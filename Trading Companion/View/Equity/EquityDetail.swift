@@ -11,12 +11,14 @@ import Combine
 
 struct EquityDetail: View {
     
+    @EnvironmentObject var viewModel : EquityViewModel
+    
     var model : Equity
     
     @State private var inputSupport : String = ""
     @State private var inputEntry   : String = ""
     
-    @State private var lock : Bool = true
+    @State private var lock : Bool = false
     
     func setInput() {
         
@@ -36,12 +38,17 @@ struct EquityDetail: View {
         }
     }
     
-    func editAction() {
-        self.lock.toggle()
-        self.actionButtonName = self.lock ? "Edit" : "Lock"
+    func fetchLastEquityLastChange() {
+        self.viewModel.fetchChange(Equity: self.model)
     }
     
-    @State var actionButtonName = "Edit"
+    func editAction() {
+        self.lock.toggle()
+    }
+    
+    var actionName : String {
+        return self.lock ? "Edit" : "Lock"
+    }
     
     var body: some View {
                     
@@ -50,15 +57,20 @@ struct EquityDetail: View {
                 Section(header: Text("Informations")) {
                     
                     TextView(label: "Cours", value: model.close)
+                    TextView(label: "Variation", value: model.prevChangePercent)
                     
                     NumberFieldView(label: "Support", input: self.$inputSupport, lock: lock)
                 }
                 
                 Section(header: Text("Indicateurs")) {
                     
+                    TextView(label:self.model.indexName , value: "")
+                    
                     DoubleTextView(label: "Tendance", value: 0)
                     
                     DoubleTextView(label: "MM20", value: 0)
+                    
+                    DoubleTextView(label: "RSI", value: 0)
                     
                 }
                 
@@ -69,7 +81,13 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Actions")) {
                     
-                    Button(action: {self.editAction()}) {Text(self.actionButtonName)}
+                    if model.shouldUpdateChange {
+                        Button(action: {self.fetchLastEquityLastChange()}, label: {Text("Last Change")})
+                    }
+                    
+                    Button(action: {self.editAction()}) {Text(self.actionName)}
+                    
+                    
                 }
             }
             .navigationBarTitle("\(model.name)")
@@ -84,6 +102,6 @@ struct EquityDetail: View {
 
 struct EquityDetail_Previews: PreviewProvider {
     static var previews: some View {
-        EquityDetail(model: Equity.preview)
+        EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
     }
 }
