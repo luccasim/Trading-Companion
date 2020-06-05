@@ -57,8 +57,11 @@ struct EquityDetail: View {
                 Section(header: Text("Informations")) {
                     
                     TextView(label: "Cours", value: model.close)
+                    
                     TextView(label: "Variation", value: model.prevChangePercent)
                     
+                    TextView(label: "Ecart", value: model.gap)
+                                        
                     NumberFieldView(label: "Support", input: self.$inputSupport, lock: lock)
                 }
                 

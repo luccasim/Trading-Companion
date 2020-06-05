@@ -71,7 +71,7 @@ class AlphavantageWSTests: XCTestCase {
         }
     }
     
-    let symbol = "^SBF120"
+    let symbol = "AF.PA"
     
     func testDetailsRequest() throws {
         let request = self.ws.detailsRequest(Symbol: symbol)

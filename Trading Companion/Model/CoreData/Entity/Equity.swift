@@ -20,6 +20,7 @@ public class Equity : NSManagedObject, Identifiable {
         new.information = Information.previous
         new.change = Change.previous
         new.symbol = new.information?.symbol
+        new.support = 108
         new.index = index
         return new
     }
@@ -89,7 +90,7 @@ extension Equity {
     }
     
     var close: String {
-        return self.change?.previousClose.stringFormat ?? ""
+        return self.change?.price.stringFormat ?? ""
     }
     
     var alert: String {
@@ -102,6 +103,15 @@ extension Equity {
     
     var indexName : String {
         return self.index?.titleIndex ?? "#"
+    }
+    
+    var gap : String {
+
+        guard let spot = self.change?.price else {return ""}
+        let sup = self.support
+        let dif = ((spot - sup) / sup) * 100
+        
+        return String(format: "%.3f%%", dif)
     }
     
 }

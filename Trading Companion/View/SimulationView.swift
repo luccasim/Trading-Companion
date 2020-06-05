@@ -47,7 +47,7 @@ struct SimulationView: View {
 struct SimulationView_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            SimulationView(objectif: .constant(""))
+            SimulationView(objectif: .constant("0"))
         }
     }
 }
