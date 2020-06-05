@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
 extension Array where Element:Equatable {
     
@@ -19,6 +21,21 @@ extension Array where Element:Equatable {
     
     mutating func update(elements:[Element]) {
         elements.forEach({self.update(element: $0)})
+    }
+}
+
+extension AppDelegate {
+    
+    static var persistentContainer: NSPersistentContainer {
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+    }
+    
+    static var viewContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
+    static func saveContext() {
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
 }
 

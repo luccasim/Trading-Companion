@@ -15,6 +15,14 @@ final class EquityViewModel : ObservableObject {
     @Published var index                = Index.main
     @Published var equities : [Equity]  = []
     
+    init() {
+        self.equities.append(contentsOf: self.sortedList)
+    }
+    
+    var count : Int {
+        return self.equities.count
+    }
+    
     func updates(result: Result<[AlphavantageWSModel], Error>) {
         
         switch result {
@@ -22,6 +30,7 @@ final class EquityViewModel : ObservableObject {
             if let equities = reponse as? [Equity] {
                 DispatchQueue.main.async {
                     self.equities.update(elements: equities)
+                    AppDelegate.saveContext()
                 }
             }
         case .failure(let error):
@@ -35,9 +44,13 @@ final class EquityViewModel : ObservableObject {
     
     func fetchEquitiesInformations() {
         
-        self.equities.append(contentsOf: self.sortedList)
-        
+        //Init
         let listToUpdate = self.sortedList.filter({$0.shouldInit})
+        
+        guard listToUpdate.count > 1 else {
+            self.fetchEquitiesChange()
+            return
+        }
         
         self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
             self.updates(result: result)

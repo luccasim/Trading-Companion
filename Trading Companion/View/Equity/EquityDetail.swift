@@ -32,6 +32,7 @@ struct EquityDetail: View {
             self.model.support = value
             print("Support saved")
         }
+
         if let value = Double(self.inputEntry) {
             self.model.entry = value
             print("Objectif saved")
@@ -67,7 +68,7 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Indicateurs")) {
                     
-                    TextView(label:self.model.indexName , value: "")
+                    TextView(label:self.model.indexName , value: self.model.indexGap)
                     
                     DoubleTextView(label: "Tendance", value: 0)
                     
@@ -90,7 +91,6 @@ struct EquityDetail: View {
                     
                     Button(action: {self.editAction()}) {Text(self.actionName)}
                     
-                    
                 }
             }
             .navigationBarTitle("\(model.name)")
@@ -104,7 +104,9 @@ struct EquityDetail: View {
 }
 
 struct EquityDetail_Previews: PreviewProvider {
+    
     static var previews: some View {
         EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
     }
+    
 }

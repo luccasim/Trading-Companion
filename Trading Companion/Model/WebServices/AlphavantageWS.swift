@@ -46,11 +46,19 @@ public class AlphavantageWS {
 
                     switch result{
                     case .success(let datas):
+                        print("[\(label)] Sucess.")
                         Completion(.success(datas.map({$0.model})))
                         reponses.removeFirst()
                     case .failure(let error):
-                        print("[\(label)] Fail Download")
-                        Completion(.failure(error))
+                        
+                        if case Errors.server(_, let url) = error {
+                            print("[\(label)] Look -> \(url)")
+                        }
+                        
+                        else {
+                            print("[\(label)] Fail Download")
+                            Completion(.failure(error))
+                        }
                     }
                     semaphore.signal()
                 }
@@ -107,8 +115,8 @@ public class AlphavantageWS {
                 
         session.dataTask(with: Request) { (data, reponse, error) in
             
-            if let error = error {
-                return Completion(.failure(error))
+            if let error = error, let url = Request.url {
+                return Completion(.failure(Errors.server(error, url.absoluteString)))
             }
             
             if let data = data {

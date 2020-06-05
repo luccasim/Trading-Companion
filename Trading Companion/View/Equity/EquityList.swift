@@ -17,7 +17,11 @@ struct EquityList: View {
         NavigationView {
             
             List {
-                                
+                
+                NavigationLink(destination: EquityDetail(model: self.viewModel.index).environmentObject(self.viewModel)) {
+                    EquityRow(equity: self.viewModel.index)
+                }
+                
                 ForEach(self.viewModel.equities) { equity in
                     
                     NavigationLink(destination: EquityDetail(model: equity)) {
@@ -27,7 +31,7 @@ struct EquityList: View {
                 
             }.onAppear {
                 self.viewModel.fetchEquitiesInformations()
-            }.navigationBarTitle("TCD Equities")
+            }.navigationBarTitle("[\(self.viewModel.count)] TCD Equities ")
         }
     }
 }

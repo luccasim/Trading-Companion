@@ -82,6 +82,11 @@ fileprivate extension Double {
 extension Equity {
     
     var little: String {
+        
+        if let index = self as? Index {
+            return index.titleIndex
+        }
+        
         return self.symbol?.components(separatedBy: ".").first ?? self.symbol ?? ""
     }
     
@@ -103,6 +108,10 @@ extension Equity {
     
     var indexName : String {
         return self.index?.titleIndex ?? "#"
+    }
+    
+    var indexGap : String {
+        return self.index?.gap ?? ""
     }
     
     var gap : String {

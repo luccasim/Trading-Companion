@@ -61,6 +61,7 @@ extension AlphavantageWS {
 extension AlphavantageWS {
     
     enum Errors : Error {
+        case server(Error,String)
         case pendingDownload
         case missingMatchesDetails
         case endOfUpdate
