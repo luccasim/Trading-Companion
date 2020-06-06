@@ -15,6 +15,7 @@ protocol AlphavantageWSModel : class {
     func setDetail(Reponse:AlphavantageWS.InformationReponse)
     func setGlobal(Reponse:AlphavantageWS.GlobalReponse)
     func setHistory(Reponse:AlphavantageWS.HistoryReponse)
+    func setRSI(Reponse:AlphavantageWS.RSIReponse)
     
 }
 
@@ -24,6 +25,7 @@ extension AlphavantageWS {
         case detail
         case global
         case history
+        case rsi
     }
     
     struct Reponse {
@@ -40,6 +42,7 @@ extension AlphavantageWS {
             case .detail: Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: Data))
             case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: Data))
             case .history: Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: Data))
+            case .rsi: Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: Data))
             }
             
         } catch let error {
@@ -53,6 +56,7 @@ extension AlphavantageWS {
         case .detail:   return Models.map({self.detailReponse(Model: $0)})
         case .global:   return Models.map({self.globalReponse(Model: $0)})
         case .history:  return Models.map({self.historyReponse(Model: $0)})
+        case .rsi:      return Models.map({self.rsiModel(Model: $0)})
         }
         
     }

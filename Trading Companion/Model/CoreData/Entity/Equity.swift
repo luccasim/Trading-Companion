@@ -127,6 +127,11 @@ extension Equity {
 
 extension Equity : AlphavantageWSModel {
     
+    func setRSI(Reponse: AlphavantageWS.RSIReponse) {
+        //Todo
+    }
+    
+    
     func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
         //Todo
     }

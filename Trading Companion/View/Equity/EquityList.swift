@@ -17,7 +17,7 @@ struct EquityList: View {
         NavigationView {
             
             List {
-                
+
                 NavigationLink(destination: EquityDetail(model: self.viewModel.index).environmentObject(self.viewModel)) {
                     EquityRow(equity: self.viewModel.index)
                 }

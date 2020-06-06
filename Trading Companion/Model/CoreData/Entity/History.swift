@@ -36,12 +36,3 @@ fileprivate extension String {
         return formatter.date(from: self)
     }
 }
-
-struct DynamicKey : CodingKey {
-    
-    var intValue: Int?
-    var stringValue: String
-
-    init?(intValue: Int) {self.intValue = intValue ;self.stringValue = ""}
-    init?(stringValue:String){self.stringValue = stringValue}
-}

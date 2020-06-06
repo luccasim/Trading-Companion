@@ -9,6 +9,8 @@
 import XCTest
 @testable import Trading_Companion
 
+fileprivate let rsiData = load(FileName: "rsi.json")
+
 class AlphavantageWSTests: XCTestCase {
     
     var ws : AlphavantageWS!
@@ -71,7 +73,27 @@ class AlphavantageWSTests: XCTestCase {
         }
     }
     
+    private func show(Request:URLRequest) {
+        
+        let exp = expectation(description: "w8")
+        
+        print("Request \(Request.url!)")
+        
+        URLSession.shared.dataTask(with: Request) { (data, rep, error) in
+            if let data = data {
+                if let str = String(data: data, encoding: .utf8) {
+                    print(str)
+                }
+            }
+            exp.fulfill()
+        }.resume()
+        
+        waitForExpectations(timeout: 30) { error in}
+    }
+    
     let symbol = "AF.PA"
+    
+    // Request
     
     func testDetailsRequest() throws {
         let request = self.ws.detailsRequest(Symbol: symbol)
@@ -82,6 +104,14 @@ class AlphavantageWSTests: XCTestCase {
         let request = self.ws.globalRequest(Label: symbol)
         print(request.url!)
     }
+    
+    func testRSIRequest() throws {
+        let request = self.ws.rsiRequest(Label: symbol)
+        
+        self.show(Request: request)
+    }
+    
+    // Endpoint Call
     
     func testDetail() throws {
         
@@ -100,6 +130,22 @@ class AlphavantageWSTests: XCTestCase {
         XCTAssertNotNil(self.mock.global)
         
         print(self.mock.global!)
+    }
+    
+    func testRSI() throws {
+        
+        
+    }
+    
+    // Parsing
+
+    func testRSIReponse() throws {
+        
+        let data = rsiData
+        
+        let reponse = try AlphavantageWS.RSIReponse(fromDataReponse: data)
+        
+        print(reponse.result)
     }
 
 }

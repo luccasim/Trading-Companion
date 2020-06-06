@@ -60,3 +60,13 @@ func load(FileName:String) -> Data {
         fatalError("Load data from \(FileName) error -> \(error.localizedDescription)")
     }
 }
+
+/// Used for parse dynamic key for json.
+struct DynamicKey : CodingKey {
+    
+    var intValue: Int?
+    var stringValue: String
+
+    init?(intValue: Int) {self.intValue = intValue ;self.stringValue = ""}
+    init?(stringValue:String){self.stringValue = stringValue}
+}
