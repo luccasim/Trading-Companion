@@ -96,7 +96,7 @@ class AlphavantageWSTests: XCTestCase {
         waitForExpectations(timeout: 30) { error in}
     }
     
-    let symbol = "AF.PA"
+    let symbol = "BIM.PA"
     
     // Request
     
@@ -125,7 +125,6 @@ class AlphavantageWSTests: XCTestCase {
         XCTAssertNotNil(mock.detail)
         
         print(mock.detail!)
-        
     }
     
     func testLastChange() throws {

@@ -16,6 +16,8 @@ extension Array where Element:Equatable {
         if let index = self.firstIndex(where: {$0 == element}) {
             self.remove(at: index)
             self.insert(element, at: index)
+        } else {
+            self.append(element)
         }
     }
     

@@ -15,12 +15,19 @@ final class EquityViewModel : ObservableObject {
     @Published var index                = Index.main
     @Published var equities : [Equity]  = []
     
-    init() {
-        self.equities.append(contentsOf: self.sortedList)
-    }
-    
     var count : Int {
         return self.equities.count
+    }
+    
+    var maxCount : Int {
+        return self.index.equitiesList.count
+    }
+    
+    init() {
+        let listInstalled   = self.index.equitiesList.filter({!$0.shouldInit})
+        
+        self.equities.update(elements: listInstalled)
+        self.equities.sort(by: {$0.name < $1.name})
     }
     
     func updates(result: Result<[AlphavantageWSModel], Error>) {
@@ -30,6 +37,7 @@ final class EquityViewModel : ObservableObject {
             if let equities = reponse as? [Equity] {
                 DispatchQueue.main.async {
                     self.equities.update(elements: equities)
+                    self.equities.sort(by: {$0.name < $1.name})
                     AppDelegate.saveContext()
                 }
             }
@@ -38,14 +46,9 @@ final class EquityViewModel : ObservableObject {
         }
     }
     
-    private lazy var sortedList = {
-        self.index.equitiesList.sorted(by: {$0.label < $1.label})
-    }()
-    
     func fetchEquitiesInformations() {
         
-        //Init
-        let listToUpdate = self.sortedList.filter({$0.shouldInit})
+        let listToUpdate    = self.index.equitiesList.filter({$0.shouldInit})
         
         guard listToUpdate.count > 1 else {
             self.fetchEquitiesChange()
@@ -59,7 +62,7 @@ final class EquityViewModel : ObservableObject {
     
     func fetchEquitiesChange() {
         
-        let list = self.sortedList.filter({$0.shouldUpdatePrice})
+        let list = self.equities.filter({$0.shouldUpdatePrice})
         
         self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
             self.updates(result: result)
