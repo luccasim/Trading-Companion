@@ -38,6 +38,7 @@ class AlphavantageWSTests: XCTestCase {
         var detail  : AlphavantageWS.InformationReponse?
         var global  : AlphavantageWS.GlobalReponse?
         var history : AlphavantageWS.HistoryReponse?
+        var rsi     : AlphavantageWS.RSIReponse?
         
         init(_ str:String) {
             self.label = str
@@ -53,6 +54,10 @@ class AlphavantageWSTests: XCTestCase {
         
         func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
             self.history = Reponse
+        }
+        
+        func setRSI(Reponse: AlphavantageWS.RSIReponse) {
+            self.rsi = Reponse
         }
     }
     
@@ -134,7 +139,6 @@ class AlphavantageWSTests: XCTestCase {
     
     func testRSI() throws {
         
-        
     }
     
     // Parsing
@@ -142,7 +146,6 @@ class AlphavantageWSTests: XCTestCase {
     func testRSIReponse() throws {
         
         let data = rsiData
-        
         let reponse = try AlphavantageWS.RSIReponse(fromDataReponse: data)
         
         print(reponse.result)

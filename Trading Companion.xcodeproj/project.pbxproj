@@ -29,6 +29,7 @@
 		84246EA3247FFF50007A9029 /* Alphavantage+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA2247FFF50007A9029 /* Alphavantage+History.swift */; };
 		8432D80D248BF0A500969263 /* Alphavantage+RSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432D80C248BF0A500969263 /* Alphavantage+RSI.swift */; };
 		8432D80F248BFCBB00969263 /* rsi.json in Resources */ = {isa = PBXBuildFile; fileRef = 8432D80E248BFCBB00969263 /* rsi.json */; };
+		8432D811248C10EC00969263 /* Rsi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432D810248C10EC00969263 /* Rsi.swift */; };
 		84366F0D2483CC32006A1C6B /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
 		84366F0E2483CC32006A1C6B /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
 		84366F0F2483CC32006A1C6B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
@@ -97,6 +98,7 @@
 		84327DCE2471B1A900FE4C87 /* history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = history.json; sourceTree = "<group>"; };
 		8432D80C248BF0A500969263 /* Alphavantage+RSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+RSI.swift"; sourceTree = "<group>"; };
 		8432D80E248BFCBB00969263 /* rsi.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rsi.json; sourceTree = "<group>"; };
+		8432D810248C10EC00969263 /* Rsi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rsi.swift; sourceTree = "<group>"; };
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
 		843CC5F7247AAF790091D853 /* HistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTests.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				848E164B2482B38200C0D536 /* Day.swift */,
 				840D5FFB2479CB4C00309500 /* Change.swift */,
 				840D5FF22479B3D400309500 /* Equity.swift */,
+				8432D810248C10EC00969263 /* Rsi.swift */,
 				84C6429B2479DF3400AB5E7D /* Index.swift */,
 			);
 			path = Entity;
@@ -509,6 +512,7 @@
 				84246E9D247EEAB4007A9029 /* Alphavantage+Detail.swift in Sources */,
 				840D5FF32479B3D400309500 /* Equity.swift in Sources */,
 				848E164C2482B38200C0D536 /* Day.swift in Sources */,
+				8432D811248C10EC00969263 /* Rsi.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */,
 				8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */,
 				84246E99247C66BF007A9029 /* Index.swift in Sources */,

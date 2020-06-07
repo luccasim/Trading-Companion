@@ -70,3 +70,29 @@ struct DynamicKey : CodingKey {
     init?(intValue: Int) {self.intValue = intValue ;self.stringValue = ""}
     init?(stringValue:String){self.stringValue = stringValue}
 }
+
+final class Helper {
+    
+    static func loadData(FileName:String) -> Data {
+        
+        let fileName        : String
+        let fileExtension   : String?
+
+        let tab = FileName.components(separatedBy: ".")
+
+        fileName = tab[0]
+        fileExtension = tab.count > 1 ? tab[1] : nil
+        
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+            fatalError("Could not load \(FileName)")
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            return data
+        } catch let error {
+            fatalError("Load data from \(FileName) error -> \(error.localizedDescription)")
+        }
+    }
+    
+}

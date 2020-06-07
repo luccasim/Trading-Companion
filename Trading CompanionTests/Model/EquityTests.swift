@@ -41,4 +41,15 @@ class EquityTests: XCTestCase {
     func testShouldUpdateChange() throws {
         print(self.model.change)
     }
+    
+    func testSetRsi() throws {
+        
+        let data = Helper.loadData(FileName: "rsi.json")
+        let reponse = try AlphavantageWS.RSIReponse.init(fromDataReponse: data)
+        
+        self.model.setRSI(Reponse: reponse)
+        XCTAssertNotNil(self.model.rsi)
+        
+        self.model.rsi?.forEach({print($0)})
+    }
 }
