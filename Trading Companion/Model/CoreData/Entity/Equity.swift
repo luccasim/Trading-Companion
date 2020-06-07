@@ -22,6 +22,7 @@ public class Equity : NSManagedObject, Identifiable {
         new.symbol = new.information?.symbol
         new.support = 108
         new.index = index
+        new.setRSI(Reponse: AlphavantageWS.RSIReponse.preview)
         return new
     }
     
@@ -123,6 +124,18 @@ extension Equity {
         return String(format: "%.3f%%", dif)
     }
     
+    var lastRSI : String {
+        
+        guard let values = (self.rsi?.allObjects as? [Rsi]) else {
+            return ""
+        }
+        
+        guard let sorted = values.sorted(by: {$0.day! > $1.day!}).first else {
+            return ""
+        }
+        
+        return sorted.value.stringFormat
+    }
 }
 
 extension Equity : AlphavantageWSModel {
@@ -135,7 +148,7 @@ extension Equity : AlphavantageWSModel {
         
         values.forEach { (rsi) in
             let obj = Rsi(context: AppDelegate.viewContext)
-            obj.day = rsi.date
+            obj.day = rsi.date?.toDate
             obj.equity = self
             obj.value = rsi.rsi.toDouble
             result.insert(obj)
@@ -190,6 +203,7 @@ extension String {
     var toDate : Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: self)
+        let safe = self.components(separatedBy: " ")
+        return formatter.date(from: safe[0])
     }
 }

@@ -50,7 +50,7 @@
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="information" inverseEntity="Equity"/>
     </entity>
     <entity name="Rsi" representedClassName=".Rsi" syncable="YES" codeGenerationType="category">
-        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="day" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="rsi" inverseEntity="Equity"/>
     </entity>

@@ -64,5 +64,11 @@ extension AlphavantageWS {
             let decoder = JSONDecoder()
             self = try decoder.decode(RSIReponse.self, from: data)
         }
+        
+        static var preview : AlphavantageWS.RSIReponse {
+            let data = Helper.loadData(FileName: "rsi.json")
+            return try! AlphavantageWS.RSIReponse.init(fromDataReponse: data)
+        }
+        
     }
 }

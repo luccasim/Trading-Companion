@@ -74,8 +74,7 @@ struct EquityDetail: View {
                     
                     DoubleTextView(label: "MM20", value: 0)
                     
-                    DoubleTextView(label: "RSI", value: 0)
-                    
+                    TextView(label: "RSI", value: self.model.lastRSI)
                 }
                 
                 Section(header: Text("Simulations")) {

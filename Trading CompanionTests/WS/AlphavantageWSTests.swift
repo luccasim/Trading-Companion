@@ -150,5 +150,9 @@ class AlphavantageWSTests: XCTestCase {
         
         print(reponse.result)
     }
+    
+    func testRSIPreview() throws {
+        print(AlphavantageWS.RSIReponse.preview)
+    }
 
 }

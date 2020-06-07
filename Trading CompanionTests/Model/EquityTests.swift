@@ -51,5 +51,15 @@ class EquityTests: XCTestCase {
         XCTAssertNotNil(self.model.rsi)
         
         self.model.rsi?.forEach({print($0)})
+        
+    }
+    
+    func testLastRSI() {
+        
+        self.model.setRSI(Reponse: AlphavantageWS.RSIReponse.preview)
+        let str = self.model.lastRSI
+        
+        XCTAssert(str.isEmpty == false)
+        print(str)
     }
 }
