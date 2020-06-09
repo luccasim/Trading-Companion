@@ -62,13 +62,14 @@ public class Equity : NSManagedObject, Identifiable {
             return ""
         }
         
-        let format = title.components(separatedBy: " ")
-        let words = format.count > 3 ? "\(format[0]) \(format[1]) \(format[2])" : title
-        let size = words.count > 30 ? words.suffix(30).base : words
+        let sub = title.prefix(25)
+        let str = String(sub)
+        let format = str.components(separatedBy: " ")
+        let words = format.count > 3 ? "\(format[0]) \(format[1]) \(format[2])" : str
         
-        self.formattedTitle = size
+        self.formattedTitle = words
         
-        return size
+        return words
     }
 
 }
@@ -92,7 +93,7 @@ extension Equity {
     }
     
     var name: String {
-        return self.formattedTitle ?? self.titleFormat
+        return self.titleFormat
     }
     
     var close: String {

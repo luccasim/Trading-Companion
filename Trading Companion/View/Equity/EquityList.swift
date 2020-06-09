@@ -29,9 +29,7 @@ struct EquityList: View {
                     }
                 }
                 
-            }.onAppear {
-                self.viewModel.fetchEquitiesInformations()
-            }.navigationBarTitle("[\(self.viewModel.count)/\(self.viewModel.maxCount)] TCD Equities ")
+            }.navigationBarTitle(self.viewModel.title)
         }
     }
 }

@@ -35,5 +35,14 @@ class IndexTests: XCTestCase {
         AppDelegate.viewContext.delete(index)
         try AppDelegate.viewContext.save()
     }
+    
+    func testMarketClose() throws {
+        if Index.marketIsOpen {
+            print("You could update")
+        }
+        else {
+            print("Market is open, try after 17:30:00")
+        }
+    }
 
 }

@@ -15,58 +15,141 @@ final class EquityViewModel : ObservableObject {
     @Published var index                = Index.main
     @Published var equities : [Equity]  = []
     
-    var count : Int {
-        return self.equities.count
-    }
+    private var state                   = State.installation
     
-    var maxCount : Int {
-        return self.index.equitiesList.count
-    }
+    @Published var title                = ""
+    
+    private var listToUpdate            = [Equity]()
+    private var updateCount             = 0
     
     init() {
+        
         let listInstalled   = self.index.equitiesList.filter({!$0.shouldInit})
+        
+        self.state = listToUpdate.isEmpty ==  false ? .installation : .finish
+        
+        self.listToUpdate = self.index.equitiesList.filter({$0.shouldInit})
         
         self.equities.update(elements: listInstalled)
         self.equities.sort(by: {$0.name < $1.name})
+        
+        self.setTitle()
+        
+        self.fetchEquities()
+    }
+
+    private enum State {
+        case installation
+        case checkIndex
+        case getMarketChange
+        case finish
     }
     
-    func updates(result: Result<[AlphavantageWSModel], Error>) {
+    private func setTitle() {
+        switch state {
+        case .installation:
+            self.title = "Install [\(self.equities.count)/\(self.index.equitiesList.count)]"
+        case .checkIndex:
+            self.title = "Fetch Index"
+        case .getMarketChange :
+            self.title = "Update [\(self.updateCount)]"
+        case .finish:
+            self.title = "Equities \(self.index.equitiesList.count)"
+        }
+    }
         
-        switch result {
-        case .success(let reponse):
-            if let equities = reponse as? [Equity] {
-                DispatchQueue.main.async {
+    private func updates(result: Result<[AlphavantageWSModel], Error>) {
+        
+        DispatchQueue.main.async {
+            
+            switch result {
+                
+            case .success(let reponse):
+                
+                if let equities = reponse as? [Equity] {
                     self.equities.update(elements: equities)
                     self.equities.sort(by: {$0.name < $1.name})
+                    self.updateCount -= 1
                     AppDelegate.saveContext()
                 }
+                
+            case .failure(let error):
+                print("Error -> \(error.localizedDescription)")
             }
-        case .failure(let error):
-            print("Error -> \(error.localizedDescription)")
+            
+            self.setTitle()
         }
     }
     
-    func fetchEquitiesInformations() {
+    /// Information -> Index -> Day changes -> Finish.
+    func fetchEquities() {
+        self.fetchEquitiesInformations()
+    }
+    
+    /// Fetch information on uninstalled equity, once finish or not list to install, fetch the index change.
+    private func fetchEquitiesInformations() {
         
-        let listToUpdate    = self.index.equitiesList.filter({$0.shouldInit})
+        self.state = .installation
+                
+        self.webService.update(Endpoint: .detail, EquitiesList: self.listToUpdate) { (result) in
+            switch result {
+            case .failure(let error):
+                if case AlphavantageWS.Errors.endOfUpdate = error {
+                    self.fetchEquitiesIndexChange()
+                }
+            default: self.updates(result: result)
+            }
+        }
+    }
+    
+    private func fetchEquitiesIndexChange() {
         
-        guard listToUpdate.count > 1 else {
-            self.fetchEquitiesChange()
+        self.state = .checkIndex
+        
+        guard self.index.shouldUpdatePrice else {
+            self.fetchEquitiesDayChange()
             return
         }
         
-        self.webService.update(Endpoint: .detail, EquitiesList: listToUpdate) { (result) in
-            self.updates(result: result)
+        self.webService.update(Endpoint: .global, EquitiesList: [self.index]) { (result) in
+            switch result {
+            case .failure(let error):
+                if case AlphavantageWS.Errors.endOfUpdate = error {
+                    self.fetchEquitiesDayChange()
+                }
+            default: self.updates(result: result)
+            }
         }
     }
     
-    func fetchEquitiesChange() {
+    private func fetchEquitiesDayChange() {
         
-        let list = self.equities.filter({$0.shouldUpdatePrice})
+        self.state = .getMarketChange
         
-        self.webService.update(Endpoint: .global, EquitiesList: list) { (result) in
-            self.updates(result: result)
+        guard self.index.marketIsClose else {
+            self.fetchEquitiesFinish()
+            return
         }
+        
+        self.listToUpdate = self.equities.filter({$0.shouldUpdatePrice})
+        self.updateCount = self.listToUpdate.count
+        
+        self.webService.update(Endpoint: .global, EquitiesList: self.listToUpdate) { (result) in
+            switch result {
+            case .failure(let error):
+                if case AlphavantageWS.Errors.endOfUpdate = error {
+                    self.fetchEquitiesFinish()
+                }
+            default: self.updates(result: result)
+            }
+        }
+    }
+    
+    private func fetchEquitiesFinish() {
+        
+        self.state = .finish
+        
+        self.setTitle()
     }
     
     func fetchChange(Equity:Equity) {
