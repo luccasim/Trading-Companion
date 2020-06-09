@@ -20,13 +20,15 @@ struct EquityRow: View {
                 Text(self.equity.little)
                     .font(.largeTitle)
                     .frame(height: nil)
-                Text(self.equity.name)
-                    .lineLimit(1)
+                if !self.equity.name.isEmpty {
+                    Text(self.equity.name)
+                        .lineLimit(1)
+                }
             }
             Spacer()
-            VStack(alignment: .trailing) {
-                Text(self.equity.close)
-                Text(self.equity.alert)
+            VStack(alignment: .trailing, spacing: 2.0) {
+                Text(self.equity.close).bold()
+                Text(self.equity.variation)
             }
             
         }
@@ -40,7 +42,11 @@ struct StockCell_Previews: PreviewProvider {
     
     static var previews: some View {
         List {
+            
+            EquityRow(equity: Index.main)
+            
             EquityRow(equity: Equity.preview)
+            
         }
     }
     

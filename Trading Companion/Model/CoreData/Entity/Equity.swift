@@ -11,20 +11,20 @@ import CoreData
 
 public class Equity : NSManagedObject, Identifiable {
     
-    static var preview : Equity = Equity.local
-    
-    static var local : Equity {
+    static var preview : Equity = {
+        
         let new = Equity(context: AppDelegate.viewContext)
         let index = Index(context: AppDelegate.viewContext)
+        
         index.symbol = "^SBF120"
         new.information = Information.previous
         new.change = Change.previous
         new.symbol = new.information?.symbol
-        new.support = 108
         new.index = index
         new.setRSI(Reponse: AlphavantageWS.RSIReponse.preview)
+        
         return new
-    }
+    }()
     
     static var resetEquities : [Equity] {
         return EquitiesGroup.SRD.list.map { str in
@@ -56,7 +56,7 @@ public class Equity : NSManagedObject, Identifiable {
         return self.information == nil
     }
     
-    var titleFormat : String {
+    private var titleFormat : String {
         
         guard let title = self.information?.name else {
             return ""
@@ -71,7 +71,6 @@ public class Equity : NSManagedObject, Identifiable {
         
         return words
     }
-
 }
 
 fileprivate extension Double {
@@ -93,15 +92,15 @@ extension Equity {
     }
     
     var name: String {
-        return self.titleFormat
+        return self.isIndex ? self.indexName : self.formattedTitle ?? self.titleFormat
     }
     
     var close: String {
         return self.change?.price.stringFormat ?? ""
     }
     
-    var alert: String {
-        return self.support == 0 ? "" : self.support.description
+    var variation: String {
+        return self.prevChangePercent
     }
     
     var prevChangePercent : String {
@@ -109,11 +108,15 @@ extension Equity {
     }
     
     var indexName : String {
-        return self.index?.titleIndex ?? "#"
+        return self.index?.titleIndex ?? ""
     }
     
     var indexGap : String {
         return self.index?.gap ?? ""
+    }
+    
+    var isIndex : Bool {
+        return self is Index
     }
     
     var gap : String {
@@ -163,7 +166,6 @@ extension Equity : AlphavantageWSModel {
         //Todo
     }
 
-    
     func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {
         
         guard let change = self.change else {
@@ -173,9 +175,7 @@ extension Equity : AlphavantageWSModel {
         }
         
         change.set(fromAlphavantage: Data)
-        
     }
-    
     
     func setDetail(Reponse Data: AlphavantageWS.InformationReponse) {
         

@@ -27,7 +27,7 @@ public class Index: Equity {
         return reset
     }
     
-    static var main : Index {
+    static var main : Index = {
         
         let value = EquitiesGroup.SRD.index
         
@@ -39,7 +39,7 @@ public class Index: Equity {
         }
         
         return resetIndex
-    }
+    }()
     
     static func reset() {
         AppDelegate.viewContext.delete(Index.main)

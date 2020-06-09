@@ -15,45 +15,30 @@ struct EquityDetail: View {
     
     var model : Equity
     
-    @State private var inputSupport : String = ""
-    @State private var inputEntry   : String = ""
-    
-    @State private var lock : Bool = false
-    
-    func setInput() {
+    @State private var worker   : Worker = Worker()
         
-        self.inputSupport = self.model.support == 0 ? "" : self.model.support.toString
-        self.inputEntry = self.model.entry == 0 ? "" : self.model.support.toString
-    }
-    
-    func saveModel() {
-        
-        if let value = Double(self.inputSupport) {
-            self.model.support = value
-            print("Support saved")
-        }
-
-        if let value = Double(self.inputEntry) {
-            self.model.entry = value
-            print("Objectif saved")
-        }
-    }
-    
     func fetchLastEquityLastChange() {
         self.viewModel.fetchChange(Equity: self.model)
-    }
-    
-    func editAction() {
-        self.lock.toggle()
-    }
-    
-    var actionName : String {
-        return self.lock ? "Edit" : "Lock"
     }
     
     var body: some View {
                     
             Form {
+                
+                Section(header: Text("Indicateurs")) {
+                    
+                    if !self.model.isIndex {
+                        TextView(label:self.model.indexName , value: self.model.indexGap)
+                    }
+                    
+                    DoubleTextView(label: "Tendance", value: 0)
+                    
+                    DoubleTextView(label: "MM20", value: 0)
+                    
+                    if !self.model.isIndex {
+                        TextView(label: "RSI", value: self.model.lastRSI)
+                    }
+                }
                 
                 Section(header: Text("Informations")) {
                     
@@ -61,51 +46,82 @@ struct EquityDetail: View {
                     
                     TextView(label: "Variation", value: model.prevChangePercent)
                     
-                    TextView(label: "Ecart", value: model.gap)
-                                        
-                    NumberFieldView(label: "Support", input: self.$inputSupport, lock: lock)
-                }
-                
-                Section(header: Text("Indicateurs")) {
+                    NumberFieldView(label: "Alerte", input: self.$worker.inputAlert, lock: self.worker.lock)
                     
-                    TextView(label:self.model.indexName , value: self.model.indexGap)
-                    
-                    DoubleTextView(label: "Tendance", value: 0)
-                    
-                    DoubleTextView(label: "MM20", value: 0)
-                    
-                    TextView(label: "RSI", value: self.model.lastRSI)
+                    if self.worker.shouldDisplayGap {
+                        TextView(label: "Ecart", value: model.gap)
+                    }
                 }
                 
                 Section(header: Text("Simulations")) {
                     
-                    SimulationView(lock: lock, objectif: self.$inputEntry)
-                }
-                
-                Section(header: Text("Actions")) {
-                    
-                    if model.shouldUpdatePrice {
-                        Button(action: {self.fetchLastEquityLastChange()}, label: {Text("Last Change")})
-                    }
-                    
-                    Button(action: {self.editAction()}) {Text(self.actionName)}
-                    
+                    SimulationView(lock: self.worker.lock, objectif: self.$worker.inputEntry)
                 }
             }
             .navigationBarTitle("\(model.name)")
             .onAppear() {
-                self.setInput()
+                self.worker.set(Model: self.model)
             }
-            .onDisappear(){
-                self.saveModel()
+            .onDisappear() {
+                self.worker.save()
             }
+    }
+}
+
+extension EquityDetail {
+    
+    struct Worker {
+        
+        private var model : Equity?
+        
+        var inputAlert      = ""
+        var inputEntry      = ""
+        var lock            = false
+        
+        var shouldDisplayGap : Bool {
+            return !self.inputAlert.isEmpty
+        }
+        
+        mutating func set(Model:Equity) {
+            self.model = Model
+            self.reset()
+        }
+        
+        mutating func reset() {
+            if let model = self.model {
+                self.inputAlert = model.support == 0 ? "" : model.support.toString
+                self.inputEntry = model.entry == 0 ? "" : model.support.toString
+            }
+        }
+        
+        func save() {
+            
+            if let value = Double(self.inputAlert) {
+                self.model?.support = value
+                print("Support saved")
+            }
+            
+            if let value = Double(self.inputEntry) {
+                self.model?.entry = value
+                print("Objectif saved")
+            }
+        }
     }
 }
 
 struct EquityDetail_Previews: PreviewProvider {
     
     static var previews: some View {
-        EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
+        
+        Group {
+            
+            NavigationView {
+                EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
+            }
+            
+            NavigationView {
+                EquityDetail(model: Index.main).environmentObject(EquityViewModel())
+            }
+        }
     }
-    
 }
