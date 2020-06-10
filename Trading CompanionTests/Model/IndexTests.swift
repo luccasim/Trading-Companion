@@ -37,12 +37,12 @@ class IndexTests: XCTestCase {
     }
     
     func testMarketClose() throws {
-        if Index.marketIsOpen {
-            print("You could update")
-        }
-        else {
-            print("Market is open, try after 17:30:00")
-        }
+//        if Index.marketIsOpen {
+//            print("You could update")
+//        }
+//        else {
+//            print("Market is open, try after 17:30:00")
+//        }
     }
 
 }

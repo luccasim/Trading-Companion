@@ -11,7 +11,7 @@ import Foundation
 extension AlphavantageWS {
     
     func historyReponse(Model:AlphavantageWSModel) -> Reponse {
-        return Reponse(model: Model, request: globalRequest(Label: Model.label), endpoint: .global)
+        return Reponse(model: Model, request: historyRequest(Label: Model.label), endpoint: .history)
     }
     
     public func historyRequest(Label:String) -> URLRequest {
@@ -81,6 +81,10 @@ extension AlphavantageWS {
             let decoder = JSONDecoder()
             self = try decoder.decode(HistoryReponse.self, from: reponse)
             
+        }
+        
+        static var preview : AlphavantageWS.HistoryReponse {
+            return try! AlphavantageWS.HistoryReponse(from: Helper.loadData(FileName: "history.json"))
         }
     }
     

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84088F70249165F700C807C0 /* DayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84088F6F249165F700C807C0 /* DayTests.swift */; };
 		840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */; };
 		840D5FF32479B3D400309500 /* Equity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF22479B3D400309500 /* Equity.swift */; };
 		840D5FF62479B9C400309500 /* Information.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF52479B9C400309500 /* Information.swift */; };
 		840D5FF82479C34100309500 /* EquityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF72479C34100309500 /* EquityTests.swift */; };
-		840D5FFA2479CB3E00309500 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FF92479CB3E00309500 /* History.swift */; };
 		840D5FFC2479CB4C00309500 /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D5FFB2479CB4C00309500 /* Change.swift */; };
 		8412C72F246A8F4E00AA342E /* EquityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C72E246A8F4E00AA342E /* EquityRow.swift */; };
 		8412C731246A8F6A00AA342E /* EquityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8412C730246A8F6A00AA342E /* EquityList.swift */; };
@@ -29,7 +29,6 @@
 		84246EA3247FFF50007A9029 /* Alphavantage+History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84246EA2247FFF50007A9029 /* Alphavantage+History.swift */; };
 		8432D80D248BF0A500969263 /* Alphavantage+RSI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432D80C248BF0A500969263 /* Alphavantage+RSI.swift */; };
 		8432D80F248BFCBB00969263 /* rsi.json in Resources */ = {isa = PBXBuildFile; fileRef = 8432D80E248BFCBB00969263 /* rsi.json */; };
-		8432D811248C10EC00969263 /* Rsi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432D810248C10EC00969263 /* Rsi.swift */; };
 		84366F0D2483CC32006A1C6B /* history.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCE2471B1A900FE4C87 /* history.json */; };
 		84366F0E2483CC32006A1C6B /* days.json in Resources */ = {isa = PBXBuildFile; fileRef = 848E16492482A94100C0D536 /* days.json */; };
 		84366F0F2483CC32006A1C6B /* information.json in Resources */ = {isa = PBXBuildFile; fileRef = 84327DCA246FDDDA00FE4C87 /* information.json */; };
@@ -40,7 +39,6 @@
 		84366F152483CC34006A1C6B /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 847B16DF24753F5E0054BE02 /* global.json */; };
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
-		843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F7247AAF790091D853 /* HistoryTests.swift */; };
 		843CC5FA247ABDB60091D853 /* ChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F9247ABDB60091D853 /* ChangeTests.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
@@ -75,11 +73,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84088F6F249165F700C807C0 /* DayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTests.swift; sourceTree = "<group>"; };
 		840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphavantageWSTests.swift; sourceTree = "<group>"; };
 		840D5FF22479B3D400309500 /* Equity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equity.swift; sourceTree = "<group>"; };
 		840D5FF52479B9C400309500 /* Information.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Information.swift; sourceTree = "<group>"; };
 		840D5FF72479C34100309500 /* EquityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityTests.swift; sourceTree = "<group>"; };
-		840D5FF92479CB3E00309500 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		840D5FFB2479CB4C00309500 /* Change.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
 		8412C72E246A8F4E00AA342E /* EquityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityRow.swift; sourceTree = "<group>"; };
 		8412C730246A8F6A00AA342E /* EquityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityList.swift; sourceTree = "<group>"; };
@@ -98,10 +96,8 @@
 		84327DCE2471B1A900FE4C87 /* history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = history.json; sourceTree = "<group>"; };
 		8432D80C248BF0A500969263 /* Alphavantage+RSI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+RSI.swift"; sourceTree = "<group>"; };
 		8432D80E248BFCBB00969263 /* rsi.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rsi.json; sourceTree = "<group>"; };
-		8432D810248C10EC00969263 /* Rsi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rsi.swift; sourceTree = "<group>"; };
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
-		843CC5F7247AAF790091D853 /* HistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTests.swift; sourceTree = "<group>"; };
 		843CC5F9247ABDB60091D853 /* ChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTests.swift; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -195,7 +191,7 @@
 				840D5FF72479C34100309500 /* EquityTests.swift */,
 				843CC5F5247A86760091D853 /* InformationTests.swift */,
 				843CC5F9247ABDB60091D853 /* ChangeTests.swift */,
-				843CC5F7247AAF790091D853 /* HistoryTests.swift */,
+				84088F6F249165F700C807C0 /* DayTests.swift */,
 				8494F827247C599800A7C5EE /* IndexTests.swift */,
 			);
 			path = Model;
@@ -321,11 +317,9 @@
 			isa = PBXGroup;
 			children = (
 				840D5FF52479B9C400309500 /* Information.swift */,
-				840D5FF92479CB3E00309500 /* History.swift */,
 				848E164B2482B38200C0D536 /* Day.swift */,
 				840D5FFB2479CB4C00309500 /* Change.swift */,
 				840D5FF22479B3D400309500 /* Equity.swift */,
-				8432D810248C10EC00969263 /* Rsi.swift */,
 				84C6429B2479DF3400AB5E7D /* Index.swift */,
 			);
 			path = Entity;
@@ -494,7 +488,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84246E9F247FF64F007A9029 /* Alphavantage+Endpoint.swift in Sources */,
-				840D5FFA2479CB3E00309500 /* History.swift in Sources */,
 				842099CA24867E4D0029739B /* TextView.swift in Sources */,
 				842099CC248680D00029739B /* DoubleTextView.swift in Sources */,
 				84246EA1247FFEE1007A9029 /* Alphavantage+Global.swift in Sources */,
@@ -512,7 +505,6 @@
 				84246E9D247EEAB4007A9029 /* Alphavantage+Detail.swift in Sources */,
 				840D5FF32479B3D400309500 /* Equity.swift in Sources */,
 				848E164C2482B38200C0D536 /* Day.swift in Sources */,
-				8432D811248C10EC00969263 /* Rsi.swift in Sources */,
 				8465D004246984F0000290A8 /* AlphavantageWS.swift in Sources */,
 				8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */,
 				84246E99247C66BF007A9029 /* Index.swift in Sources */,
@@ -527,12 +519,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84088F70249165F700C807C0 /* DayTests.swift in Sources */,
 				843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */,
 				843CC5F6247A86760091D853 /* InformationTests.swift in Sources */,
 				8494F828247C599800A7C5EE /* IndexTests.swift in Sources */,
 				840D5FF82479C34100309500 /* EquityTests.swift in Sources */,
 				840CAA3924758B800024DB5B /* AlphavantageWSTests.swift in Sources */,
-				843CC5F8247AAF790091D853 /* HistoryTests.swift in Sources */,
 				843CC5FA247ABDB60091D853 /* ChangeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -42,6 +42,11 @@ public class Equity : NSManagedObject, Identifiable {
             return Equity.resetEquities
         }
     }
+    
+    var allDays : [Day] {
+        guard let allObj = self.days?.allObjects as? [Day], allObj.count > 0 else { return [] }
+        return allObj.sorted(by: {$0.date! < $1.date!})
+    }
         
     var shouldUpdatePrice : Bool {
         
@@ -53,7 +58,7 @@ public class Equity : NSManagedObject, Identifiable {
     }
     
     var shouldInit : Bool {
-        return self.information == nil
+        return (self.information == nil) && (self.allDays.isEmpty)
     }
     
     private var titleFormat : String {
@@ -116,16 +121,7 @@ extension Equity {
     }
     
     var lastRSI : String {
-        
-        guard let values = (self.rsi?.allObjects as? [Rsi]) else {
-            return ""
-        }
-        
-        guard let sorted = values.sorted(by: {$0.day! > $1.day!}).first else {
-            return ""
-        }
-        
-        return sorted.value.stringFormat
+        return "peanut"
     }
 }
 
@@ -134,23 +130,29 @@ extension Equity : AlphavantageWSModel {
     func setRSI(Reponse: AlphavantageWS.RSIReponse) {
         
         //Todo
-        let values = Reponse.result
-        var result = Set<Rsi>()
-        
-        values.forEach { (rsi) in
-            let obj = Rsi(context: AppDelegate.viewContext)
-            obj.day = rsi.date?.toDate
-            obj.equity = self
-            obj.value = rsi.rsi.toDouble
-            result.insert(obj)
-        }
-        
-        self.rsi?.addingObjects(from: result)
+//        let values = Reponse.result
+//        var result = Set<Rsi>()
+//
+//        values.forEach { (rsi) in
+//            let obj = Rsi(context: AppDelegate.viewContext)
+//            obj.day = rsi.date?.toDate
+//            obj.equity = self
+//            obj.value = rsi.rsi.toDouble
+//            result.insert(obj)
+//        }
+//
+//        self.rsi?.addingObjects(from: result)
     }
     
     
-    func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
-        //Todo
+    func setHistory(Reponse wrapper: AlphavantageWS.HistoryReponse) {
+                    
+        wrapper.days.forEach { (value) in
+            
+            let day = Day.init(context: AppDelegate.viewContext)
+            day.set(HistoryDay: value)
+            self.addToDays(day)
+        }
     }
 
     func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {

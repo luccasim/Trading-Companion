@@ -83,7 +83,7 @@ public class AlphavantageWS {
                 
                 self.group.enter()
                 
-                print("[\(model.model.label)] Call \(model.endpoint.rawValue) at \(Date())\nRequest -> \(model.request.url!)")
+                print("[\(model.model.label)] Call \(model.endpoint.rawValue) at \(Date())")
                 
                 self.getDataTask(Request: model.request) { (result) in
                     

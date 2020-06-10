@@ -12,3 +12,20 @@ import CoreData
 public class Day : NSManagedObject {
     
 }
+
+
+//MARK: - Alphavantage Reponse
+extension Day {
+    
+    func set(HistoryDay reponse:AlphavantageWS.HistoryReponse.DayReponse) {
+        
+        self.date   = reponse.date?.toDate
+        self.open   = reponse.open.toDouble
+        self.close  = reponse.close.toDouble
+        self.high   = reponse.high.toDouble
+        self.low    = reponse.low.toDouble
+        self.volume = reponse.volume.toDouble
+        
+    }
+    
+}

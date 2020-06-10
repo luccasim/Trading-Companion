@@ -75,6 +75,10 @@ struct DynamicKey : CodingKey {
 
 final class Helper {
     
+    static var testmoc : NSManagedObjectContext {
+        return NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+    }
+    
     static func loadData(FileName:String) -> Data {
         
         let fileName        : String

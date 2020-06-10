@@ -15,12 +15,12 @@ class EquityTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        self.model = Equity.preview
+        self.model = Equity(context: Helper.testmoc)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        
+//        AppDelegate.viewContext.delete(self.model)
         self.model = nil
     }
 
@@ -39,18 +39,31 @@ class EquityTests: XCTestCase {
     }
     
     func testShouldUpdateChange() throws {
-        print(self.model.change)
+//        print(self.model.change)
+    }
+    
+    func testShouldInit() {
+        
+    }
+    
+    func testSetHistory() throws {
+        
+        let data = Helper.loadData(FileName: "history.json")
+        let wrapper = try AlphavantageWS.HistoryReponse(from: data)
+        
+        self.model.setHistory(Reponse: wrapper)
+
+        let days = (self.model.days?.allObjects as? [Day]) ?? []
+        
+        XCTAssert(days.count > 0)
+        
+        print(days)
     }
     
     func testSetRsi() throws {
         
         let data = Helper.loadData(FileName: "rsi.json")
         let reponse = try AlphavantageWS.RSIReponse.init(fromDataReponse: data)
-        
-        self.model.setRSI(Reponse: reponse)
-        XCTAssertNotNil(self.model.rsi)
-        
-        self.model.rsi?.forEach({print($0)})
         
     }
     

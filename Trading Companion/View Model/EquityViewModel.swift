@@ -91,7 +91,7 @@ final class EquityViewModel : ObservableObject {
         
         self.state = .installation
                 
-        self.webService.update(Endpoints: [.detail, .global], EquitiesList: self.listToUpdate) { (result) in
+        self.webService.update(Endpoints: [.detail, .history], EquitiesList: self.listToUpdate) { (result) in
             switch result {
             case .failure(let error):
                 if case AlphavantageWS.Errors.endOfUpdate = error {

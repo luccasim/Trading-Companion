@@ -61,11 +61,11 @@ class AlphavantageWSTests: XCTestCase {
         }
     }
     
-    private func callEndpoint(Mock:Mock, Endpoint:AlphavantageWS.Endpoint) {
+    private func callEndpoint(Mock:Mock, Endpoint:[AlphavantageWS.Endpoint]) {
         
         let exp = expectation(description: "TestDetails")
         
-        self.ws.update(Endpoint: Endpoint, EquitiesList: [Mock]) { (result) in
+        self.ws.update(Endpoints: Endpoint, EquitiesList: [Mock]) { (result) in
             switch result {
             case .success(_): break
             case .failure(let error): print(error.localizedDescription)
@@ -120,7 +120,7 @@ class AlphavantageWSTests: XCTestCase {
     
     func testDetail() throws {
         
-        self.callEndpoint(Mock: mock, Endpoint: .detail)
+        self.callEndpoint(Mock: mock, Endpoint: [.detail])
         
         XCTAssertNotNil(mock.detail)
         
@@ -129,7 +129,7 @@ class AlphavantageWSTests: XCTestCase {
     
     func testLastChange() throws {
         
-        self.callEndpoint(Mock: self.mock, Endpoint: .global)
+        self.callEndpoint(Mock: self.mock, Endpoint: [.global])
         
         XCTAssertNotNil(self.mock.global)
         
