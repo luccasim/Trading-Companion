@@ -34,19 +34,15 @@ extension AlphavantageWS {
         let endpoint    : AlphavantageWS.Endpoint
     }
     
-    func setDataToModel(Data:Data, Reponse:Reponse) {
+    func setDataToModel(Result:Result<Data,Error>, Reponse:Reponse) throws {
         
-        do {
-            
-            switch Reponse.endpoint {
-            case .detail: Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: Data))
-            case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: Data))
-            case .history: Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: Data))
-            case .rsi: Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: Data))
-            }
-            
-        } catch let error {
-            print("[\(Reponse.model.label)] Error \(error.localizedDescription)")
+        let data = try Result.get()
+        
+        switch Reponse.endpoint {
+        case .detail: Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: data))
+        case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: data))
+        case .history: Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: data))
+        case .rsi: Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: data))
         }
     }
     

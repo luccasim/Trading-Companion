@@ -111,21 +111,8 @@ extension Equity {
         return self.index?.titleIndex ?? ""
     }
     
-    var indexGap : String {
-        return self.index?.gap ?? ""
-    }
-    
     var isIndex : Bool {
         return self is Index
-    }
-    
-    var gap : String {
-
-        guard let spot = self.change?.price else {return ""}
-        let sup = self.support
-        let dif = ((spot - sup) / sup) * 100
-        
-        return String(format: "%.3f%%", dif)
     }
     
     var lastRSI : String {

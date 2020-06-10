@@ -18,7 +18,7 @@ public class AlphavantageWS {
     ///   - Endpoint: endpoint service to call
     ///   - list: list for endpoint protocol
     ///   - Completion: Result of operation, the Error endOfUpdate mean the end of operation.
-    func update(Endpoint:AlphavantageWS.Endpoint, EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
+    func update(Endpoints:[AlphavantageWS.Endpoint], EquitiesList list:[AlphavantageWSModel], Completion: @escaping(Result<[AlphavantageWSModel],Error>)->Void) {
         
         guard self.notDownloadList else {
             return Completion(.failure(AlphavantageWS.Errors.pendingDownload))
@@ -26,29 +26,28 @@ public class AlphavantageWS {
         
         self.notDownloadList = false
 
-        var reponses = self.mapModel(Endpoint: Endpoint, Models: list)
+        var modelList = list
                         
         self.timerQueue.async {
             
             let semaphore = DispatchSemaphore(value: 0)
             
-            while (!reponses.isEmpty) {
+            while (!modelList.isEmpty) {
             
-                guard let downloadList = reponses.first else {
+                guard let model = modelList.first else {
                     break
                 }
 
-                let label = downloadList.model.label
-
-                print("[\(label)] Start Download for : \(Endpoint.rawValue)  At : \(Date())")
-
-                self.getDataTask(List: [downloadList]) { (result) in
+                let label = model.label
+                let downloadList = Endpoints.compactMap({self.mapModel(Endpoint: $0, Models: [model]).first})
+    
+                self.getDataTask(List: downloadList) { (result) in
 
                     switch result{
                     case .success(let datas):
                         print("[\(label)] Sucess.")
                         Completion(.success(datas.map({$0.model})))
-                        reponses.removeFirst()
+                        modelList.removeFirst()
                     case .failure(let error):
                         
                         if case Errors.server(_, let url) = error {
@@ -56,7 +55,7 @@ public class AlphavantageWS {
                         }
                         
                         else {
-                            print("[\(label)] Fail Download")
+                            print("[\(label)] Failed.")
                             Completion(.failure(error))
                         }
                     }
@@ -78,21 +77,25 @@ public class AlphavantageWS {
         
         self.dlqueue.async {
             
-            var unvalid : Error?
+            var unvalid : Error? = nil
                         
             List.forEach { (model) in
                 
                 self.group.enter()
                 
+                print("[\(model.model.label)] Call \(model.endpoint.rawValue) at \(Date())\nRequest -> \(model.request.url!)")
+                
                 self.getDataTask(Request: model.request) { (result) in
-
-                    switch result {
-                    case .success(let data):
-                        DispatchQueue.main.async {self.setDataToModel(Data: data, Reponse: model)}
-                    case .failure(let error):
-                        unvalid = error
+                    
+                    DispatchQueue.main.async {
+            
+                        do {
+                            try self.setDataToModel(Result: result, Reponse: model)
+                        } catch let error {
+                            unvalid = error
+                        }
                     }
-                                        
+                
                     self.group.leave()
                 }
             }

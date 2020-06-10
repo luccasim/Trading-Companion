@@ -91,7 +91,7 @@ final class EquityViewModel : ObservableObject {
         
         self.state = .installation
                 
-        self.webService.update(Endpoint: .detail, EquitiesList: self.listToUpdate) { (result) in
+        self.webService.update(Endpoints: [.detail, .global], EquitiesList: self.listToUpdate) { (result) in
             switch result {
             case .failure(let error):
                 if case AlphavantageWS.Errors.endOfUpdate = error {
@@ -100,6 +100,10 @@ final class EquityViewModel : ObservableObject {
             default: self.updates(result: result)
             }
         }
+    }
+    
+    private func fetchEquitiesHistory() {
+        
     }
     
     private func fetchEquitiesIndexChange() {
@@ -111,7 +115,7 @@ final class EquityViewModel : ObservableObject {
             return
         }
         
-        self.webService.update(Endpoint: .global, EquitiesList: [self.index]) { (result) in
+        self.webService.update(Endpoints: [.global], EquitiesList: [self.index]) { (result) in
             switch result {
             case .failure(let error):
                 if case AlphavantageWS.Errors.endOfUpdate = error {
@@ -134,7 +138,7 @@ final class EquityViewModel : ObservableObject {
         self.listToUpdate = self.equities.filter({$0.shouldUpdatePrice})
         self.updateCount = self.listToUpdate.count
         
-        self.webService.update(Endpoint: .global, EquitiesList: self.listToUpdate) { (result) in
+        self.webService.update(Endpoints: [.global], EquitiesList: self.listToUpdate) { (result) in
             switch result {
             case .failure(let error):
                 if case AlphavantageWS.Errors.endOfUpdate = error {
@@ -154,7 +158,7 @@ final class EquityViewModel : ObservableObject {
     
     func fetchChange(Equity:Equity) {
         
-        self.webService.update(Endpoint: .global, EquitiesList: [Equity]) { (result) in
+        self.webService.update(Endpoints: [.global], EquitiesList: [Equity]) { (result) in
             self.updates(result: result)
         }
     }

@@ -28,7 +28,7 @@ struct EquityDetail: View {
                 Section(header: Text("Indicateurs")) {
                     
                     if !self.model.isIndex {
-                        TextView(label:self.model.indexName , value: self.model.indexGap)
+//                        TextView(label:self.model.indexName , value: self.model.indexGap)
                     }
                     
                     DoubleTextView(label: "Tendance", value: 0)
@@ -42,14 +42,14 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Informations")) {
                     
-                    TextView(label: "Cours", value: model.close)
+                    TextView(label: "Cours", value: self.worker.price)
                     
-                    TextView(label: "Variation", value: model.prevChangePercent)
+                    TextView(label: "Variation", value: self.worker.variation)
                     
                     NumberFieldView(label: "Alerte", input: self.$worker.inputAlert, lock: self.worker.lock)
                     
                     if self.worker.shouldDisplayGap {
-                        TextView(label: "Ecart", value: model.gap)
+                        TextView(label: "Ecart", value: self.worker.gap)
                     }
                 }
                 
@@ -72,14 +72,26 @@ extension EquityDetail {
     
     struct Worker {
         
-        private var model : Equity?
+        private weak var model : Equity?
         
+        var price           = ""
+        var variation       = ""
         var inputAlert      = ""
         var inputEntry      = ""
         var lock            = false
         
         var shouldDisplayGap : Bool {
             return !self.inputAlert.isEmpty
+        }
+        
+        var gap : String {
+
+            guard let spot = self.model?.change?.price, let alert = Double(self.inputAlert) else {
+                return ""
+            }
+            
+            let dif = ((spot - alert) / alert) * 100
+            return String(format: "%.3f%%", dif)
         }
         
         mutating func set(Model:Equity) {
@@ -89,15 +101,17 @@ extension EquityDetail {
         
         mutating func reset() {
             if let model = self.model {
-                self.inputAlert = model.support == 0 ? "" : model.support.toString
-                self.inputEntry = model.entry == 0 ? "" : model.support.toString
+                self.inputAlert = model.alert == 0 ? "" : model.alert.toString
+                self.inputEntry = model.entry == 0 ? "" : model.entry.toString
+                self.price      = model.change?.price.toString ?? ""
+                self.variation  = model.change?.percentFormat ?? ""
             }
         }
         
         func save() {
             
             if let value = Double(self.inputAlert) {
-                self.model?.support = value
+                self.model?.alert = value
                 print("Support saved")
             }
             
@@ -106,6 +120,7 @@ extension EquityDetail {
                 print("Objectif saved")
             }
         }
+        
     }
 }
 
