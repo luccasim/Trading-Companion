@@ -12,6 +12,7 @@
         <attribute name="symbol" optional="YES" attributeType="String"/>
         <attribute name="update" optional="YES" attributeType="String"/>
         <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day"/>
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="change" inverseEntity="Equity"/>
     </entity>
     <entity name="Day" representedClassName=".Day" syncable="YES" codeGenerationType="category">
@@ -46,10 +47,10 @@
         <relationship name="equity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Equity" inverseName="information" inverseEntity="Equity"/>
     </entity>
     <elements>
-        <element name="Change" positionX="343.8046875" positionY="-808.82421875" width="128" height="223"/>
-        <element name="Day" positionX="138.68359375" positionY="-1026.11328125" width="128" height="163"/>
+        <element name="Change" positionX="343.8046875" positionY="-808.82421875" width="128" height="238"/>
+        <element name="Day" positionX="144.4453125" positionY="-1063.8984375" width="128" height="163"/>
         <element name="Equity" positionX="345.70703125" positionY="-1066.453125" width="128" height="163"/>
         <element name="Index" positionX="350.4609375" positionY="-1157.55859375" width="128" height="58"/>
-        <element name="Information" positionX="581.90625" positionY="-1036.51171875" width="128" height="133"/>
+        <element name="Information" positionX="547.96484375" positionY="-1063.40625" width="128" height="133"/>
     </elements>
 </model>

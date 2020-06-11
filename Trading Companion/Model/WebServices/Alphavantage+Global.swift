@@ -74,5 +74,10 @@ extension AlphavantageWS {
         init(from data:Data) throws {
             self = try JSONDecoder().decode(GlobalReponse.self, from: data)
         }
+        
+        static var preview : AlphavantageWS.GlobalReponse {
+            let data = Helper.loadData(FileName: "global.json")
+            return try! AlphavantageWS.GlobalReponse(from: data)
+        }
     }
 }

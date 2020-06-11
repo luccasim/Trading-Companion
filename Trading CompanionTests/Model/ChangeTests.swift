@@ -22,10 +22,6 @@ class ChangeTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         self.change = nil
     }
-
-    private func get(FileName:String,FileExtension:String) -> URL! {
-        return Bundle(for: type(of: self)).url(forResource: FileName, withExtension: FileExtension)
-    }
     
     func testInit() throws {
         
@@ -36,8 +32,7 @@ class ChangeTests: XCTestCase {
     
     func testSetFromAlphavantage() throws {
         
-        let data    = try Data(contentsOf: self.get(FileName: "ibm_change", FileExtension: "json"))
-        let reponse = try AlphavantageWS.GlobalReponse(from: data)
+        let reponse = AlphavantageWS.GlobalReponse.preview
         
         self.change.set(fromAlphavantage: reponse)
         
@@ -49,6 +44,7 @@ class ChangeTests: XCTestCase {
         XCTAssertNotNil(change.high)
         XCTAssertNotNil(change.price)
         XCTAssertNotNil(change.volume)
+        XCTAssertNotNil(change.day)
         
         print(self.change.description)
     }

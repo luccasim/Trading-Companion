@@ -40,6 +40,7 @@
 		843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */; };
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
 		843CC5FA247ABDB60091D853 /* ChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F9247ABDB60091D853 /* ChangeTests.swift */; };
+		8440362B2491FB5600DBE5BB /* EquityDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440362A2491FB5600DBE5BB /* EquityDay.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
 		8465CFD6246984C5000290A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD5246984C5000290A8 /* ContentView.swift */; };
@@ -99,6 +100,7 @@
 		843CC5F2247A7BD00091D853 /* EquitiesGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquitiesGroupTests.swift; sourceTree = "<group>"; };
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
 		843CC5F9247ABDB60091D853 /* ChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTests.swift; sourceTree = "<group>"; };
+		8440362A2491FB5600DBE5BB /* EquityDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityDay.swift; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8465CFD3246984C5000290A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -293,9 +295,10 @@
 		847CAEBA24880EC80026A0D5 /* Equity */ = {
 			isa = PBXGroup;
 			children = (
-				848E16462482761000C0D536 /* EquityDetail.swift */,
 				8412C730246A8F6A00AA342E /* EquityList.swift */,
 				8412C72E246A8F4E00AA342E /* EquityRow.swift */,
+				848E16462482761000C0D536 /* EquityDetail.swift */,
+				8440362A2491FB5600DBE5BB /* EquityDay.swift */,
 			);
 			path = Equity;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				84246E99247C66BF007A9029 /* Index.swift in Sources */,
 				840D5FF62479B9C400309500 /* Information.swift in Sources */,
 				84246EA3247FFF50007A9029 /* Alphavantage+History.swift in Sources */,
+				8440362B2491FB5600DBE5BB /* EquityDay.swift in Sources */,
 				84207C5824858FCE0068DF50 /* SimulationView.swift in Sources */,
 				8465CFD6246984C5000290A8 /* ContentView.swift in Sources */,
 			);

@@ -9,20 +9,30 @@
 import Foundation
 import CoreData
 
-fileprivate let localData = load(FileName: "global.json")
-
 public class Change : NSManagedObject {
     
-    static var previous = Change.local
-    
-    static var local : Change {
+    static var preview : Change = {
         let obj = Change(context: AppDelegate.viewContext)
-        obj.set(fromAlphavantage: try? AlphavantageWS.GlobalReponse(from:localData))
+        obj.set(fromAlphavantage: AlphavantageWS.GlobalReponse.preview)
         return obj
-    }
+    }()
     
     var shouldUpdate : Bool {
         return self.update == nil ? true : self.update == Date().currentStringDayDate ? false : true
+    }
+    
+    private var fetchDay : Day {
+        
+        if let date = self.update?.toDate as NSDate? {
+            let request : NSFetchRequest<Day> = Day.fetchRequest()
+            request.predicate = NSPredicate(format: "date = %@", date)
+            if let day = try? AppDelegate.viewContext.fetch(request).first {
+                return day
+            }
+        }
+        let day = Day(context: AppDelegate.viewContext)
+        day.set(Change: self)
+        return day
     }
     
     func set(fromAlphavantage reponse:AlphavantageWS.GlobalReponse?) {
@@ -39,6 +49,7 @@ public class Change : NSManagedObject {
             self.change         = reponse.change.toDouble
             self.percent        = reponse.percent
             self.update         = Date().currentStringDayDate
+            self.day            = self.fetchDay
         }
     }
     
@@ -57,7 +68,7 @@ public class Change : NSManagedObject {
     
 }
 
-fileprivate extension Date {
+extension Date {
     
     var currentStringDayDate : String {
         let formatter = DateFormatter()

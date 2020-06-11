@@ -11,11 +11,18 @@ import CoreData
 
 public class Day : NSManagedObject {
     
+    var label : String {
+        return self.date?.currentStringDayDate ?? "#"
+    }
+    
+    var price : String {
+        return self.close.toString
+    }
 }
 
 
 //MARK: - Alphavantage Reponse
-extension Day {
+extension Day : Identifiable {
     
     func set(HistoryDay reponse:AlphavantageWS.HistoryReponse.DayReponse) {
         
@@ -28,4 +35,14 @@ extension Day {
         
     }
     
+    func set(Change change:Change) {
+        
+        self.date   = change.update?.toDate
+        self.open   = change.open
+        self.close  = change.price
+        self.high   = change.high
+        self.low    = change.low
+        self.volume = change.volume
+        
+    }
 }

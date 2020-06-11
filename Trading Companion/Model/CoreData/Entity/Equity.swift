@@ -18,10 +18,11 @@ public class Equity : NSManagedObject, Identifiable {
         
         index.symbol = "^SBF120"
         new.information = Information.previous
-        new.change = Change.previous
+        new.change = Change.preview
         new.symbol = new.information?.symbol
         new.index = index
         new.setRSI(Reponse: AlphavantageWS.RSIReponse.preview)
+        new.setHistory(Reponse: AlphavantageWS.HistoryReponse.preview)
         
         return new
     }()
@@ -45,7 +46,7 @@ public class Equity : NSManagedObject, Identifiable {
     
     var allDays : [Day] {
         guard let allObj = self.days?.allObjects as? [Day], allObj.count > 0 else { return [] }
-        return allObj.sorted(by: {$0.date! < $1.date!})
+        return allObj.sorted(by: {$0.date! > $1.date!})
     }
         
     var shouldUpdatePrice : Bool {
