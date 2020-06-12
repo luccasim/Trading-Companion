@@ -54,13 +54,17 @@ public class Index: Equity {
         return self.symbol?.replacingOccurrences(of: "^", with: "") ?? "#"
     }
     
-    var marketIsClose : Bool {
+    static var mandatoryUpdate : Date {
         let marketClose = "17:30:00"
         let date = Date()
         let formater = DateFormatter()
         formater.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let current = formater.string(from: date)
         let limit = "\(current.components(separatedBy: " ")[0]) \(marketClose)"
-        return date > formater.date(from: limit)!
+        return formater.date(from: limit)!
+    }
+    
+    var marketIsClose : Bool {
+        return Date() > Index.mandatoryUpdate
     }
 }

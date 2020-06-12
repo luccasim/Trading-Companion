@@ -10,13 +10,17 @@ import XCTest
 @testable import Trading_Companion
 
 class IndexTests: XCTestCase {
+    
+    var model : Index!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.model = Index(context: AppDelegate.viewContext)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        self.model = nil
     }
 
     func testResetValue() throws {
@@ -37,12 +41,11 @@ class IndexTests: XCTestCase {
     }
     
     func testMarketClose() throws {
-//        if Index.marketIsOpen {
-//            print("You could update")
-//        }
-//        else {
-//            print("Market is open, try after 17:30:00")
-//        }
+        self.model.marketIsClose ? print("You could update") : print("Market is open, try after 17:30:00")
+    }
+    
+    func testMandatoryDate() throws {
+        print("Mandatory:\n\(Index.mandatoryUpdate)")
     }
 
 }

@@ -18,7 +18,6 @@ public class Equity : NSManagedObject, Identifiable {
         
         index.symbol = "^SBF120"
         new.information = Information.previous
-        new.change = Change.preview
         new.symbol = new.information?.symbol
         new.index = index
         new.setRSI(Reponse: AlphavantageWS.RSIReponse.preview)
@@ -71,18 +70,11 @@ public class Equity : NSManagedObject, Identifiable {
         let sub = title.prefix(25)
         let str = String(sub)
         let format = str.components(separatedBy: " ")
-        let words = format.count > 3 ? "\(format[0]) \(format[1]) \(format[2])" : str
+        let words = format.count >= 3 ? "\(format[0]) \(format[1]) \(format[2]) \(format[3])" : str
         
         self.formattedTitle = words
         
         return words
-    }
-}
-
-fileprivate extension Double {
-    
-    var stringFormat : String {
-        return String(format: "%.3f", self)
     }
 }
 
@@ -102,7 +94,7 @@ extension Equity {
     }
     
     var close: String {
-        return self.change?.price.stringFormat ?? ""
+        return self.change?.price.toStringDecimal ?? ""
     }
     
     var variation: String {
@@ -110,7 +102,7 @@ extension Equity {
     }
     
     var prevChangePercent : String {
-        return self.change?.percentFormat ?? "#"
+        return self.change?.percentFormat ?? ""
     }
     
     var indexName : String {
@@ -147,36 +139,45 @@ extension Equity : AlphavantageWSModel {
     
     
     func setHistory(Reponse wrapper: AlphavantageWS.HistoryReponse) {
-                    
+        
         wrapper.days.forEach { (value) in
             
             let day = Day.init(context: AppDelegate.viewContext)
             day.set(HistoryDay: value)
             self.addToDays(day)
         }
+        
+        if self.change == nil, let lastDay = self.allDays.first {
+            self.change = Change(context: AppDelegate.viewContext)
+            self.change?.equity = self
+            self.change?.set(lastDay: lastDay)
+        }
     }
 
     func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {
         
-        guard let change = self.change else {
-            self.change = Change(WithEquity: self)
-            self.change?.set(fromAlphavantage: Data)
-            return
+        if let change = self.change {
+            change.set(fromAlphavantage: Data)
         }
         
-        change.set(fromAlphavantage: Data)
+        else {
+            self.change = Change(context: AppDelegate.viewContext)
+            self.change?.equity = self
+            self.change?.set(fromAlphavantage: Data)
+        }
     }
     
     func setDetail(Reponse Data: AlphavantageWS.InformationReponse) {
         
-        guard let information = self.information else {
-            self.information = Information(context: AppDelegate.viewContext)
-            self.information?.set(fromAlphavantage: Data)
-            self.information?.equity = self
-            return
+        if let information = self.information {
+            information.set(fromAlphavantage: Data)
         }
         
-        information.set(fromAlphavantage: Data)
+        else {
+            self.information = Information(context: AppDelegate.viewContext)
+            self.information?.equity = self
+            self.information?.set(fromAlphavantage: Data)
+        }
     }
     
     var label : String {
@@ -191,10 +192,32 @@ extension String {
         return Double(self) ?? 0
     }
     
-    var toDate : Date? {
+    var toDayDate : Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let safe = self.components(separatedBy: " ")
         return formatter.date(from: safe[0])
+    }
+    
+    var toDateDayAndHour : Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.date(from: self)
+    }
+}
+
+extension Double {
+    
+    var toStringDecimal : String {
+        return String(format: "%.3f", self)
+    }
+}
+
+extension Date {
+    
+    var toStringDayAndHour : String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter.string(from: self)
     }
 }

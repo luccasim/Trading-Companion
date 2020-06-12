@@ -12,7 +12,7 @@ import CoreData
 public class Day : NSManagedObject {
     
     var label : String {
-        return self.date?.currentStringDayDate ?? "#"
+        return self.date?.toStringDayAndHour ?? "#"
     }
     
     var price : String {
@@ -26,7 +26,7 @@ extension Day : Identifiable {
     
     func set(HistoryDay reponse:AlphavantageWS.HistoryReponse.DayReponse) {
         
-        self.date   = reponse.date?.toDate
+        self.date   = reponse.date?.toDayDate
         self.open   = reponse.open.toDouble
         self.close  = reponse.close.toDouble
         self.high   = reponse.high.toDouble
@@ -37,7 +37,7 @@ extension Day : Identifiable {
     
     func set(Change change:Change) {
         
-        self.date   = change.update?.toDate
+        self.date   = change.update?.toDayDate
         self.open   = change.open
         self.close  = change.price
         self.high   = change.high

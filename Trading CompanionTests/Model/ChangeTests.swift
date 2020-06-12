@@ -25,9 +25,9 @@ class ChangeTests: XCTestCase {
     
     func testInit() throws {
         
+        print(self.change.description)
         XCTAssertNotNil(self.change)
         
-        print(self.change.description)
     }
     
     func testSetFromAlphavantage() throws {
@@ -47,5 +47,18 @@ class ChangeTests: XCTestCase {
         XCTAssertNotNil(change.day)
         
         print(self.change.description)
+    }
+    
+    func testShouldUpdate() {
+        
+        self.change.update = nil
+        XCTAssert(self.change.shouldUpdate)
+        
+        self.change.update = "2000-01-01 01:01:01"
+        XCTAssert(self.change.shouldUpdate)
+        
+        self.change.update = "2050-01-12 10:10:10"
+        XCTAssert(!self.change.shouldUpdate)
+        
     }
 }
