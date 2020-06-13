@@ -29,6 +29,7 @@
         <attribute name="alert" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="entry" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="formattedTitle" optional="YES" attributeType="String"/>
+        <attribute name="selectedDay" optional="YES" attributeType="String"/>
         <attribute name="symbol" attributeType="String"/>
         <relationship name="change" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Change" inverseName="equity" inverseEntity="Change"/>
         <relationship name="days" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Day" inverseName="equity" inverseEntity="Day"/>
@@ -49,7 +50,7 @@
     <elements>
         <element name="Change" positionX="343.8046875" positionY="-808.82421875" width="128" height="238"/>
         <element name="Day" positionX="144.4453125" positionY="-1063.8984375" width="128" height="163"/>
-        <element name="Equity" positionX="345.70703125" positionY="-1066.453125" width="128" height="163"/>
+        <element name="Equity" positionX="345.70703125" positionY="-1066.453125" width="128" height="178"/>
         <element name="Index" positionX="350.4609375" positionY="-1157.55859375" width="128" height="58"/>
         <element name="Information" positionX="547.96484375" positionY="-1063.40625" width="128" height="133"/>
     </elements>

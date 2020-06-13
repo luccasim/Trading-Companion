@@ -25,18 +25,27 @@ struct EquityDetail: View {
                     
             Form {
                 
+                Section(header: Text("Day")) {
+                    
+                    Picker("\(self.worker.selectedDayTitle)", selection: self.$worker.daySelector) {
+                        ForEach(self.worker.days) {
+                            Text("\($0.date?.toStringDay ?? "")")
+                        }
+                    }
+                }
+                
                 Section(header: Text("Indicateurs")) {
                     
                     if !self.model.isIndex {
 //                        TextView(label:self.model.indexName , value: self.model.indexGap)
                     }
                     
-                    DoubleTextView(label: "Tendance", value: 0)
+                    TextView(label: "Volume", value: self.worker.volume)
                     
-                    DoubleTextView(label: "MM20", value: 0)
+                    TextView(label: "MM20", value: self.worker.trend)
                     
                     if !self.model.isIndex {
-                        TextView(label: "RSI", value: self.model.lastRSI)
+                        TextView(label: "RSI", value: self.worker.rsi)
                     }
                 }
                 
@@ -80,8 +89,23 @@ extension EquityDetail {
         var inputEntry      = ""
         var lock            = false
         
+        var daySelector     = 0
+        
         var shouldDisplayGap : Bool {
             return !self.inputAlert.isEmpty
+        }
+        
+        var days : [Day] {
+            return self.model?.allDays ?? []
+        }
+        
+        var selectedDay : Day? {
+            guard self.days.count > 0 else {return nil}
+            return self.days[self.daySelector]
+        }
+        
+        var selectedDayTitle : String {
+            return self.selectedDay?.date?.toStringDay ?? ""
         }
         
         var gap : String {
@@ -92,6 +116,18 @@ extension EquityDetail {
             
             let dif = ((spot - alert) / alert) * 100
             return String(format: "%.3f%%", dif)
+        }
+        
+        var rsi : String {
+            return self.selectedDay?.rsi.toStringDecimal ?? ""
+        }
+        
+        var volume : String {
+            return self.selectedDay?.volume.toStringInt ?? ""
+        }
+        
+        var trend : String {
+            return ""
         }
         
         mutating func set(Model:Equity) {
@@ -105,6 +141,7 @@ extension EquityDetail {
                 self.inputEntry = model.entry == 0 ? "" : model.entry.toString
                 self.price      = model.change?.price.toString ?? ""
                 self.variation  = model.change?.percentFormat ?? ""
+                self.daySelector = model.indexDay
             }
         }
         
@@ -119,6 +156,8 @@ extension EquityDetail {
                 self.model?.entry = value
                 print("Objectif saved")
             }
+            
+            self.model?.selectedDay = self.days[daySelector].label
         }
         
     }

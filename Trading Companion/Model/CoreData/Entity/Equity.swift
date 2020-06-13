@@ -80,6 +80,15 @@ public class Equity : NSManagedObject, Identifiable {
 
 extension Equity {
     
+    var day : Day?  {
+        guard self.allDays.count > 0 else {return nil}
+        return self.allDays[self.indexDay]
+    }
+    
+    var indexDay : Int {
+        return self.allDays.firstIndex(where: {$0.label == self.selectedDay}) ?? 0
+    }
+    
     var little: String {
         
         if let index = self as? Index {
@@ -152,6 +161,10 @@ extension Equity : AlphavantageWSModel {
             self.change?.equity = self
             self.change?.set(lastDay: lastDay)
         }
+        
+        if let defaultSelectedDay = self.allDays.first {
+            self.selectedDay = defaultSelectedDay.label
+        }
     }
 
     func setGlobal(Reponse Data: AlphavantageWS.GlobalReponse) {
@@ -211,6 +224,10 @@ extension Double {
     var toStringDecimal : String {
         return String(format: "%.3f", self)
     }
+    
+    var toStringInt : String {
+        return String(format: "%.0f", self)
+    }
 }
 
 extension Date {
@@ -220,4 +237,11 @@ extension Date {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: self)
     }
+    
+    var toStringDay : String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: self)
+    }
+
 }
