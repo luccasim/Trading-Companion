@@ -19,4 +19,47 @@ extension AlphavantageWS {
         
     }
     
+    struct SMAReponse : Codable {
+        
+        let result : [SMA]
+        
+        enum Key : String, CodingKey {
+            case result = "Technical Analysis: SMA"
+        }
+        
+        init(from decoder:Decoder) throws {
+            
+            let container = try decoder.container(keyedBy: Key.self)
+
+            let nested = try container.nestedContainer(keyedBy: DynamicKey.self, forKey: .result)
+            
+            let keys = nested.allKeys
+            var res = [SMA]()
+            
+            keys.forEach { (key) in
+                if key.stringValue.contains("2020"), var value = try? nested.decode(SMA.self, forKey: key) {
+                    value.date = key.stringValue
+                    res.append(value)
+                }
+            }
+            
+            self.result = res
+        }
+        
+        struct SMA : Codable {
+            
+            var date    : String?
+            let mm      : String
+            
+            enum CodingKeys: String, CodingKey {
+                case mm = "SMA"
+            }
+        }
+        
+        init(withData data:Data) throws {
+            let wrapper = try JSONDecoder().decode(SMAReponse.self, from: data)
+            self = wrapper
+        }
+    }
+    
 }

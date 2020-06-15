@@ -9,7 +9,7 @@
 import XCTest
 @testable import Trading_Companion
 
-class AlphavantageTests_mm: XCTestCase {
+class AlphavantageTests_SMA: XCTestCase {
     
     var model : AlphavantageWSModel!
     var symbol = "AF.PA"
@@ -47,7 +47,9 @@ class AlphavantageTests_mm: XCTestCase {
     func testLocal() throws {
         
         let data = Helper.loadData(FileName: "mm.json")
-        print(data.toStr)
+        let reponse = try AlphavantageWS.SMAReponse.init(withData: data)
+        
+        print(reponse)
     }
 
 }
