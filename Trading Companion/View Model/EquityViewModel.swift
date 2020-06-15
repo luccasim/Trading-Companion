@@ -164,15 +164,15 @@ final class EquityViewModel : ObservableObject {
         }
     }
     
-    func fetchTrend(Equity:Equity) {
+    func fetchIndicator(Equity:Equity) {
         self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
             self.updates(result: result)
         }
     }
     
-    func fecthRSI(Equity:Equity) {
-        self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
-            self.updates(result: result)
-        }
-    }
+//    func fecthRSI(Equity:Equity) {
+//        self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
+//            self.updates(result: result)
+//        }
+//    }
 }

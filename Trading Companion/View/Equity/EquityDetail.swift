@@ -41,28 +41,22 @@ struct EquityDetail: View {
                 
                 Section(header: Text("Indicateurs")) {
                     
-                    if !self.model.isIndex {
-//                        TextView(label:self.model.indexName , value: self.model.indexGap)
-                    }
-                    
-                    TextView(label: "Volume", value: self.worker.volume)
-                    
-                    if self.worker.shouldUpdateTrend {
-
-                    }
-                    
-                    else {
-                        TextView(label: "MM20", value: self.worker.trend)
-                    }
-                    
-                    if self.worker.needUpdateRSI {
-                        Button("RSI") {
-                            self.worker.updateRSI()
+                    if self.worker.couldUpdate {
+                        Button("Update") {
+                            self.worker.updateIndicator()
                         }
                     }
                     
-                    else {
-                        TextView(label: "RSI", value: self.worker.trend)
+                    if self.worker.hasVolume {
+                        TextView(label: "Volume", value: self.worker.volume)
+                    }
+                    
+                    if self.worker.hasTrend {
+                        TextView(label: "MM20", value: self.worker.trend)
+                    }
+                    
+                    if self.worker.hasRSI {
+                        TextView(label: "RSI", value: self.worker.rsi)
                     }
                 }
                 
@@ -87,14 +81,12 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onAppear() {
-                print("Selected Index = \(self.indic)")
                 self.worker.set(Model: self.model, Manager: self.viewModel)
                 self.worker.daySelector = self.indic
             }
             .onDisappear() {
                 self.worker.save()
             }
-//        }
     }
 }
 
@@ -130,6 +122,10 @@ extension EquityDetail {
             return self.selectedDay?.date?.toStringDay ?? ""
         }
         
+        var couldUpdate : Bool {
+            return (self.selectedDay?.shouldUpdate ?? true)
+        }
+        
         var gap : String {
 
             guard let spot = self.selectedDay?.close, let alert = Double(self.inputAlert) else {
@@ -156,23 +152,21 @@ extension EquityDetail {
             return !(self.model?.isIndex ?? true)
         }
         
-        var shouldUpdateTrend : Bool {
-            return self.trend.isEmpty
+        var hasVolume : Bool {
+            return !(self.selectedDay?.volume == 0)
         }
         
-        var needUpdateRSI : Bool {
-            return self.rsi.isEmpty
+        var hasTrend : Bool {
+            return !(self.selectedDay?.mm20 == 0)
         }
         
-        mutating func updateTrend() {
-            if let manager = self.manager, let model = self.model {
-                manager.fetchTrend(Equity: model)
-            }
+        var hasRSI : Bool {
+            return !(self.selectedDay?.rsi == 0)
         }
         
-        mutating func updateRSI() {
-            if let manager = self.manager, let model = self.model {
-                manager.fecthRSI(Equity: model)
+        mutating func updateIndicator() {
+            if let model = self.model {
+                self.manager?.fetchIndicator(Equity: model)
             }
         }
         

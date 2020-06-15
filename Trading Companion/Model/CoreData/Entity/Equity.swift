@@ -129,21 +129,16 @@ extension Equity {
 
 extension Equity : AlphavantageWSModel {
     
-    func setRSI(Reponse: AlphavantageWS.RSIReponse) {
+    func setRSI(Reponse wrapper:AlphavantageWS.RSIReponse) {
         
         //Todo
-//        let values = Reponse.result
-//        var result = Set<Rsi>()
-//
-//        values.forEach { (rsi) in
-//            let obj = Rsi(context: AppDelegate.viewContext)
-//            obj.day = rsi.date?.toDate
-//            obj.equity = self
-//            obj.value = rsi.rsi.toDouble
-//            result.insert(obj)
-//        }
-//
-//        self.rsi?.addingObjects(from: result)
+        wrapper.result.forEach { (rsi) in
+            self.allDays.forEach { (day) in
+                if let date = rsi.date, date.contains(day.dayDate) {
+                    day.rsi = Double(rsi.rsi) ?? 0
+                }
+            }
+        }
     }
     
     
