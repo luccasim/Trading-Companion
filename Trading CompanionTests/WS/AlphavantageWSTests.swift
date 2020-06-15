@@ -9,19 +9,17 @@
 import XCTest
 @testable import Trading_Companion
 
-fileprivate let rsiData = load(FileName: "rsi.json")
-
 class AlphavantageWSTests: XCTestCase {
     
     var ws : AlphavantageWS!
 
-    var mock: Mock!
+    var mock: AlphaMock!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         self.ws = AlphavantageWS()
-        self.mock = Mock(self.symbol)
+        self.mock = AlphaMock(self.symbol)
         
     }
 
@@ -32,36 +30,7 @@ class AlphavantageWSTests: XCTestCase {
         self.mock = nil
     }
     
-    class Mock : AlphavantageWSModel {
-
-        var label   : String
-        var detail  : AlphavantageWS.InformationReponse?
-        var global  : AlphavantageWS.GlobalReponse?
-        var history : AlphavantageWS.HistoryReponse?
-        var rsi     : AlphavantageWS.RSIReponse?
-        
-        init(_ str:String) {
-            self.label = str
-        }
-        
-        func setDetail(Reponse: AlphavantageWS.InformationReponse) {
-            self.detail = Reponse
-        }
-        
-        func setGlobal(Reponse: AlphavantageWS.GlobalReponse) {
-            self.global = Reponse
-        }
-        
-        func setHistory(Reponse: AlphavantageWS.HistoryReponse) {
-            self.history = Reponse
-        }
-        
-        func setRSI(Reponse: AlphavantageWS.RSIReponse) {
-            self.rsi = Reponse
-        }
-    }
-    
-    private func callEndpoint(Mock:Mock, Endpoint:[AlphavantageWS.Endpoint]) {
+    private func callEndpoint(Mock:AlphaMock, Endpoint:[AlphavantageWS.Endpoint]) {
         
         let exp = expectation(description: "TestDetails")
         

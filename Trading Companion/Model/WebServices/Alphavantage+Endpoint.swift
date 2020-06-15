@@ -26,6 +26,7 @@ extension AlphavantageWS {
         case global
         case history
         case rsi
+        case mm
     }
     
     struct Reponse {
@@ -43,6 +44,7 @@ extension AlphavantageWS {
         case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: data))
         case .history: Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: data))
         case .rsi: Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: data))
+        default: break
         }
     }
     
@@ -53,6 +55,7 @@ extension AlphavantageWS {
         case .global:   return Models.map({self.globalReponse(Model: $0)})
         case .history:  return Models.map({self.historyReponse(Model: $0)})
         case .rsi:      return Models.map({self.rsiModel(Model: $0)})
+        default:        return []
         }
         
     }

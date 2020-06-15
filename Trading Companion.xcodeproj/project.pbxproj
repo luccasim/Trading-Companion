@@ -41,6 +41,10 @@
 		843CC5F6247A86760091D853 /* InformationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F5247A86760091D853 /* InformationTests.swift */; };
 		843CC5FA247ABDB60091D853 /* ChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843CC5F9247ABDB60091D853 /* ChangeTests.swift */; };
 		8440362B2491FB5600DBE5BB /* EquityDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440362A2491FB5600DBE5BB /* EquityDay.swift */; };
+		844036502497DCEA00DBE5BB /* mm.json in Resources */ = {isa = PBXBuildFile; fileRef = 8440364F2497DCEA00DBE5BB /* mm.json */; };
+		844036522497DD2400DBE5BB /* AlphavantageTests+mm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844036512497DD2400DBE5BB /* AlphavantageTests+mm.swift */; };
+		844036542497DEA600DBE5BB /* Alphavantage+MM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844036532497DEA600DBE5BB /* Alphavantage+MM.swift */; };
+		844036562497E0FE00DBE5BB /* Alphavantage+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844036552497E0FE00DBE5BB /* Alphavantage+Mock.swift */; };
 		8465CFD2246984C5000290A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD1246984C5000290A8 /* AppDelegate.swift */; };
 		8465CFD4246984C5000290A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD3246984C5000290A8 /* SceneDelegate.swift */; };
 		8465CFD6246984C5000290A8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CFD5246984C5000290A8 /* ContentView.swift */; };
@@ -101,6 +105,10 @@
 		843CC5F5247A86760091D853 /* InformationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTests.swift; sourceTree = "<group>"; };
 		843CC5F9247ABDB60091D853 /* ChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeTests.swift; sourceTree = "<group>"; };
 		8440362A2491FB5600DBE5BB /* EquityDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquityDay.swift; sourceTree = "<group>"; };
+		8440364F2497DCEA00DBE5BB /* mm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mm.json; sourceTree = "<group>"; };
+		844036512497DD2400DBE5BB /* AlphavantageTests+mm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlphavantageTests+mm.swift"; sourceTree = "<group>"; };
+		844036532497DEA600DBE5BB /* Alphavantage+MM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+MM.swift"; sourceTree = "<group>"; };
+		844036552497E0FE00DBE5BB /* Alphavantage+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alphavantage+Mock.swift"; sourceTree = "<group>"; };
 		8465CFCE246984C5000290A8 /* Trading Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trading Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8465CFD1246984C5000290A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8465CFD3246984C5000290A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				840CAA3824758B800024DB5B /* AlphavantageWSTests.swift */,
+				844036512497DD2400DBE5BB /* AlphavantageTests+mm.swift */,
+				844036552497E0FE00DBE5BB /* Alphavantage+Mock.swift */,
 			);
 			path = WS;
 			sourceTree = "<group>";
@@ -311,6 +321,7 @@
 				84327DCE2471B1A900FE4C87 /* history.json */,
 				848E16492482A94100C0D536 /* days.json */,
 				84327DCA246FDDDA00FE4C87 /* information.json */,
+				8440364F2497DCEA00DBE5BB /* mm.json */,
 				847B16DF24753F5E0054BE02 /* global.json */,
 			);
 			path = Ressources;
@@ -345,6 +356,7 @@
 				84246EA0247FFEE1007A9029 /* Alphavantage+Global.swift */,
 				84246EA2247FFF50007A9029 /* Alphavantage+History.swift */,
 				8432D80C248BF0A500969263 /* Alphavantage+RSI.swift */,
+				844036532497DEA600DBE5BB /* Alphavantage+MM.swift */,
 			);
 			path = WebServices;
 			sourceTree = "<group>";
@@ -458,6 +470,7 @@
 				8432D80F248BFCBB00969263 /* rsi.json in Resources */,
 				8470DC09248A7F410030B6B4 /* index.json in Resources */,
 				84366F102483CC32006A1C6B /* global.json in Resources */,
+				844036502497DCEA00DBE5BB /* mm.json in Resources */,
 				8465CFDB246984C6000290A8 /* Preview Assets.xcassets in Resources */,
 				84366F0D2483CC32006A1C6B /* history.json in Resources */,
 				84366F0E2483CC32006A1C6B /* days.json in Resources */,
@@ -503,6 +516,7 @@
 				84246E9B247CED14007A9029 /* Helper.swift in Sources */,
 				8412C731246A8F6A00AA342E /* EquityList.swift in Sources */,
 				8412C736246AC3FF00AA342E /* EquitiesGroup.swift in Sources */,
+				844036542497DEA600DBE5BB /* Alphavantage+MM.swift in Sources */,
 				8432D80D248BF0A500969263 /* Alphavantage+RSI.swift in Sources */,
 				8412C72F246A8F4E00AA342E /* EquityRow.swift in Sources */,
 				84246E9D247EEAB4007A9029 /* Alphavantage+Detail.swift in Sources */,
@@ -523,7 +537,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				844036562497E0FE00DBE5BB /* Alphavantage+Mock.swift in Sources */,
 				84088F70249165F700C807C0 /* DayTests.swift in Sources */,
+				844036522497DD2400DBE5BB /* AlphavantageTests+mm.swift in Sources */,
 				843CC5F3247A7BD00091D853 /* EquitiesGroupTests.swift in Sources */,
 				843CC5F6247A86760091D853 /* InformationTests.swift in Sources */,
 				8494F828247C599800A7C5EE /* IndexTests.swift in Sources */,

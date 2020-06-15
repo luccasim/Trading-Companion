@@ -26,6 +26,13 @@ extension Array where Element:Equatable {
     }
 }
 
+extension Data {
+    
+    var toStr : String {
+        return String(data: self, encoding: .utf8) ?? "<Error>"
+    }
+}
+
 extension AppDelegate {
     
     static var persistentContainer: NSPersistentContainer {
