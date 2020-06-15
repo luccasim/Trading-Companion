@@ -15,21 +15,26 @@ struct EquityDetail: View {
     
     var model : Equity
     
-    @State private var worker   : Worker = Worker()
-        
-    func fetchLastEquityLastChange() {
-        self.viewModel.fetchChange(Equity: self.model)
-    }
+    @State var worker   : Worker = Worker()
     
+    @State var indic    = 0
+    
+    var dayCount : String {
+        return self.indic == 0 ? "0" : "-\(self.indic)"
+    }
+        
     var body: some View {
-                    
+                        
             Form {
                 
-                Section(header: Text("Day")) {
+                if self.worker.days.count > 0 {
                     
-                    Picker("\(self.worker.selectedDayTitle)", selection: self.$worker.daySelector) {
-                        ForEach(self.worker.days) {
-                            Text("\($0.date?.toStringDay ?? "")")
+                    Section(header: Text("Echelle")) {
+                        
+                        Picker(selection: self.$indic, label: Text("Day \(self.dayCount)")) {
+                            ForEach(0 ..< self.worker.days.count) {
+                                Text("\(self.worker.days[$0].dayDate)")
+                            }
                         }
                     }
                 }
@@ -42,16 +47,29 @@ struct EquityDetail: View {
                     
                     TextView(label: "Volume", value: self.worker.volume)
                     
-                    TextView(label: "MM20", value: self.worker.trend)
+                    if self.worker.shouldUpdateTrend {
+
+                    }
                     
-                    if !self.model.isIndex {
-                        TextView(label: "RSI", value: self.worker.rsi)
+                    else {
+                        TextView(label: "MM20", value: self.worker.trend)
+                    }
+                    
+                    if self.worker.needUpdateRSI {
+                        Button("RSI") {
+                            self.worker.updateRSI()
+                        }
+                    }
+                    
+                    else {
+                        TextView(label: "RSI", value: self.worker.trend)
                     }
                 }
                 
                 Section(header: Text("Informations")) {
                     
                     TextView(label: "Cours", value: self.worker.price)
+                   
                     
                     TextView(label: "Variation", value: self.worker.variation)
                     
@@ -69,11 +87,14 @@ struct EquityDetail: View {
             }
             .navigationBarTitle("\(model.name)")
             .onAppear() {
-                self.worker.set(Model: self.model)
+                print("Selected Index = \(self.indic)")
+                self.worker.set(Model: self.model, Manager: self.viewModel)
+                self.worker.daySelector = self.indic
             }
             .onDisappear() {
                 self.worker.save()
             }
+//        }
     }
 }
 
@@ -81,7 +102,8 @@ extension EquityDetail {
     
     struct Worker {
         
-        private weak var model : Equity?
+        private weak var manager    : EquityViewModel?
+        private weak var model      : Equity?
         
         var price           = ""
         var variation       = ""
@@ -110,7 +132,7 @@ extension EquityDetail {
         
         var gap : String {
 
-            guard let spot = self.model?.change?.price, let alert = Double(self.inputAlert) else {
+            guard let spot = self.selectedDay?.close, let alert = Double(self.inputAlert) else {
                 return ""
             }
             
@@ -130,12 +152,38 @@ extension EquityDetail {
             return ""
         }
         
-        mutating func set(Model:Equity) {
+        var isEquity : Bool {
+            return !(self.model?.isIndex ?? true)
+        }
+        
+        var shouldUpdateTrend : Bool {
+            return self.trend.isEmpty
+        }
+        
+        var needUpdateRSI : Bool {
+            return self.rsi.isEmpty
+        }
+        
+        mutating func updateTrend() {
+            if let manager = self.manager, let model = self.model {
+                manager.fetchTrend(Equity: model)
+            }
+        }
+        
+        mutating func updateRSI() {
+            if let manager = self.manager, let model = self.model {
+                manager.fecthRSI(Equity: model)
+            }
+        }
+        
+        mutating func set(Model:Equity,Manager:EquityViewModel) {
             self.model = Model
+            self.manager = Manager
             self.reset()
         }
         
         mutating func reset() {
+            
             if let model = self.model {
                 self.inputAlert = model.alert == 0 ? "" : model.alert.toString
                 self.inputEntry = model.entry == 0 ? "" : model.entry.toString
@@ -157,9 +205,8 @@ extension EquityDetail {
                 print("Objectif saved")
             }
             
-            self.model?.selectedDay = self.days[daySelector].label
+            self.model?.selectedDay = self.selectedDay?.label
         }
-        
     }
 }
 
@@ -173,9 +220,9 @@ struct EquityDetail_Previews: PreviewProvider {
                 EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
             }
             
-            NavigationView {
-                EquityDetail(model: Index.main).environmentObject(EquityViewModel())
-            }
+//            NavigationView {
+//                EquityDetail(model: Index.main).environmentObject(EquityViewModel())
+//            }
         }
     }
 }

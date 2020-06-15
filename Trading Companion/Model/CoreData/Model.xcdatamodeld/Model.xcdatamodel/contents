@@ -20,6 +20,7 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="high" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="low" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="mm20" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="open" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="rsi" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -49,7 +50,7 @@
     </entity>
     <elements>
         <element name="Change" positionX="343.8046875" positionY="-808.82421875" width="128" height="238"/>
-        <element name="Day" positionX="144.4453125" positionY="-1063.8984375" width="128" height="163"/>
+        <element name="Day" positionX="144.4453125" positionY="-1063.8984375" width="128" height="178"/>
         <element name="Equity" positionX="345.70703125" positionY="-1066.453125" width="128" height="178"/>
         <element name="Index" positionX="350.4609375" positionY="-1157.55859375" width="128" height="58"/>
         <element name="Information" positionX="547.96484375" positionY="-1063.40625" width="128" height="133"/>

@@ -70,7 +70,7 @@ public class Equity : NSManagedObject, Identifiable {
         let sub = title.prefix(25)
         let str = String(sub)
         let format = str.components(separatedBy: " ")
-        let words = format.count >= 3 ? "\(format[0]) \(format[1]) \(format[2]) \(format[3])" : str
+        let words = format.count > 3 ? "\(format[0]) \(format[1]) \(format[2]) \(format[3])" : str
         
         self.formattedTitle = words
         

@@ -15,8 +15,24 @@ public class Day : NSManagedObject {
         return self.date?.toStringDayAndHour ?? "#"
     }
     
+    var dayDate : String {
+        return self.date?.toStringDay ?? ""
+    }
+    
     var price : String {
         return self.close.toString
+    }
+    
+    var shouldUpdateRSI : Bool {
+        return self.rsi == 0
+    }
+    
+    var shouldUpdateMM : Bool {
+        return self.mm20 == 0
+    }
+    
+    var shouldUpdate : Bool {
+        return self.shouldUpdateRSI || self.shouldUpdateMM
     }
 }
 

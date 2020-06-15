@@ -33,7 +33,7 @@ final class EquityViewModel : ObservableObject {
         self.equities.update(elements: listInstalled)
         self.equities.sort(by: {$0.name < $1.name})
         
-        self.setTitle()
+        self.publishTitle()
         
         self.fetchEquities()
     }
@@ -45,16 +45,20 @@ final class EquityViewModel : ObservableObject {
         case finish
     }
     
-    private func setTitle() {
-        switch state {
-        case .installation:
-            self.title = "Install [\(self.equities.count)/\(self.index.equitiesList.count)]"
-        case .checkIndex:
-            self.title = "Fetch Index"
-        case .getMarketChange :
-            self.title = "Update [\(self.updateCount)]"
-        case .finish:
-            self.title = "Equities \(self.index.equitiesList.count)"
+    private func publishTitle() {
+        
+        DispatchQueue.main.async {
+            
+            switch self.state {
+            case .installation:
+                self.title = "Install [\(self.equities.count)/\(self.index.equitiesList.count)]"
+            case .checkIndex:
+                self.title = "Fetch Index"
+            case .getMarketChange :
+                self.title = "Update [\(self.updateCount)]"
+            case .finish:
+                self.title = "Equities \(self.index.equitiesList.count)"
+            }
         }
     }
         
@@ -77,7 +81,7 @@ final class EquityViewModel : ObservableObject {
                 print("Error -> \(error.localizedDescription)")
             }
             
-            self.setTitle()
+            self.publishTitle()
         }
     }
     
@@ -100,10 +104,6 @@ final class EquityViewModel : ObservableObject {
             default: self.updates(result: result)
             }
         }
-    }
-    
-    private func fetchEquitiesHistory() {
-        
     }
     
     private func fetchEquitiesIndexChange() {
@@ -131,6 +131,7 @@ final class EquityViewModel : ObservableObject {
         self.state = .getMarketChange
         
         guard self.index.marketIsClose else {
+            print("Not auto update, market is open!.")
             self.fetchEquitiesFinish()
             return
         }
@@ -153,12 +154,24 @@ final class EquityViewModel : ObservableObject {
         
         self.state = .finish
         
-        self.setTitle()
+        self.publishTitle()
     }
     
     func fetchChange(Equity:Equity) {
         
         self.webService.update(Endpoints: [.global], EquitiesList: [Equity]) { (result) in
+            self.updates(result: result)
+        }
+    }
+    
+    func fetchTrend(Equity:Equity) {
+        self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
+            self.updates(result: result)
+        }
+    }
+    
+    func fecthRSI(Equity:Equity) {
+        self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
             self.updates(result: result)
         }
     }

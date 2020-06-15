@@ -140,16 +140,6 @@ class AlphavantageWSTests: XCTestCase {
         
     }
     
-    // Parsing
-
-    func testRSIReponse() throws {
-        
-        let data = rsiData
-        let reponse = try AlphavantageWS.RSIReponse(fromDataReponse: data)
-        
-        print(reponse.result)
-    }
-    
     func testRSIPreview() throws {
         print(AlphavantageWS.RSIReponse.preview)
     }
