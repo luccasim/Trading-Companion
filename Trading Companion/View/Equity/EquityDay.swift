@@ -45,7 +45,7 @@ struct EquityDay: View {
             ForEach(self.model.allDays) { day in
                 TextView(label: day.date!.toStringDay, value: self.displayed(Value: self.value[self.selector], ForDay: day))
             }
-        }
+        }.navigationBarTitle("\(model.name)")
     }
 }
 

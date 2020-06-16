@@ -32,10 +32,10 @@ struct EquityDetail: View {
                     Section(header: Text("Echelle")) {
                         
                         Picker(selection: self.$indic, label: Text("Day \(self.dayCount)")) {
-                            ForEach(0 ..< self.worker.days.count) {
+                            ForEach(self.model.allDays.indices) {
                                 Text("\(self.worker.days[$0].dayDate)")
                             }
-                        }
+                        }.navigationBarTitle("\(model.name)")
                     }
                 }
                 
@@ -108,9 +108,7 @@ extension EquityDetail {
             return !self.inputAlert.isEmpty
         }
         
-        var days : [Day] {
-            return self.model?.allDays ?? []
-        }
+        var days : [Day]  = []
         
         var selectedDay : Day? {
             guard self.days.count > 0 else {return nil}
@@ -148,7 +146,7 @@ extension EquityDetail {
         }
         
         var trend : String {
-            return ""
+            return self.selectedDay?.mm20.toStringInt ?? ""
         }
         
         var isEquity : Bool {
@@ -186,6 +184,7 @@ extension EquityDetail {
                 self.inputEntry = model.entry == 0 ? "" : model.entry.toString
                 self.variation  = model.change?.percentFormat ?? ""
                 self.daySelector = model.indexDay
+                self.days = model.allDays
             }
         }
         

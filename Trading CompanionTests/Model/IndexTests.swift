@@ -41,7 +41,14 @@ class IndexTests: XCTestCase {
     }
     
     func testMarketClose() throws {
-        self.model.marketIsClose ? print("You could update") : print("Market is open, try after 17:30:00")
+        let date    = Date()
+        let close   = Index.mandatoryUpdate
+        
+        print("Current date :\(date)\nMandatory date :\(close)")
+        
+        self.model.marketIsClose ?
+            print("You could update") :
+            print("Market is open, try after 17:30:00")
     }
     
     func testMandatoryDate() throws {

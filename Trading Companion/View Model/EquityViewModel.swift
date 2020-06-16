@@ -70,8 +70,19 @@ final class EquityViewModel : ObservableObject {
                 
             case .success(let reponse):
                 
+                if let _ = reponse as? [Index] {
+                    break
+                }
+                
                 if let equities = reponse as? [Equity] {
-                    self.equities.update(elements: equities)
+                    
+                    equities.forEach { (eq) in
+                        eq.objectWillChange.send()
+                        if self.equities.contains(eq) == false {
+                            self.equities.append(eq)
+                        }
+                    }
+                    
                     self.equities.sort(by: {$0.name < $1.name})
                     self.updateCount -= 1
                     AppDelegate.saveContext()
@@ -130,11 +141,11 @@ final class EquityViewModel : ObservableObject {
         
         self.state = .getMarketChange
         
-        guard self.index.marketIsClose else {
-            print("Not auto update, market is open!.")
-            self.fetchEquitiesFinish()
-            return
-        }
+//        guard self.index.marketIsClose else {
+//            print("Not auto update, market is open!.")
+//            self.fetchEquitiesFinish()
+//            return
+//        }
         
         self.listToUpdate = self.equities.filter({$0.shouldUpdatePrice})
         self.updateCount = self.listToUpdate.count
@@ -165,7 +176,7 @@ final class EquityViewModel : ObservableObject {
     }
     
     func fetchIndicator(Equity:Equity) {
-        self.webService.update(Endpoints: [.rsi], EquitiesList: [Equity]) { (result) in
+        self.webService.update(Endpoints: [.rsi,.mm], EquitiesList: [Equity]) { (result) in
             self.updates(result: result)
         }
     }

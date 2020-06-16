@@ -8,7 +8,7 @@ public class AlphavantageWS {
     public init() {}
     
     private let dlqueue     = DispatchQueue(label: "Download stock List")
-    private let timerQueue  = DispatchQueue.init(label: "Timer")
+    private let timerQueue  = DispatchQueue(label: "Timer")
     private let group       = DispatchGroup()
         
     private var notDownloadList = true
