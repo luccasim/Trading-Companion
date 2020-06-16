@@ -97,7 +97,6 @@ extension EquityDetail {
         private weak var manager    : EquityViewModel?
         private weak var model      : Equity?
         
-        var price           = ""
         var variation       = ""
         var inputAlert      = ""
         var inputEntry      = ""
@@ -124,6 +123,10 @@ extension EquityDetail {
         
         var couldUpdate : Bool {
             return (self.selectedDay?.shouldUpdate ?? true)
+        }
+        
+        var price : String {
+            return self.selectedDay?.price ?? ""
         }
         
         var gap : String {
@@ -181,7 +184,6 @@ extension EquityDetail {
             if let model = self.model {
                 self.inputAlert = model.alert == 0 ? "" : model.alert.toString
                 self.inputEntry = model.entry == 0 ? "" : model.entry.toString
-                self.price      = model.change?.price.toString ?? ""
                 self.variation  = model.change?.percentFormat ?? ""
                 self.daySelector = model.indexDay
             }

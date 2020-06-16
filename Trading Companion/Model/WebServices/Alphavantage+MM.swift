@@ -19,6 +19,10 @@ extension AlphavantageWS {
         
     }
     
+    func SMAModel(model:AlphavantageWSModel) -> Reponse {
+        return Reponse(model: model, request: self.mmRequest(model: model), endpoint: .mm)
+    }
+    
     struct SMAReponse : Codable {
         
         let result : [SMA]
@@ -59,6 +63,10 @@ extension AlphavantageWS {
         init(withData data:Data) throws {
             let wrapper = try JSONDecoder().decode(SMAReponse.self, from: data)
             self = wrapper
+        }
+        
+        static var preview : SMAReponse {
+            return try! AlphavantageWS.SMAReponse.init(withData: Helper.loadData(FileName: "mm.json"))
         }
     }
     

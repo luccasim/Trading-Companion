@@ -53,6 +53,7 @@ extension AlphavantageWS {
             self.type       = try container.decode(String.self, forKey: .type)
             self.region     = try container.decode(String.self, forKey: .region)
             self.currency   = try container.decode(String.self, forKey: .currency)
+            
         }
         
         private struct Wrapper : Codable {

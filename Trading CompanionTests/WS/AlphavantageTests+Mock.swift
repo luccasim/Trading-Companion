@@ -16,6 +16,7 @@ class AlphaMock : AlphavantageWSModel {
     var global  : AlphavantageWS.GlobalReponse?
     var history : AlphavantageWS.HistoryReponse?
     var rsi     : AlphavantageWS.RSIReponse?
+    var sma     : AlphavantageWS.SMAReponse?
     
     init(_ str:String) {
         self.label = str
@@ -36,4 +37,9 @@ class AlphaMock : AlphavantageWSModel {
     func setRSI(Reponse: AlphavantageWS.RSIReponse) {
         self.rsi = Reponse
     }
+    
+    func setSMA(Reponse: AlphavantageWS.SMAReponse) {
+        self.sma = Reponse
+    }
+    
 }

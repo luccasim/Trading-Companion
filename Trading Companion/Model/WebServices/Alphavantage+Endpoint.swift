@@ -16,6 +16,7 @@ protocol AlphavantageWSModel : class {
     func setGlobal(Reponse:AlphavantageWS.GlobalReponse)
     func setHistory(Reponse:AlphavantageWS.HistoryReponse)
     func setRSI(Reponse:AlphavantageWS.RSIReponse)
+    func setSMA(Reponse:AlphavantageWS.SMAReponse)
     
 }
 
@@ -40,11 +41,11 @@ extension AlphavantageWS {
         let data = try Result.get()
         
         switch Reponse.endpoint {
-        case .detail: Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: data))
-        case .global: Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: data))
-        case .history: Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: data))
-        case .rsi: Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: data))
-        default: break
+        case .detail:   Reponse.model.setDetail(Reponse: try AlphavantageWS.InformationReponse(from: data))
+        case .global:   Reponse.model.setGlobal(Reponse: try AlphavantageWS.GlobalReponse(from: data))
+        case .history:  Reponse.model.setHistory(Reponse: try AlphavantageWS.HistoryReponse(from: data))
+        case .rsi:      Reponse.model.setRSI(Reponse: try AlphavantageWS.RSIReponse(fromDataReponse: data))
+        case .mm:       Reponse.model.setSMA(Reponse: try AlphavantageWS.SMAReponse(withData: data))
         }
     }
     
@@ -55,9 +56,8 @@ extension AlphavantageWS {
         case .global:   return Models.map({self.globalReponse(Model: $0)})
         case .history:  return Models.map({self.historyReponse(Model: $0)})
         case .rsi:      return Models.map({self.rsiModel(Model: $0)})
-        default:        return []
+        case .mm:       return Models.map({self.SMAModel(model: $0)})
         }
-        
     }
 }
 

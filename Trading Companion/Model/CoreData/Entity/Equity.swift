@@ -129,6 +129,18 @@ extension Equity {
 
 extension Equity : AlphavantageWSModel {
     
+    func setSMA(Reponse wrapper:AlphavantageWS.SMAReponse) {
+        
+        wrapper.result.forEach { (sma) in
+            self.allDays.forEach { (day) in
+                if let date = sma.date, date.contains(day.dayDate) {
+                    day.rsi = Double(sma.mm) ?? 0
+                }
+            }
+        }
+    }
+    
+    
     func setRSI(Reponse wrapper:AlphavantageWS.RSIReponse) {
         
         //Todo
