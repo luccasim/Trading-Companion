@@ -73,13 +73,3 @@ public class Change : NSManagedObject {
     }
     
 }
-
-extension Date {
-    
-    
-}
-
-extension String {
-    
-
-}

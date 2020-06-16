@@ -31,6 +31,12 @@ struct EquityDetail: View {
                     
                     Section(header: Text("Echelle")) {
                         
+                        if self.worker.couldUpdate {
+                            Button("Update") {
+                                self.worker.updateIndicator()
+                            }
+                        }
+                        
                         Picker(selection: self.$indic, label: Text("Day \(self.dayCount)")) {
                             ForEach(self.model.allDays.indices) {
                                 Text("\(self.worker.days[$0].dayDate)")
@@ -39,12 +45,25 @@ struct EquityDetail: View {
                     }
                 }
                 
+                Section(header: Text("Informations")) {
+                    
+                    TextView(label: "Cours", value: self.worker.price)
+                   
+                    if !self.worker.variation.isEmpty {
+                        TextView(label: "Variation", value: self.worker.variation)
+                    }
+                    
+                    NumberFieldView(label: "Alerte", input: self.$worker.inputAlert, lock: self.worker.lock)
+                    
+                    if self.worker.shouldDisplayGap {
+                        TextView(label: "Ecart", value: self.worker.gap)
+                    }
+                }
+                
                 Section(header: Text("Indicateurs")) {
                     
-                    if self.worker.couldUpdate {
-                        Button("Update") {
-                            self.worker.updateIndicator()
-                        }
+                    if self.worker.isEquity && !self.worker.indexGap.isEmpty {
+                        TextView(label: "\(self.worker.indexName)", value: self.worker.indexGap)
                     }
                     
                     if self.worker.hasVolume {
@@ -59,21 +78,7 @@ struct EquityDetail: View {
                         TextView(label: "RSI", value: self.worker.rsi)
                     }
                 }
-                
-                Section(header: Text("Informations")) {
-                    
-                    TextView(label: "Cours", value: self.worker.price)
-                   
-                    
-                    TextView(label: "Variation", value: self.worker.variation)
-                    
-                    NumberFieldView(label: "Alerte", input: self.$worker.inputAlert, lock: self.worker.lock)
-                    
-                    if self.worker.shouldDisplayGap {
-                        TextView(label: "Ecart", value: self.worker.gap)
-                    }
-                }
-                
+            
                 Section(header: Text("Simulations")) {
                     
                     SimulationView(lock: self.worker.lock, objectif: self.$worker.inputEntry)
@@ -135,6 +140,14 @@ extension EquityDetail {
             
             let dif = ((spot - alert) / alert) * 100
             return String(format: "%.3f%%", dif)
+        }
+        
+        var indexName : String {
+            return self.model?.indexName ?? ""
+        }
+        
+        var indexGap : String {
+            return self.model?.index?.variation ?? ""
         }
         
         var rsi : String {

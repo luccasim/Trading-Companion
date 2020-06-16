@@ -134,7 +134,7 @@ extension Equity : AlphavantageWSModel {
         wrapper.result.forEach { (sma) in
             self.allDays.forEach { (day) in
                 if let date = sma.date, date.contains(day.dayDate) {
-                    day.rsi = Double(sma.mm) ?? 0
+                    day.mm20 = Double(sma.mm) ?? 0
                 }
             }
         }

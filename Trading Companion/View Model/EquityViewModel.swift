@@ -11,6 +11,7 @@ import Foundation
 final class EquityViewModel : ObservableObject {
     
     private var webService              = AlphavantageWS()
+    private var updateWS                = AlphavantageWS()
     
     @Published var index                = Index.main
     @Published var equities : [Equity]  = []
@@ -176,7 +177,7 @@ final class EquityViewModel : ObservableObject {
     }
     
     func fetchIndicator(Equity:Equity) {
-        self.webService.update(Endpoints: [.rsi,.mm], EquitiesList: [Equity]) { (result) in
+        self.updateWS.update(Endpoints: [.rsi,.mm], EquitiesList: [Equity]) { (result) in
             self.updates(result: result)
         }
     }
