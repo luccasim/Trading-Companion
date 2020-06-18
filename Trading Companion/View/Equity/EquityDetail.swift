@@ -16,7 +16,6 @@ struct EquityDetail: View {
     var model : Equity
     
     @State var worker   : Worker = Worker()
-    
     @State var indic    = 0
     
     var dayCount : String {

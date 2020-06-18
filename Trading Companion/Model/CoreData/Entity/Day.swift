@@ -61,4 +61,38 @@ extension Day : Identifiable {
         self.volume = change.volume
         
     }
+    
+    struct Candle {
+        
+        let high    : Double
+        let low     : Double
+        let open    : Double
+        let close   : Double
+        
+        init(Day:Day) {
+            self.high   = Day.high
+            self.low    = Day.low
+            self.open   = Day.open
+            self.close  = Day.close
+        }
+        
+        var color : Color {
+            
+            let closing = close - open
+            
+            if closing > 0 {
+                return .green
+            }
+        
+            else if closing < 0{
+                return .red
+            }
+            
+            return .none
+        }
+        
+        enum Color {
+            case red,green,none
+        }
+    }
 }
