@@ -11,7 +11,7 @@ import Combine
 
 struct EquityDetail: View {
     
-    @EnvironmentObject var viewModel : EquityViewModel
+    @EnvironmentObject var viewModel : EquityManager
     
     var model : Equity
     
@@ -98,7 +98,7 @@ extension EquityDetail {
     
     struct Worker {
         
-        private weak var manager    : EquityViewModel?
+        private weak var manager    : EquityManager?
         private weak var model      : Equity?
         
         var variation       = ""
@@ -183,7 +183,7 @@ extension EquityDetail {
             }
         }
         
-        mutating func set(Model:Equity,Manager:EquityViewModel) {
+        mutating func set(Model:Equity,Manager:EquityManager) {
             self.model = Model
             self.manager = Manager
             self.reset()
@@ -224,7 +224,7 @@ struct EquityDetail_Previews: PreviewProvider {
         Group {
             
             NavigationView {
-                EquityDetail(model: Equity.preview).environmentObject(EquityViewModel())
+                EquityDetail(model: Equity.preview).environmentObject(EquityManager())
             }
             
 //            NavigationView {

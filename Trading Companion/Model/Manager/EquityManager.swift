@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class EquityViewModel : ObservableObject {
+final class EquityManager : ObservableObject {
     
     private var webService              = AlphavantageWS()
     private var updateWS                = AlphavantageWS()

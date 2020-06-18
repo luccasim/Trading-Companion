@@ -10,7 +10,7 @@ import SwiftUI
 
 struct EquityList: View {
     
-    @EnvironmentObject var viewModel : EquityViewModel
+    @EnvironmentObject var viewModel : EquityManager
         
     var body: some View {
         
@@ -36,6 +36,6 @@ struct EquityList: View {
 
 struct StockList_Previews: PreviewProvider {
     static var previews: some View {
-        EquityList().environmentObject(EquityViewModel())
+        EquityList().environmentObject(EquityManager())
     }
 }
