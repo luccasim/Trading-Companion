@@ -42,14 +42,5 @@ class DayTests: XCTestCase {
         print(self.model.description)
         
     }
-    
-    func testCandle() throws {
-        
-        try self.testSetHistoryReponse()
-        
-        let candle = Day.Candle(Day: self.model)
-        
-        print(candle.color)
-    }
 
 }

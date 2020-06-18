@@ -12,6 +12,7 @@ import Foundation
 class AlphaMock : AlphavantageWSModel {
 
     var label   : String
+    
     var detail  : AlphavantageWS.InformationReponse?
     var global  : AlphavantageWS.GlobalReponse?
     var history : AlphavantageWS.HistoryReponse?

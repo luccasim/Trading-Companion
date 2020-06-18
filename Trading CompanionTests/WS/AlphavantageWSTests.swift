@@ -65,9 +65,14 @@ class AlphavantageWSTests: XCTestCase {
         waitForExpectations(timeout: 30) { error in}
     }
     
-    let symbol = "BIM.PA"
+    let symbol = "EUCAR.PA"
     
     // Request
+    
+    func testHistoryRequest() throws {
+        let request = self.ws.historyRequest(Label: symbol)
+        print(request.url!)
+    }
     
     func testDetailsRequest() throws {
         let request = self.ws.detailsRequest(Symbol: symbol)
@@ -86,6 +91,15 @@ class AlphavantageWSTests: XCTestCase {
     }
     
     // Endpoint Call
+    
+    func testHistory() throws {
+        
+        self.callEndpoint(Mock: mock, Endpoint: [.history])
+        
+        XCTAssertNotNil(mock.history)
+        
+        print(mock.detail!)
+    }
     
     func testDetail() throws {
         
