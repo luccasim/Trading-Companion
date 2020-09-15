@@ -71,7 +71,7 @@ class AlphavantageTests_SMA: XCTestCase {
     
     func testLocal() throws {
         
-        let data = Helper.loadData(FileName: "mm.json")
+        let data = Helper.loadData(FileName: "WeatherReponse.json")
         let reponse = try AlphavantageWS.SMAReponse.init(withData: data)
         
         print(reponse)

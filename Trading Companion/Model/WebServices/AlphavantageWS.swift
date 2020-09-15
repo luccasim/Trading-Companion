@@ -128,4 +128,11 @@ public class AlphavantageWS {
             
         }.resume()
     }
+        
+    func getPromise(Request:URLRequest) -> Future<Data,Never> {
+        return Future { promise in
+            URLSession.shared.dataTaskPublisher(for: Request)
+                .map({$0.data})
+        }
+    }
 }

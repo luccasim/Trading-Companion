@@ -30,6 +30,9 @@ class Engine_CandleTests: XCTestCase {
         
         XCTAssert(candles.count > 0)
         XCTAssert(candles.count == self.moc.days.count)
+        
+        candles.forEach({print($0)})
+//        candles.forEach({print("[\($0.date.toStringDay)] \($0.color)")})
     }
 
 }

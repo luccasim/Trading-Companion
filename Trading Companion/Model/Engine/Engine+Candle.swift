@@ -10,7 +10,7 @@ import Foundation
 
 extension Engine {
     
-    struct Candle {
+    struct Candle : CustomStringConvertible {
         
         let high    : Double
         let low     : Double
@@ -30,6 +30,7 @@ extension Engine {
             self.open   = Day.open
             self.close  = Day.close
             self.date   = date
+            
         }
         
         var color : Color {
@@ -48,15 +49,35 @@ extension Engine {
         }
         
         enum Color {
-            case red,green,none
+            case red, green, none
+        }
+        
+        enum State {
+            case support, resistance, normal
+        }
+        
+        var description : String {
+            return "\(self.date.toStringDay) [\(self.color)]"
         }
         
     }
     
     func getCandles(Days:[Day]) -> [Candle] {
         let candles = Days.compactMap({Candle(Day: $0)})
-        return candles.sorted(by: {$0.date < $1.date})
+        return candles.sorted(by: {$0.date > $1.date})
     }
+    
+    
+    
+//    func searchSupport(LastDay:Int, Candle:[Candle]) -> [Candle] {
+//        
+//        var i = 0
+//        
+//        while (i < LastDay) {
+//            
+//            i += 1
+//        }
+//    }
     
     
 }
